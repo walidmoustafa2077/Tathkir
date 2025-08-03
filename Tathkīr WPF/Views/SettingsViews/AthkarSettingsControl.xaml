@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Tathkīr_WPF.Views.SettingsViews.AthkarSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Tathkīr_WPF"
+             mc:Ignorable="d">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ItemsControl ItemsSource="{Binding AthkarList}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <materialDesign:Card Margin="5"
+                                         Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Athkar name -->
+                            <TextBlock Text="{Binding Name}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       TextWrapping="Wrap"
+                                       FontSize="16"
+                                       FontWeight="Medium" />
+
+                            <!-- ComboBox for repeat options -->
+                            <ComboBox Grid.Column="1"
+                                      ItemsSource="{Binding RepeatOptions}"
+                                      SelectedItem="{Binding SelectedRepeatOption}"
+                                      Width="180"
+                                      Margin="10 0"
+                                      materialDesign:HintAssist.Hint="{x:Static local:Strings.Repeat_Time}" />
+                        </Grid>
+                    </materialDesign:Card>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<RootNamespace>Tathkīr_WPF</RootNamespace>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<AssemblyName>Tathkīr</AssemblyName>
+		<ApplicationIcon>Resources\icon-logo.ico</ApplicationIcon>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Include="Resources\*\**">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="Resources\Fonts\KFGQPC Uthmanic Script HAFS.otf" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="MaterialDesignColors" Version="5.2.1" />
+		<PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+		<PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		
+	  <Resource Include="Resources\Background.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+		
+	  <Resource Include="Resources\Fonts\KFGQPC Uthmanic Script HAFS.otf" />
+		
+	  <Resource Include="Resources\Icons\mosque_10010709.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+		
+	  <Resource Include="Resources\tulip.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Strings.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Strings.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Strings.ar.resx">
+	    <CustomToolNamespace></CustomToolNamespace>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Strings.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+	
+</Project>
