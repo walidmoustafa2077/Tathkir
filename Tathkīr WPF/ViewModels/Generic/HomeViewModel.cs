@@ -27,6 +27,7 @@ namespace Tathkīr_WPF.ViewModels.Generic
         private string _currentDate = string.Empty;
         public string CurrentDate { get => _currentDate; set { _currentDate = value; OnPropertyChanged(); } }
         public ObservableCollection<PrayerItem> PrayerList { get; } = new();
+        public ObservableCollection<int> TasbeehLimits { get; set; } = new ObservableCollection<int> { 33, 99, 100 };
 
         // Tasbeeh properties
         private int _tasbeehCount;
@@ -36,8 +37,8 @@ namespace Tathkīr_WPF.ViewModels.Generic
             set { _tasbeehCount = value; OnPropertyChanged(); }
         }
 
-        private string _tasbeehLimit = "33"; 
-        public string TasbeehLimit
+        private int _tasbeehLimit = 33; 
+        public int TasbeehLimit
         {
             get => _tasbeehLimit;
             set { _tasbeehLimit = value; OnPropertyChanged(); }
@@ -49,6 +50,7 @@ namespace Tathkīr_WPF.ViewModels.Generic
             get => _tasbeehTotal;
             set { _tasbeehTotal = value; OnPropertyChanged(); }
         }
+
 
         private DateTime _selectedDate = DateTime.Now;
         public DateTime SelectedDate
@@ -78,9 +80,9 @@ namespace Tathkīr_WPF.ViewModels.Generic
             IncrementTasbeehCommand = new CommandBase((o) =>
             {
                 TasbeehCount++;
-                TasbeehTotal = $"Total: {TasbeehCount}";
+                TasbeehTotal = $"{Strings.Total}: {TasbeehCount}";
 
-                if (TasbeehCount >= int.Parse(TasbeehLimit))
+                if (TasbeehCount >= TasbeehLimit)
                 {
                     TasbeehCount = 0; // Reset after reaching limit
                 }
@@ -96,26 +98,9 @@ namespace Tathkīr_WPF.ViewModels.Generic
                 });
             };
 
-            HijriEvents.Add(new HijriEvent
-            {
-                Date = DateTime.Today.AddDays(1),
-                Title = "Tomorrow's Event"
-            });
-            HijriEvents.Add(new HijriEvent
-            {
-                Date = DateTime.Today.AddDays(2),
-                Title = "Day After Tomorrow's Event"
-            });
-            HijriEvents.Add(new HijriEvent
-            {
-                Date = DateTime.Today.AddDays(3),
-                Title = "Three Days Later Event"
-            });
-
             // Tasbeeh initial values
             TasbeehCount = 0;
-            TasbeehLimit = "33";
-            TasbeehTotal = "Total: 0";
+            TasbeehTotal = $"{Strings.Total}: 0";
 
             Initialize();
         }
@@ -157,26 +142,8 @@ namespace Tathkīr_WPF.ViewModels.Generic
             }
         }
 
-        int timer = 5;
-
         private void UpdateCountdown()
         {
-            timer--;
-
-            if (timer == 0)
-                HijriEvents.Add(new HijriEvent
-                {
-                    Date = DateTime.Today.AddDays(12),
-                    Title = "New Countdown Event"
-                });
-
-            if (timer == -20)
-                HijriEvents.Add(new HijriEvent
-                {
-                    Date = DateTime.Today.AddDays(24),
-                    Title = "New Countdown Event"
-                });
-
             var countdown = _manager.Countdown;
 
             Countdown = $"{(int)countdown.TotalHours:D2}:{countdown.Minutes:D2}:{countdown.Seconds:D2}";

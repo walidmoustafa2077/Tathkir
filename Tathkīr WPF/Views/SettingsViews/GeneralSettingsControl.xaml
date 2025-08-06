@@ -3,68 +3,77 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Tathkīr_WPF.Views.SettingsViews"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d">
+             xmlns:local="clr-namespace:Tathkīr_WPF"
+             mc:Ignorable="d"
+             Foreground="#1199DD">
 
     <ScrollViewer>
         <StackPanel Margin="20"
                     Orientation="Vertical">
-
             <!-- Personalization -->
-            <GroupBox Header="Personalization"
+            <GroupBox Header="{x:Static local:Strings.Personalization}"
                       Margin="0 12"
                       Style="{StaticResource MaterialDesignCardGroupBox}">
                 <StackPanel Orientation="Vertical">
+                    <!-- Language ComboBox -->
                     <ComboBox Height="40"
                               Padding="4"
                               Margin="12 6"
+                              ItemsSource="{Binding AvailableLanguages}"
+                              SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
                               Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                              materialDesign:HintAssist.Hint="Select Language" />
-                    
+                              materialDesign:HintAssist.Hint="{x:Static local:Strings.Select_Language}" />
+                    <!-- Theme ComboBox -->
                     <ComboBox Height="40"
                               Padding="4"
                               Margin="12 6"
+                              ItemsSource="{Binding AvailableThemes}"
+                              SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
                               Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                              materialDesign:HintAssist.Hint="Select Theme" />
+                              materialDesign:HintAssist.Hint="{x:Static local:Strings.Select_Theme}" />
                 </StackPanel>
             </GroupBox>
 
             <!-- Behavior -->
-            <GroupBox Header="Behavior"
+            <GroupBox Header="{x:Static local:Strings.Behavior}"
                       Margin="0 12"
                       Style="{StaticResource MaterialDesignCardGroupBox}">
                 <StackPanel Margin="10">
                     <DockPanel Margin="0 0 0 6">
-                        <TextBlock Text="Launch on system startup"
+                        <TextBlock Text="{x:Static local:Strings.Launch_On_System_Startup}"
+                                   VerticalAlignment="Center"
+                                   Margin="0 0 12 0"
+                                   Style="{StaticResource MaterialDesignBodyMediumTextBlock}" />
+                        <!-- Launch On Startup Toggle -->
+                        <ToggleButton IsChecked="{Binding LaunchOnStartup, Mode=TwoWay}"
+                                      HorizontalAlignment="Right"
+                                      Style="{StaticResource MaterialDesignSwitchToggleButton}" />
+
+                    </DockPanel>
+
+                    <DockPanel Margin="0 6 0 0">
+                        <TextBlock Text="{x:Static local:Strings.Show_Notifications}"
                                    VerticalAlignment="Center"
                                    Margin="0 0 12 0"
                                    Style="{StaticResource MaterialDesignBodyMediumTextBlock}" />
 
-                        <ToggleButton HorizontalAlignment="Right"
+                        <!-- Show Notifications Toggle -->
+                        <ToggleButton IsChecked="{Binding ShowNotifications, Mode=TwoWay}"
+                                      HorizontalAlignment="Right"
                                       Style="{StaticResource MaterialDesignSwitchToggleButton}" />
-                    </DockPanel>
-                    
-                    <DockPanel Margin="0 6 0 0">
-                        <TextBlock Text="Show notifications" 
-                                   VerticalAlignment="Center" 
-                                   Margin="0 0 12 0"
-                                   Style="{StaticResource MaterialDesignBodyMediumTextBlock}"/>
-                        
-                        <ToggleButton HorizontalAlignment="Right"
-                            Style="{StaticResource MaterialDesignSwitchToggleButton}" />
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
 
             <!-- Privacy & Info -->
-            <GroupBox Header="PrivacyInfo"
+            <GroupBox Header="{x:Static local:Strings.Privacy_Info}"
                       Margin="0 12"
                       Style="{StaticResource MaterialDesignCardGroupBox}">
                 <StackPanel Margin="10">
-                    <Button Content="Privacy Settings"
+                    <Button Content="{x:Static local:Strings.Privacy_Settings}"
                             Margin="0 6" />
-                    <Button Content="About"
+                    <Button Content="{x:Static local:Strings.About}"
                             Margin="0 6" />
                 </StackPanel>
             </GroupBox>

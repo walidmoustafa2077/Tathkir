@@ -1,4 +1,5 @@
 ﻿using Tathkīr_WPF.Enums;
+using Tathkīr_WPF.Extensions;
 
 namespace Tathkīr_WPF.Models
 {
@@ -9,7 +10,7 @@ namespace Tathkīr_WPF.Models
         {
             get
             {
-                return Strings.ResourceManager.GetString(Type.ToString()) ?? Type.ToString();
+                return (Type.ToString()).ToLocalizedLanguage();
             }
         }
 

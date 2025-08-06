@@ -12,6 +12,28 @@
         public PrayerMeta Meta { get; set; } = new();
     }
 
+    public record Address
+    {
+        public string Country { get; set; } = string.Empty;
+        public string CountryLocalized { get; set; } = string.Empty;
+        public string CountryCode { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string CityLocalized { get; set; } = string.Empty;
+    }
+
+    public record Country
+    {
+        public string Name { get; set; } = string.Empty;
+        public string NameLocalized { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
+    }
+
+    public record City 
+    {
+        public string Name { get; set; } = string.Empty;
+        public string NameLocalized { get; set; } = string.Empty;
+    }
+
     public record PrayerTimings
     {
         public string? Fajr { get; set; }
@@ -24,7 +46,6 @@
         public string? Midnight { get; set; }
         public string? Lastthird { get; set; }
     }
-
 
     public record PrayerDate
     {

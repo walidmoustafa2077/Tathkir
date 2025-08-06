@@ -4,7 +4,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <Border Padding="16"
-            CornerRadius="14">
+            CornerRadius="14"
+            Background="#25F5F5F5">
         <!-- Wrap Grid in a Border for Padding -->
         <Grid>
 
@@ -18,7 +19,7 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Height"
-                                Value="50" />
+                                Value="60" />
                         <Setter Property="Background"
                                 Value="White" />
                         <Setter Property="HorizontalContentAlignment"
@@ -29,14 +30,15 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListViewItem">
                                     <Border x:Name="Bd"
-                                            Background="{TemplateBinding Background}"
+                                            Background="{DynamicResource MaterialDesignCardBackground}"
+                                            Effect="{StaticResource MaterialDesignShadowDepth1}"
                                             BorderBrush="Transparent"
                                             CornerRadius="16"
                                             Margin="4 2"
                                             SnapsToDevicePixels="True">
                                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                          Margin="0 0 0 6"
+                                                          Margin="0 0 0 12"
                                                           RecognizesAccessKey="True" />
                                     </Border>
 
@@ -46,21 +48,7 @@
                                                  Value="True">
                                             <Setter TargetName="Bd"
                                                     Property="Background"
-                                                    Value="#DADADA" />
-                                        </Trigger>
-                                        <Trigger Property="IsSelected"
-                                                 Value="True">
-                                            <Setter TargetName="Bd"
-                                                    Property="Background"
-                                                    Value="#FFEEEEEE" />
-                                            <Setter Property="Foreground"
-                                                    Value="Black" />
-                                        </Trigger>
-                                        <Trigger Property="IsEnabled"
-                                                 Value="False">
-                                            <Setter TargetName="Bd"
-                                                    Property="Opacity"
-                                                    Value="0.5" />
+                                                    Value="{StaticResource MaterialDesignLightSeparatorBackground}" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -86,8 +74,11 @@
                                         VerticalAlignment="Center">
                                 <TextBlock Text="{Binding DisplayName}"
                                            FontFamily="pack://application:,,,/Resources/Fonts/#Amiri Quran"
+                                           FontSize="20"
                                            FontWeight="Bold"
                                            HorizontalAlignment="Center"
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap"
                                            Style="{StaticResource MaterialDesignBody1TextBlock}" />
                             </StackPanel>
                         </Border>

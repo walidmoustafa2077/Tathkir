@@ -8,8 +8,12 @@
              mc:Ignorable="d">
 
     <Border CornerRadius="12"
-            Background="White"
-            Padding="18">
+            Background="#FFFFFF"
+            Effect="{StaticResource MaterialDesignShadowDepth2}"
+            BorderBrush="{StaticResource MaterialDesignLightSeparatorBackground}"
+            BorderThickness="4"
+            Padding="18"
+            MinWidth="240">
 
         <StackPanel>
             <TextBlock Text="{Binding Title}"

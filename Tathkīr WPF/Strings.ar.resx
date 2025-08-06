@@ -126,9 +126,6 @@
   <data name="Home" xml:space="preserve">
     <value>الرئيسية</value>
   </data>
-  <data name="Wake-up_Thikr" xml:space="preserve">
-    <value>أذكار الاستيقاظ</value>
-  </data>
   <data name="Prayer_Times" xml:space="preserve">
     <value>اوقات الصلاة</value>
   </data>
@@ -140,36 +137,6 @@
   </data>
   <data name="Tathkir" xml:space="preserve">
     <value>تذكير</value>
-  </data>
-  <data name="Athan_Thikr" xml:space="preserve">
-    <value>أذكار الآذان</value>
-  </data>
-  <data name="Bedtime_Thikr" xml:space="preserve">
-    <value>أذكار النوم</value>
-  </data>
-  <data name="Eating_Thikr" xml:space="preserve">
-    <value>أذكار الطعام</value>
-  </data>
-  <data name="After_Prayer_Thikr" xml:space="preserve">
-    <value>أذكار بعد الصلاة</value>
-  </data>
-  <data name="Entering/Leaving_Bathroom_Thikr" xml:space="preserve">
-    <value>أذكار الخلاء</value>
-  </data>
-  <data name="Evening_Thikr" xml:space="preserve">
-    <value>أذكار المساء</value>
-  </data>
-  <data name="Morning_Thikr" xml:space="preserve">
-    <value>أذكار الصباح</value>
-  </data>
-  <data name="Wudu_Thikr" xml:space="preserve">
-    <value>أذكار الوضوء</value>
-  </data>
-  <data name="Prayer_Thikr" xml:space="preserve">
-    <value>أذكار الصلاة</value>
-  </data>
-  <data name="Mosque_Thikr" xml:space="preserve">
-    <value>أذكار المسجد</value>
   </data>
   <data name="Select_Location" xml:space="preserve">
     <value>حدد الموقع</value>
@@ -302,5 +269,83 @@
   </data>
   <data name="Looping_Off" xml:space="preserve">
     <value>تشغيل التكرار</value>
+  </data>
+  <data name="Select_Tasbeeh_Limit" xml:space="preserve">
+    <value>حدد حد التسبيح</value>
+  </data>
+  <data name="Tasbeeh" xml:space="preserve">
+    <value>تسابيح</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>التقويم</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>الإجمالي</value>
+  </data>
+  <data name="Alert_Time" xml:space="preserve">
+    <value>وقت التنبيه</value>
+  </data>
+  <data name="Enable_Alert" xml:space="preserve">
+    <value>تفعيل التنبيه</value>
+  </data>
+  <data name="On_Athan" xml:space="preserve">
+    <value>وقت الآذان</value>
+  </data>
+  <data name="Before_Athan" xml:space="preserve">
+    <value>قبل الآذان</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>الرئيسية</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>دقيقة</value>
+  </data>
+  <data name="Personalization" xml:space="preserve">
+    <value>التخصيص</value>
+  </data>
+  <data name="Behavior" xml:space="preserve">
+    <value>السلوك</value>
+  </data>
+  <data name="Privacy_Info" xml:space="preserve">
+    <value>معلومات الخصوصية</value>
+  </data>
+  <data name="Launch_On_System_Startup" xml:space="preserve">
+    <value>التشغيل عند بدء تشغيل النظام</value>
+  </data>
+  <data name="Show_Notifications" xml:space="preserve">
+    <value>إظهار الإشعارات</value>
+  </data>
+  <data name="Select_Language" xml:space="preserve">
+    <value>اختر اللغة</value>
+  </data>
+  <data name="Select_Theme" xml:space="preserve">
+    <value>اختر السمة</value>
+  </data>
+  <data name="Privacy_Settings" xml:space="preserve">
+    <value>إعدادات الخصوصية</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>حول</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>الإنجليزية</value>
+  </data>
+  <data name="Arabic" xml:space="preserve">
+    <value>العربية</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>فاتح</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>داكن</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>تفعيل</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>خطأ</value>
+  </data>
+  <data name="OnSave" xml:space="preserve">
+    <value>سيتم حفظ الإعدادات الحالية. يُرجى إعادة تشغيل التطبيق لتفعيل الإعدادات الجديدة.</value>
   </data>
 </root>

@@ -3,7 +3,6 @@
     public class AthkarItem
     {
         public string Name { get; set; } = string.Empty;
-        public string Icon { get; set; } = string.Empty;
         public string SelectedRepeatOption { get; set; } = string.Empty;
         public List<string> RepeatOptions { get; } = new List<string>
         {

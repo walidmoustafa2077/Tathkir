@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows;
 using System.Windows.Input;
 using Tathkīr_WPF.Models;
 using Tathkīr_WPF.Services;
@@ -11,6 +10,10 @@ namespace Tathkīr_WPF.ViewModels.Generic
 {
     public class QuranViewModel : ViewModelBase
     {
+        private readonly AudioPlaybackService _audioPlayer = new AudioPlaybackService();
+        private readonly AudioCacheService _cacheService = new AudioCacheService();
+        private readonly AudioRepository _audioRepo = new AudioRepository();
+
         public ObservableCollection<SurahMeta> Surahs { get; set; } = new ObservableCollection<SurahMeta>();
 
         private SurahMeta _selectedSurah = new SurahMeta();
@@ -28,13 +31,13 @@ namespace Tathkīr_WPF.ViewModels.Generic
                     var fullSurah = LoadFullSurah(_selectedSurah.Number);
                     if (fullSurah != null && fullSurah.Name != null)
                     {
-                        fullSurah.Name.DisplayName = isRtl ? fullSurah.Name.Ar : fullSurah.Name.En;
+                        fullSurah.Name.DisplayName = fullSurah.Name.Ar;
                         fullSurah.Verses?.ForEach(v =>
                         {
-                            v.Text.Text = isRtl ? v.Text.Ar : v.Text.En;
+                            v.Text.Text = v.Text.Ar;
                         });
 
-                        var vm = new SurahDialogViewModel { Surah = fullSurah };
+                        var vm = new SurahDialogViewModel(_audioPlayer, _audioRepo, _cacheService) { Surah = fullSurah };
 
                         DialogService.Instance.ShowDialogGeneric(vm);
                     }
@@ -46,59 +49,50 @@ namespace Tathkīr_WPF.ViewModels.Generic
         public ICommand PreviousAyahCommand { get; set; } = null!;
         public ICommand NextAyahCommand { get; set; } = null!;
 
-        private bool isRtl;
-
         public QuranViewModel()
         {
             // Commands
-            isRtl = Application.Current.MainWindow.FlowDirection == FlowDirection.RightToLeft;
         }
 
         public async Task LoadDataAsync()
         {
-            var tempList = new List<SurahMeta>();
+            var quantJsonPath = Path.Combine(App.baseDir, "Quran.json");
+            var surahFolder = Path.Combine(App.baseDir, "Surahs");
 
-            await Task.Run(async () =>
+            // Create folder if it doesn't exist
+            if (!Directory.Exists(surahFolder))
             {
-                var baseDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
-                var jsonPath = Path.Combine(baseDir, "Quran.json");
-                var surahFolder = Path.Combine(baseDir, "Surahs");
-
-                // Create folder if it doesn't exist
-                if (!Directory.Exists(surahFolder))
-                    await BuildSurahsFolder(jsonPath, surahFolder);
-                else
-                {
-                    // If folder exists, load metadata from existing files
-                    foreach (var surahFile in Directory.GetFiles(surahFolder, "*.json"))
-                    {
-                        var fullSurah = JsonConvert.DeserializeObject<SurahMeta>(File.ReadAllText(surahFile));
-                        if (fullSurah?.Name == null) continue;
-
-                        var meta = new SurahMeta
-                        {
-                            Number = fullSurah.Number,
-                            Name = fullSurah.Name,
-                            DisplayName = isRtl ? fullSurah.Name.Ar : fullSurah.Name.En
-                        };
-
-                        tempList.Add(meta);
-                    }
-                }
-            });
-
-            // Update ObservableCollection on UI thread
-            Surahs.Clear();
-            foreach (var surah in tempList.OrderBy(s => s.Number))
-            {
-                Surahs.Add(surah);
+                await BuildSurahsFolder(quantJsonPath, surahFolder);
+                return;
             }
 
+            // If folder exists, load metadata from existing files and update Surahs collection
+            foreach (var surahFile in Directory.GetFiles(surahFolder, "*.json").OrderBy(f => GetSurahNumberFromFilename(f)))
+            {
+                var fullSurah = JsonConvert.DeserializeObject<SurahMeta>(File.ReadAllText(surahFile));
+                if (fullSurah?.Name == null) continue;
+
+                var meta = new SurahMeta
+                {
+                    Number = fullSurah.Number,
+                    Name = fullSurah.Name,
+                    DisplayName = fullSurah.Name.Ar 
+                };
+
+                Surahs.Add(meta);
+            }
         }
+
+        private int GetSurahNumberFromFilename(string filePath)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            return int.TryParse(fileName, out int number) ? number : 0;
+        }
+
 
         private Surah? LoadFullSurah(int surahNumber)
         {
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Surahs", $"{surahNumber}.json");
+            var filePath = Path.Combine(App.baseDir, "Surahs", $"{surahNumber}.json");
             if (!File.Exists(filePath)) return null;
 
             return JsonConvert.DeserializeObject<Surah>(File.ReadAllText(filePath));
@@ -106,7 +100,6 @@ namespace Tathkīr_WPF.ViewModels.Generic
 
         private async Task BuildSurahsFolder(string jsonPath, string surahFolder)
         {
-            var tempList = new List<Surah>();
 
             Directory.CreateDirectory(surahFolder);
 
@@ -128,67 +121,11 @@ namespace Tathkīr_WPF.ViewModels.Generic
                         // Save this surah into a separate JSON file
                         var surahFilePath = Path.Combine(surahFolder, $"{fullSurah.Number}.json");
                         File.WriteAllText(surahFilePath, JsonConvert.SerializeObject(fullSurah, Formatting.Indented));
-
-                        if (fullSurah.Verses == null || fullSurah.Verses.Count == 0)
-                            continue;
-
-                        // Create metadata for the main list
-                        var meta = new Surah
-                        {
-                            Number = fullSurah.Number,
-                            Name = fullSurah.Name,
-                            Verses_Count = fullSurah.Verses.Count,
-                        };
-
-                        tempList.Add(meta);
                     }
                 }
             }
 
             await LoadDataAsync();
         }
-
-        public void BuildSurahsAudios()
-        {
-            var baseDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
-            var jsonPath = Path.Combine(baseDir, "Quran.json");
-
-            var audioFile = Path.Combine(baseDir, "QuranAudios.json");
-
-            using (var fs = File.OpenRead(jsonPath))
-            using (var reader = new JsonTextReader(new StreamReader(fs)))
-            {
-                var serializer = new JsonSerializer();
-
-                while (reader.Read())
-                {
-                    if (reader.TokenType == JsonToken.StartObject)
-                    {
-                        // Deserialize audio info for this Surah
-                        var surahAudio = serializer.Deserialize<SurahAudio>(reader);
-
-                        if (surahAudio == null) continue;
-
-                        // Filter to only include "حفص عن عاصم"
-                        surahAudio.Audio = surahAudio.Audio?
-                            .Where(a => a.Rewaya.Ar.Trim() == "حفص عن عاصم")
-                            .ToList() ?? new List<Audio>();
-
-                        // Skip if no matching audio
-                        if (surahAudio.Audio.Count == 0) continue;
-
-                        // Add to combined list
-                        File.WriteAllText(
-                            audioFile,
-                            JsonConvert.SerializeObject(surahAudio, Formatting.Indented)
-                        );
-                        return;
-                    }
-                }
-            }
-
-          
-        }
-
     }
 }

@@ -36,27 +36,27 @@ namespace Tathkīr_WPF.ViewModels
 
                     if (tabItem.Header?.ToString() == Strings.Home)
                     {
-                        CurrentContentControl = new HomeControl();
+                        CurrentContentControl = _homeControl;
                     }
                     else if (tabItem.Header?.ToString() == Strings.Athkar)
                     {
-                        CurrentContentControl = new AthkarControl();
+                        CurrentContentControl = _athkarControl;
                     }
                     else if (tabItem.Header?.ToString() == Strings.Quran)
                     {
-                        CurrentContentControl = new QuranControl();
+                        CurrentContentControl = _quranControl;
                     }
                     else if (tabItem.Header?.ToString() == Strings.Prayer_Times)
                     {
-                        CurrentContentControl = new PrayerTimesControl();
+                        CurrentContentControl = _prayerTimesControl;
                     }
                     else if (tabItem.Header?.ToString() == Strings.Settings)
                     {
-                        CurrentContentControl = new SettingsControl();
+                        CurrentContentControl = _settingsControl;
                     }
                     else
                     {
-                        CurrentContentControl = null; 
+                        CurrentContentControl = null;
                     }
 
                     OnPropertyChanged();
@@ -81,8 +81,22 @@ namespace Tathkīr_WPF.ViewModels
             }
         }
 
+        private HomeControl? _homeControl;
+        private AthkarControl? _athkarControl;
+        private QuranControl? _quranControl;
+        private PrayerTimesControl? _prayerTimesControl;
+        private SettingsControl? _settingsControl;
+
+
         public MainWindowViewModel()
         {
+            _homeControl ??= new HomeControl();
+            _athkarControl ??= new AthkarControl();
+            _quranControl ??= new QuranControl();
+            _prayerTimesControl ??= new PrayerTimesControl();
+            _settingsControl ??= new SettingsControl();
+
+
             TabItem tap = new TabItem();
             tap.Header = Strings.Home;
             SelectedTap = tap;

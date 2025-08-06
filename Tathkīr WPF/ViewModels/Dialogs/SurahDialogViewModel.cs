@@ -1,15 +1,11 @@
-﻿using Newtonsoft.Json;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
-using System.Net.Http;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Tathkīr_WPF.Commands;
-using Tathkīr_WPF.Managers;
+using Tathkīr_WPF.Helpers;
 using Tathkīr_WPF.Models;
 using Tathkīr_WPF.Services;
 
@@ -17,69 +13,19 @@ namespace Tathkīr_WPF.ViewModels.Dialogs
 {
     public class SurahDialogViewModel : BaseDialogViewModel
     {
+        private readonly IAudioPlaybackService _audioPlayer;
+        private readonly IAudioCacheService _cacheService;
+        private readonly IAudioRepository _audioRepo;
         private readonly MediaPlayer _mediaPlayer;
-        private readonly AppSettings _settings;
+        private readonly AppSettings _settings = SettingsService.AppSettings;
+        private readonly DispatcherTimer _timer;
 
         public Surah Surah { get; set; } = null!;
 
-        public ObservableCollection<string> Readers { get; set; } = new ObservableCollection<string>();
-
-        private ICollectionView _readersView = null!;
-        public ICollectionView ReadersView
-        {
-            get => _readersView;
-            set { _readersView = value; OnPropertyChanged(); }
-        }
-
-        private string _selectedReader = string.Empty;
-        public string SelectedReader
-        {
-            get => _selectedReader;
-            set
-            {
-                _selectedReader = value;
-
-                SearchText = value; 
-
-                IsPause = false;
-                IsPlay = true;
-                _currentTrackUrl = string.Empty;
-
-                _settings.LastSelectedReader = value;
-
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(IsPlay));
-                OnPropertyChanged(nameof(IsPause));
-            }
-        }
-
-        private string _searchText = string.Empty;
-        public string SearchText
-        {
-            get => _searchText;
-            set
-            {
-                if (_searchText != value)
-                {
-                    _searchText = value;
-                    OnPropertyChanged();
-
-                    // Refresh the filter when the search text changes
-                    ReadersView?.Refresh();
-                }
-            }
-        }
+        public SearchableList<string> ReadersList { get; } = new();
 
         private string _loopStatus = Strings.Looping_Off;
-        public string LoopStatus
-        {
-            get => _loopStatus;
-            set
-            {
-                _loopStatus = value;
-                OnPropertyChanged();
-            }
-        }
+        public string LoopStatus { get => _loopStatus; set { _loopStatus = value; OnPropertyChanged(); } }
 
         private bool _isPlay = true;
         public bool IsPlay { get => _isPlay; set { _isPlay = value; OnPropertyChanged(); } }
@@ -122,59 +68,106 @@ namespace Tathkīr_WPF.ViewModels.Dialogs
         private bool _isLoopEnabled = false;
         private bool _isSeeking;
 
-        private string _cacheDirectory = Path.Combine(AppContext.BaseDirectory, "Cache");
-
-        public SurahDialogViewModel()
+        public SurahDialogViewModel(AudioPlaybackService audioPlayer, AudioRepository audioRepo, AudioCacheService cacheService)
         {
-            _settings = SettingsService.AppSettings;
+            _audioPlayer = audioPlayer;
+            _audioRepo = audioRepo;
+            _cacheService = cacheService;
+            _mediaPlayer = _audioPlayer.MediaPlayer;
 
-            _mediaPlayer = AudioManager.Instance.MediaPlayer;
+            surahAudio = _audioRepo.LoadAudioData();
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
 
-            surahAudio = LoadAllAudios();
+            InitializeCommands();
+            InitializeReaders();
+            InitializeTimer();
+            HookMediaPlayerEvents();
 
-            List<string>? readers = surahAudio?.Audio?
-                .Select(a => a.Reciter.Ar)
-                .Distinct()
-                .OrderBy(r => r)
-                .ToList();
+            RestoreLastReader();
+            SetInitialPlaybackState();
+        }
 
-            readers?.ForEach(r => Readers.Add(r));
-
-            ReadersView = CollectionViewSource.GetDefaultView(Readers);
-            ReadersView.Filter = FilterReaders;
-
-            PlaySurahCommand = new CommandBase(async (o) =>
+        private void InitializeCommands()
+        {
+            PlaySurahCommand = new CommandBase(async _ => await PlaySurahAsync());
+            StopSurahCommand = new CommandBase(_ =>
             {
-                await PlaySurahAsync();
-            });
-
-            StopSurahCommand = new CommandBase((o) =>
-            {
-                AudioManager.Instance.Stop();
+                _audioPlayer.Stop();
                 IsPlay = true;
                 IsPause = false;
                 _currentTrackUrl = string.Empty;
             });
 
-            LoopSurahCommand = new CommandBase((o) =>
+            LoopSurahCommand = new CommandBase(_ =>
             {
                 _isLoopEnabled = !_isLoopEnabled;
-
                 LoopStatus = _isLoopEnabled ? Strings.Looping_On : Strings.Looping_Off;
-
             });
 
-            CloseDialog = new CommandBase((o) =>
+            CloseDialog = new CommandBase(_ =>
             {
                 MainWindowViewModel.Instance.DialogControl = null;
             });
+        }
 
-            // Subscribe to MediaPlayer events
-            _mediaPlayer.MediaEnded += async (s, e) =>
+        private void InitializeReaders()
+        {
+            var readers = surahAudio?.Audio?
+                .Select(a => a.Reciter.Ar)
+                .Distinct()
+                .OrderBy(r => r)
+                .ToList();
+
+            if (readers == null) return;
+
+            foreach (var reader in readers)
+                ReadersList.Items.Add(reader);
+
+            // Handle selection changes
+            ReadersList.PropertyChanged += ReadersList_PropertyChanged;
+        }
+
+        private void ReadersList_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ReadersList.SelectedItem))
             {
-                if (_isLoopEnabled && !string.IsNullOrEmpty(_currentTrackUrl))
+                var selected = ReadersList.SelectedItem;
+
+                if (!string.IsNullOrWhiteSpace(selected))
                 {
-                    await PlayAudioWithCacheAsync(_currentTrackUrl, SelectedReader);
+                    IsPause = false;
+                    IsPlay = true;
+                    _currentTrackUrl = string.Empty;
+
+                    _settings.LastSelectedReader = selected;
+                }
+            }
+        }
+
+        private void InitializeTimer()
+        {
+            _timer.Tick += (s, e) =>
+            {
+                if (!_isSeeking && _mediaPlayer.Source != null)
+                    MediaPosition = _mediaPlayer.Position.TotalSeconds;
+            };
+            _timer.Start();
+        }
+
+        private void HookMediaPlayerEvents()
+        {
+            _mediaPlayer.MediaOpened += (_, _) =>
+            {
+                if (_mediaPlayer.NaturalDuration.HasTimeSpan)
+                    MediaDuration = _mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+            };
+
+            _mediaPlayer.MediaEnded += async (_, _) =>
+            {
+                if (_isLoopEnabled && !string.IsNullOrEmpty(_currentTrackUrl) && !string.IsNullOrEmpty(ReadersList.SelectedItem))
+                {
+                    var localPath = await _cacheService.GetOrDownloadAsync(_currentTrackUrl, ReadersList.SelectedItem);
+                    _audioPlayer.Play(localPath);
                 }
                 else
                 {
@@ -183,36 +176,24 @@ namespace Tathkīr_WPF.ViewModels.Dialogs
                     _currentTrackUrl = string.Empty;
                 }
             };
+        }
 
-            _mediaPlayer.MediaOpened += (s, e) =>
+        private void RestoreLastReader()
+        {
+            if (!string.IsNullOrEmpty(_settings.LastSelectedReader) &&
+                ReadersList.Items.Contains(_settings.LastSelectedReader))
             {
-                if (_mediaPlayer.NaturalDuration.HasTimeSpan)
-                {
-                    MediaDuration = _mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-                }
-            };
-
-            // Update MediaPosition every second
-            DispatcherTimer timer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(1)
-            };
-
-            timer.Tick += (s, e) =>
-            {
-                if (!_isSeeking && _mediaPlayer.Source != null)
-                    MediaPosition = _mediaPlayer.Position.TotalSeconds;
-            };
-
-            timer.Start();
-
-            // Restore last selected reader
-            if (!string.IsNullOrEmpty(_settings.LastSelectedReader) && Readers.Contains(_settings.LastSelectedReader))
-                SelectedReader = _settings.LastSelectedReader;
+                ReadersList.SelectedItem = _settings.LastSelectedReader;
+            }
             else
-                SelectedReader = Readers.FirstOrDefault() ?? string.Empty;
+            {
+                ReadersList.SelectedItem     = ReadersList.Items.FirstOrDefault() ?? string.Empty;
+            }
+        }
 
-            if (!AudioManager.Instance.IsPlaying)
+        private void SetInitialPlaybackState()
+        {
+            if (!_audioPlayer.IsPlaying)
             {
                 MediaDuration = 100;
                 MediaPosition = 0;
@@ -222,116 +203,63 @@ namespace Tathkīr_WPF.ViewModels.Dialogs
                 MediaDuration = _mediaPlayer.NaturalDuration.HasTimeSpan
                     ? _mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds
                     : 100;
-                MediaPosition = _mediaPlayer.Position.TotalSeconds;
-            }
 
-            if (AudioManager.Instance.IsPlaying)
-            {
+                MediaPosition = _mediaPlayer.Position.TotalSeconds;
+
                 IsPlay = false;
                 IsPause = true;
-                _currentTrackUrl = _mediaPlayer.Source.LocalPath;
+                _currentTrackUrl = _mediaPlayer.Source?.LocalPath ?? string.Empty;
             }
         }
 
         public async Task PlaySurahAsync()
         {
-            if (Surah == null || string.IsNullOrEmpty(SelectedReader)) return;
+            if (Surah == null || string.IsNullOrEmpty(ReadersList.SelectedItem)) return;
 
             var audio = surahAudio?.Audio?
-                .FirstOrDefault(a => a.Reciter.Ar == SelectedReader);
+                .FirstOrDefault(a => a.Reciter.Ar == ReadersList.SelectedItem);
 
-            if (audio != null)
+            if (audio == null) return;
+
+            var id = Surah.Number.ToString("D3");
+            var url = $"{audio.Server.TrimEnd('/')}/{id}.mp3";
+            var localPath = await _cacheService.GetOrDownloadAsync(url, ReadersList.SelectedItem);
+
+            if (_audioPlayer.IsEnded || _currentTrackUrl != url || _cachedReader != ReadersList.SelectedItem)
             {
-                // Format Surah number as 3 digits (001, 002, ..., 114)
-                var id = Surah.Number.ToString("D3");
-                var url = $"{audio.Server.TrimEnd('/')}/{id}.mp3";
-
-                string fileName = Path.GetFileName(url);
-                string sourceName = Path.GetFileName(AudioManager.Instance.GetCurrentTrack());
-
-                if (fileName != sourceName || _cachedReader != SelectedReader || fileName == sourceName && AudioManager.Instance.IsEnded)
-                {
-                    _currentTrackUrl = url;
-                    _cachedReader = SelectedReader;
-                    await PlayAudioWithCacheAsync(url, SelectedReader);
-                }
+                _currentTrackUrl = url;
+                _cachedReader = ReadersList.SelectedItem;
+                _audioPlayer.Play(localPath);
             }
 
-            IsPlay = !IsPlay;
-            IsPause = !IsPause;
-
-            if (IsPause && !AudioManager.Instance.IsPlaying)
-            {
-                AudioManager.Instance.Resume();
-            }
-            else if (IsPlay && AudioManager.Instance.IsPlaying)
-            {
-                AudioManager.Instance.Pause();
-            }
+            TogglePlayPause();
         }
 
-        public void StartSeeking() => _isSeeking = true;
+        public void StartSeeking()
+        {
+            _isSeeking = true;
+        }
+
         public void StopSeeking()
         {
             _isSeeking = false;
             _mediaPlayer.Position = TimeSpan.FromSeconds(MediaPosition);
         }
 
-        private SurahAudio? LoadAllAudios()
+        private void TogglePlayPause()
         {
-            var audioFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "QuranAudios.json");
-            return File.Exists(audioFile)
-                ? JsonConvert.DeserializeObject<SurahAudio>(File.ReadAllText(audioFile))
-                : new SurahAudio();
-        }
-
-        private async Task PlayAudioWithCacheAsync(string url, string reader)
-        {
-            Directory.CreateDirectory(_cacheDirectory);
-
-            if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(reader))
+            if (_audioPlayer.IsPlaying)
             {
-                MessageBox.Show("Invalid audio URL or reader selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                _audioPlayer.Pause();
+                IsPlay = true;
+                IsPause = false;
             }
-
-            string fileName = Path.GetFileName(url);
-            string folderName = Path.Combine(_cacheDirectory, reader);
-            string localPath = Path.Combine(folderName, fileName);
-
-            if (!File.Exists(localPath))
+            else
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(localPath)!);
-                // Play directly from URL (starts immediately)
-                AudioManager.Instance.Play(url);
-
-                using var client = new HttpClient();
-                using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
-
-                response.EnsureSuccessStatusCode();
-
-                using (var fs = new FileStream(localPath, FileMode.Create, FileAccess.Write, FileShare.None))
-                {
-                    await response.Content.CopyToAsync(fs);
-                }
-                return;
+                _audioPlayer.Resume();
+                IsPlay = false;
+                IsPause = true;
             }
-
-            // Play from local file
-            AudioManager.Instance.Play(localPath);
         }
-
-        private bool FilterReaders(object item)
-        {
-            if (string.IsNullOrEmpty(SearchText))
-                return true;
-
-            if (item == null)
-                return false;
-
-            return item.ToString()?
-                       .IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0;
-        }
-
     }
 }

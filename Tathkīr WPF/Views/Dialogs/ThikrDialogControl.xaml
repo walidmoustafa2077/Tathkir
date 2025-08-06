@@ -62,13 +62,13 @@
                                     <StackPanel Grid.Column="0"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Margin="0,0,12,0"
-                                                Height="80">
+                                                Margin="0 0 14 0"
+                                                Height="100">
                                         <Button Content="{Binding Count}"
                                                 Command="{Binding DecrementCountCommand}"
                                                 Width="80"
-                                                Height="40"
-                                                Margin="0,0,0,8"
+                                                Height="50"
+                                                Margin="0 12"
                                                 Background="#2ECC71"
                                                 FontSize="20"
                                                 FontWeight="Bold"
@@ -90,16 +90,16 @@
 
                                     <!-- Left side: Text content -->
                                     <StackPanel Grid.Column="1"
-                                                VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Title}"
-                                                   FontSize="16"
-                                                   FontWeight="Bold"
-                                                   Margin="0,0,0,8"
-                                                   TextWrapping="Wrap" />
+                                                VerticalAlignment="Center"
+                                                MinHeight="80">
                                         <TextBlock Text="{Binding Content}"
                                                    TextWrapping="Wrap"
-                                                   FontSize="16"
-                                                   Margin="0,0,0,8" />
+                                                   FontSize="22"
+                                                   FontWeight="Bold"
+                                                   Margin="0,0,0,12"
+                                                   LineHeight="34"
+                                                   LineStackingStrategy="BlockLineHeight"
+                                                   FontFamily="pack://application:,,,/Resources/Fonts/#Amiri Quran" />
                                         <TextBlock Text="{Binding Description}"
                                                    Foreground="Gray"
                                                    FontSize="12"

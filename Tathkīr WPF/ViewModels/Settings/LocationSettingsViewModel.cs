@@ -1,31 +1,23 @@
-﻿using System.Collections.ObjectModel;
+﻿using Tathkīr_WPF.Helpers;
+using Tathkīr_WPF.Services;
 
 namespace Tathkīr_WPF.ViewModels.Settings
 {
     public class LocationSettingsViewModel : ViewModelBase
     {
-        public ObservableCollection<string> AvailableCountries { get; set; }
-        public ObservableCollection<string> AvailableCities { get; set; }
+        public SearchableList<string> AvailableCountries { get; } = new();
+        public SearchableList<string> AvailableCities { get; } = new();
 
-        private string _selectedCountry = string.Empty;
-        public string SelectedCountry
+        public string? SelectedCountry
         {
-            get => _selectedCountry;
-            set
-            {
-                if (SetProperty(ref _selectedCountry, value))
-                {
-                    LoadCitiesForCountry(_selectedCountry);
-                    IsCityEnabled = !string.IsNullOrEmpty(_selectedCountry);
-                }
-            }
+            get => AvailableCountries.SelectedItem;
+            set => AvailableCountries.SelectedItem = value;
         }
 
-        private string _selectedCity = string.Empty;
-        public string SelectedCity
+        public string? SelectedCity
         {
-            get => _selectedCity;
-            set => SetProperty(ref _selectedCity, value);
+            get => AvailableCities.SelectedItem;
+            set => AvailableCities.SelectedItem = value;
         }
 
         private bool _isCityEnabled;
@@ -38,56 +30,83 @@ namespace Tathkīr_WPF.ViewModels.Settings
         public LocationSettingsViewModel()
         {
             // Sample data for testing
-            AvailableCountries = new ObservableCollection<string>
-            {
-                "Egypt", "Saudi Arabia", "UAE", "Morocco", "Indonesia"
-            };
-
-            AvailableCities = new ObservableCollection<string>();
+            LoadAsync();
 
             IsCityEnabled = false;
+
+            AvailableCountries.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(AvailableCountries.SelectedItem))
+                {
+                    if (AvailableCountries.SelectedItem != null)
+                    {
+                        LoadCitiesForCountry(AvailableCountries.SelectedItem);
+                        IsCityEnabled = true;
+                    }
+                    else
+                    {
+                        AvailableCities.Items.Clear();
+                        IsCityEnabled = false;
+                    }
+                }
+            };
         }
 
-        private void LoadCitiesForCountry(string country)
+        private async void LoadAsync()
         {
-            AvailableCities.Clear();
-
-            if (string.IsNullOrWhiteSpace(country)) return;
-
-            // Sample test data
-            switch (country)
+            var countries = await HostService.Instance.GetCountryNamesAsync();
+            if (countries != null && countries.Count > 0)
             {
-                case "Egypt":
-                    AvailableCities.Add("Cairo");
-                    AvailableCities.Add("Alexandria");
-                    AvailableCities.Add("Giza");
-                    AvailableCities.Add("Shubra El Kheima");
-                    AvailableCities.Add("Port Said");
-                    AvailableCities.Add("Suez");
-                    AvailableCities.Add("Luxor");
-                    AvailableCities.Add("Aswan");
-                    break;
-                case "Saudi Arabia":
-                    AvailableCities.Add("Riyadh");
-                    AvailableCities.Add("Jeddah");
-                    AvailableCities.Add("Makkah");
-                    break;
-                case "UAE":
-                    AvailableCities.Add("Dubai");
-                    AvailableCities.Add("Abu Dhabi");
-                    AvailableCities.Add("Sharjah");
-                    break;
-                case "Morocco":
-                    AvailableCities.Add("Casablanca");
-                    AvailableCities.Add("Marrakech");
-                    AvailableCities.Add("Rabat");
-                    break;
-                case "Indonesia":
-                    AvailableCities.Add("Jakarta");
-                    AvailableCities.Add("Bandung");
-                    AvailableCities.Add("Surabaya");
-                    break;
+                AvailableCountries.Items.Clear();
+                countries.ForEach(country =>
+                {
+                    if (!string.IsNullOrWhiteSpace(country))
+                    {
+                        AvailableCountries.Items.Add(country);
+                    }
+                });
+
+                // set default country to AppSettings
+                SelectedCountry = SettingsService.AppSettings.ApiConfig.Country;
+                SelectedCity = SettingsService.AppSettings.ApiConfig.City;
             }
+            else
+            {
+                AvailableCountries.Items.Clear();
+                SelectedCountry = string.Empty;
+                SelectedCity = string.Empty;
+            }
+        }
+
+        private async void LoadCitiesForCountry(string country)
+        {
+            var cities = await HostService.Instance.GetCitiesByCountryNameAsync(country);
+            if (cities != null && cities.Count > 0)
+            {
+                AvailableCities.Items.Clear();
+                cities.ForEach(city =>
+                {
+                    if (!string.IsNullOrWhiteSpace(city))
+                    {
+                        AvailableCities.Items.Add(city);
+                    }
+                });
+            }
+            else
+            {
+                AvailableCities.Items.Clear();
+                SelectedCity = string.Empty;
+            }
+        }
+
+        public void SaveSettings()
+        {
+            SettingsService.AppSettings.ApiConfig.Country = SelectedCountry ?? string.Empty;
+            SettingsService.AppSettings.ApiConfig.City = SelectedCity ?? string.Empty;
+
+            SettingsService.AppSettings.ApiConfig.Address = HostService.Instance.GetCurrentAddress(SelectedCountry, SelectedCity);
+
+            SettingsService.Save(SettingsService.AppSettings);
         }
     }
 }

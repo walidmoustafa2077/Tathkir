@@ -61,11 +61,20 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to After Prayer Thikr.
+        ///   Looks up a localized string similar to About.
         /// </summary>
-        public static string After_Prayer_Thikr {
+        public static string About {
             get {
-                return ResourceManager.GetString("After_Prayer_Thikr", resourceCulture);
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alert time.
+        /// </summary>
+        public static string Alert_Time {
+            get {
+                return ResourceManager.GetString("Alert_Time", resourceCulture);
             }
         }
         
@@ -79,20 +88,20 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arabic.
+        /// </summary>
+        public static string Arabic {
+            get {
+                return ResourceManager.GetString("Arabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Asr.
         /// </summary>
         public static string Asr {
             get {
                 return ResourceManager.GetString("Asr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Athan Thikr .
-        /// </summary>
-        public static string Athan_Thikr {
-            get {
-                return ResourceManager.GetString("Athan_Thikr", resourceCulture);
             }
         }
         
@@ -115,11 +124,20 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bedtime Thikr.
+        ///   Looks up a localized string similar to Before Athan.
         /// </summary>
-        public static string Bedtime_Thikr {
+        public static string Before_Athan {
             get {
-                return ResourceManager.GetString("Bedtime_Thikr", resourceCulture);
+                return ResourceManager.GetString("Before_Athan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Behavior.
+        /// </summary>
+        public static string Behavior {
+            get {
+                return ResourceManager.GetString("Behavior", resourceCulture);
             }
         }
         
@@ -129,6 +147,15 @@ namespace Tathkīr_WPF {
         public static string Bookmark {
             get {
                 return ResourceManager.GetString("Bookmark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calendar.
+        /// </summary>
+        public static string Calendar {
+            get {
+                return ResourceManager.GetString("Calendar", resourceCulture);
             }
         }
         
@@ -169,6 +196,15 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string Dark {
+            get {
+                return ResourceManager.GetString("Dark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dhuhr.
         /// </summary>
         public static string Dhuhr {
@@ -178,29 +214,38 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Eating Thikr.
+        ///   Looks up a localized string similar to Enable.
         /// </summary>
-        public static string Eating_Thikr {
+        public static string Enable {
             get {
-                return ResourceManager.GetString("Eating_Thikr", resourceCulture);
+                return ResourceManager.GetString("Enable", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Entering/Leaving Bathroom Thikr .
+        ///   Looks up a localized string similar to Enable alert.
         /// </summary>
-        public static string Entering_Leaving_Bathroom_Thikr {
+        public static string Enable_Alert {
             get {
-                return ResourceManager.GetString("Entering/Leaving_Bathroom_Thikr", resourceCulture);
+                return ResourceManager.GetString("Enable_Alert", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Evening Thikr.
+        ///   Looks up a localized string similar to English.
         /// </summary>
-        public static string Evening_Thikr {
+        public static string English {
             get {
-                return ResourceManager.GetString("Evening_Thikr", resourceCulture);
+                return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
             }
         }
         
@@ -313,6 +358,24 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Launch on system startup.
+        /// </summary>
+        public static string Launch_On_System_Startup {
+            get {
+                return ResourceManager.GetString("Launch_On_System_Startup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string Light {
+            get {
+                return ResourceManager.GetString("Light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location.
         /// </summary>
         public static string Location {
@@ -349,6 +412,15 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Main.
+        /// </summary>
+        public static string Main {
+            get {
+                return ResourceManager.GetString("Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Midnight.
         /// </summary>
         public static string Midnight {
@@ -358,20 +430,11 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Morning Thikr.
+        ///   Looks up a localized string similar to min.
         /// </summary>
-        public static string Morning_Thikr {
+        public static string Minute {
             get {
-                return ResourceManager.GetString("Morning_Thikr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mosque Thikr.
-        /// </summary>
-        public static string Mosque_Thikr {
-            get {
-                return ResourceManager.GetString("Mosque_Thikr", resourceCulture);
+                return ResourceManager.GetString("Minute", resourceCulture);
             }
         }
         
@@ -394,11 +457,38 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to On Athan.
+        /// </summary>
+        public static string On_Athan {
+            get {
+                return ResourceManager.GetString("On_Athan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current settings will be saved. Please restart the application to activate the new settings..
+        /// </summary>
+        public static string OnSave {
+            get {
+                return ResourceManager.GetString("OnSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pause.
         /// </summary>
         public static string Pause {
             get {
                 return ResourceManager.GetString("Pause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personalization.
+        /// </summary>
+        public static string Personalization {
+            get {
+                return ResourceManager.GetString("Personalization", resourceCulture);
             }
         }
         
@@ -430,20 +520,29 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prayer Thikr.
-        /// </summary>
-        public static string Prayer_Thikr {
-            get {
-                return ResourceManager.GetString("Prayer_Thikr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Prayer Times.
         /// </summary>
         public static string Prayer_Times {
             get {
                 return ResourceManager.GetString("Prayer_Times", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy Info.
+        /// </summary>
+        public static string Privacy_Info {
+            get {
+                return ResourceManager.GetString("Privacy_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy Settings.
+        /// </summary>
+        public static string Privacy_Settings {
+            get {
+                return ResourceManager.GetString("Privacy_Settings", resourceCulture);
             }
         }
         
@@ -502,6 +601,15 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Language.
+        /// </summary>
+        public static string Select_Language {
+            get {
+                return ResourceManager.GetString("Select_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Location.
         /// </summary>
         public static string Select_Location {
@@ -511,11 +619,38 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Tasbeeh Limit.
+        /// </summary>
+        public static string Select_Tasbeeh_Limit {
+            get {
+                return ResourceManager.GetString("Select_Tasbeeh_Limit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Theme.
+        /// </summary>
+        public static string Select_Theme {
+            get {
+                return ResourceManager.GetString("Select_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show notifications.
+        /// </summary>
+        public static string Show_Notifications {
+            get {
+                return ResourceManager.GetString("Show_Notifications", resourceCulture);
             }
         }
         
@@ -556,6 +691,15 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tasbeeh.
+        /// </summary>
+        public static string Tasbeeh {
+            get {
+                return ResourceManager.GetString("Tasbeeh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tathkīr.
         /// </summary>
         public static string Tathkir {
@@ -592,11 +736,11 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wake-up Thikr.
+        ///   Looks up a localized string similar to Total.
         /// </summary>
-        public static string Wake_up_Thikr {
+        public static string Total {
             get {
-                return ResourceManager.GetString("Wake-up_Thikr", resourceCulture);
+                return ResourceManager.GetString("Total", resourceCulture);
             }
         }
         
@@ -606,15 +750,6 @@ namespace Tathkīr_WPF {
         public static string Widgets {
             get {
                 return ResourceManager.GetString("Widgets", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wudu Thikr.
-        /// </summary>
-        public static string Wudu_Thikr {
-            get {
-                return ResourceManager.GetString("Wudu_Thikr", resourceCulture);
             }
         }
     }

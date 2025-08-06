@@ -1,8 +1,9 @@
-﻿using System.Globalization;
+﻿using MaterialDesignThemes.Wpf;
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
-using System.Windows.Media;
+using Tathkīr_WPF.Extensions;
 using Tathkīr_WPF.Helpers;
 using Tathkīr_WPF.Managers;
 using Tathkīr_WPF.Models;
@@ -15,7 +16,12 @@ namespace Tathkīr_WPF
     /// </summary>
     public partial class App : Application
     {
-        private const string Culture = "ar-SA";
+        public static readonly string baseDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Data");
+
+        private const string CultureAr = "ar-SA";
+        private const string CultureEn = "en-US";
+
+        public static bool IsRtl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
@@ -31,28 +37,51 @@ namespace Tathkīr_WPF
         /// <param name="e">The event arguments.</param>
         protected override async void OnStartup(StartupEventArgs e)
         {
-            SetCulture(Culture);
+            SettingsService.Load();
+
+            // Set the culture based on the saved language setting or default to English
+            if (string.IsNullOrEmpty(SettingsService.AppSettings.AppConfig.Language))
+                SetCulture(CultureEn);
+            else
+                SetCulture(SettingsService.AppSettings.AppConfig.Language == "English" ? CultureEn : CultureAr);
+
+            if (SettingsService.AppSettings.AppConfig.Theme == "Light")
+                ModifyTheme(false);
+            else
+                ModifyTheme(true);
+
             SettingsService.Load();
 
             base.OnStartup(e);
 
-            await PrayerTimesManager.Instance.LoadPrayerTimesAsync("Alexandria, EG");
+            if (SettingsService.AppSettings.ApiConfig.LastUpdated < new DateTime(2025, 1, 1))
+            {
+                var language = CultureAr.Split('-')[0]; // "ar"
+                var config = await HostService.Instance.GetAddress(language);
+
+                SettingsService.AppSettings.ApiConfig.Country = config.CountryLocalized;
+                SettingsService.AppSettings.ApiConfig.CountryCode = config.CountryCode;
+                SettingsService.AppSettings.ApiConfig.City = config.CityLocalized;
+                SettingsService.AppSettings.ApiConfig.Address = $"{config.City}, {config.CountryCode}";
+                SettingsService.AppSettings.ApiConfig.LastUpdated = DateTime.Now;
+
+                SettingsService.AppSettings.AppConfig.Language = Strings.English;
+                SettingsService.AppSettings.AppConfig.Theme = Strings.Light;
+
+                SettingsService.Save(SettingsService.AppSettings);
+            }
+
+            await PrayerTimesManager.Instance.LoadPrayerTimesAsync();
 
             ToastHelper.Initialize();
 
             // open the main window 
             var mainWindow = new MainWindow();
 
-            mainWindow.ContentRendered += (s, ev) =>
-            {
-                // Culture re-apply logic here
-                SetCulture(Culture);
-            };
-
 
             // Set FlowDirection and then show
             mainWindow.FlowDirection =
-                    Culture.StartsWith("ar") ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                    IsRtl ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
 
             mainWindow.Show();
 
@@ -98,6 +127,8 @@ namespace Tathkīr_WPF
 
             CultureInfo.DefaultThreadCurrentCulture = ci;
             CultureInfo.DefaultThreadCurrentUICulture = ci;
+
+            IsRtl = culture.StartsWith("ar", StringComparison.OrdinalIgnoreCase);
         }
 
         private static void HandleAudios()
@@ -154,12 +185,17 @@ namespace Tathkīr_WPF
                 string jsonPath = Path.Combine(resourcesFolder, "Audios.json");
                 string json = JsonSerializer.Serialize(audios, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(jsonPath, json);
-
-                MessageBox.Show($"Audios.json saved to {jsonPath}");
             }
 
         }
-       
-    }
 
+        private static void ModifyTheme(bool isDarkTheme)
+        {
+            var paletteHelper = new PaletteHelper();
+            var theme = paletteHelper.GetTheme();
+
+            theme.SetBaseTheme(isDarkTheme ? BaseTheme.Dark : BaseTheme.Light);
+            paletteHelper.SetTheme(theme);
+        }
+    }
 }

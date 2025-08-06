@@ -71,10 +71,27 @@ namespace Tathkīr_WPF.Services
             IsDialogOpen = true;
         }
 
+        public void ShowError(string error, string message, bool secondaryButton = false)
+        {
+            var vm = new BaseDialogViewModel
+            {
+                Title = error,
+                Message = message,
+                PrimaryButton = Strings.OK,
+                SecondaryButton = secondaryButton ? Strings.Cancel : string.Empty,
+                PrimaryButtonAction = Instance.CloseDialog,
+                SecondaryButtonAction = Instance.CloseDialog,
+            };
+
+            ShowDialog(vm);
+        }
+
         public void CloseDialog()
         {
             _mainWindowViewModel.DialogControl = null;
             IsDialogOpen = false;
         }
+
+ 
     }
 }

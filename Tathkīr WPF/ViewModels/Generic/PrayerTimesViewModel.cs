@@ -1,12 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Markup;
 using Tathkīr_WPF.Commands;
 using Tathkīr_WPF.Managers;
 using Tathkīr_WPF.Models;
-using Tathkīr_WPF.Views.GenericViews;
 
 namespace Tathkīr_WPF.ViewModels.Generic
 {
@@ -66,7 +63,7 @@ namespace Tathkīr_WPF.ViewModels.Generic
 
 
             ResetDateVisibility = true;
-            var result = _manager.LoadPrayerTimesPerDayAsync(date, _manager.Address);
+            var result = _manager.LoadPrayerTimesPerDayAsync(date);
 
             result.ContinueWith(task =>
             {
@@ -91,7 +88,7 @@ namespace Tathkīr_WPF.ViewModels.Generic
             date = date.AddDays(Application.Current.MainWindow.FlowDirection == FlowDirection.RightToLeft ? 1 : -1);
 
             ResetDateVisibility = true;
-            var result = _manager.LoadPrayerTimesPerDayAsync(date, _manager.Address);
+            var result = _manager.LoadPrayerTimesPerDayAsync(date);
 
             result.ContinueWith(task =>
             {

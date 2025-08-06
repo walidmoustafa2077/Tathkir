@@ -1,4 +1,5 @@
-﻿using System.Windows.Threading;
+﻿using System.Net;
+using System.Windows.Threading;
 using Tathkīr_WPF.Helpers;
 using Tathkīr_WPF.Models;
 using Tathkīr_WPF.Services;
@@ -7,7 +8,7 @@ namespace Tathkīr_WPF.Managers
 {
     public class PrayerTimesManager
     {
-        private readonly PrayerTimesService _prayerTimesService;
+        private readonly HostService _prayerTimesService;
         private static PrayerTimesManager? _instance;
         public static PrayerTimesManager Instance
         {
@@ -15,14 +16,13 @@ namespace Tathkīr_WPF.Managers
             {
                 if (_instance == null)
                 {
-                    _instance = new PrayerTimesManager(new PrayerTimesService());
+                    _instance = new PrayerTimesManager();
                 }
                 return _instance;
             }
         }
         private static IClock _clock = new SystemClock();
         public PrayerTimesResult? PrayerTimesResult { get; private set; }
-        public string Address { get; private set; } = string.Empty;
 
         private List<PrayerItem> _prayerItems => PrayerTimesResult?.Prayers ?? new List<PrayerItem>();
 
@@ -40,9 +40,9 @@ namespace Tathkīr_WPF.Managers
         public event Action? CountdownUpdated;
         public event Action? NewPrayerCycleStarted;
 
-        public PrayerTimesManager(PrayerTimesService prayerTimesService)
+        public PrayerTimesManager()
         {
-            _prayerTimesService = prayerTimesService;
+            _prayerTimesService = HostService.Instance;
 
             _timer = new DispatcherTimer
             {
@@ -56,77 +56,51 @@ namespace Tathkīr_WPF.Managers
             _clock = clock;
         }
 
-        public async Task LoadPrayerTimesAsync(string address, bool use24HourFormat = false)
+        public async Task LoadPrayerTimesAsync(bool use24HourFormat = false)
         {
-            var result = await _prayerTimesService.GetTodayPrayerTimesAsync(_loadedDate, address);
-            if (result?.Data == null)
-                return;
+            PrayerTimesResult = await BuildPrayerTimesAsync(_loadedDate, use24HourFormat);
 
-            var prayerItems = new List<PrayerItem>
+            if (PrayerTimesResult != null)
             {
-                new PrayerItem { Type = Enums.PrayerType.Fajr, Time = FormatTime(result.Data.Timings.Fajr, use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Sunrise, Time = FormatTime(result.Data.Timings.Sunrise, use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Dhuhr, Time = FormatTime(result.Data.Timings.Dhuhr, use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Asr, Time = FormatTime(result.Data.Timings.Asr, use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Maghrib, Time = FormatTime(result.Data.Timings.Maghrib, use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Isha, Time = FormatTime(result.Data.Timings.Isha, use24HourFormat) }
-            };
-
-            // If the day is Friday, replace Dhuhr with Jumua
-            if (_loadedDate.DayOfWeek == DayOfWeek.Friday)
-            {
-                var dhuhrItem = prayerItems.FirstOrDefault(p => p.Type == Enums.PrayerType.Dhuhr);
-                if (dhuhrItem != null)
-                {
-                    dhuhrItem.Type = Enums.PrayerType.Jumua;
-                }
+                _timer.Start();
+                UpdateNextPrayer();
             }
-
-            PrayerTimesResult = new PrayerTimesResult
-            {
-                Prayers = prayerItems,
-                Midnight = FormatTime(result.Data.Timings.Midnight, use24HourFormat),
-                LastThird = FormatTime(result.Data.Timings.Lastthird, use24HourFormat),
-                CurrentDate = FormatCurrentDate(result.Data.Date)
-            };
-
-            _timer.Start();
-            UpdateNextPrayer();
-
-            Address = address;
         }
-     
-        public async Task<PrayerTimesResult> LoadPrayerTimesPerDayAsync(DateTime date, string address, bool _use24HourFormat = false)
-        {
-            var result = await _prayerTimesService.GetTodayPrayerTimesAsync(date, address);
-            if (result?.Data == null)
-                return new();
 
-            var prayerItems = new List<PrayerItem>
+        public async Task<PrayerTimesResult> LoadPrayerTimesPerDayAsync(DateTime date, bool use24HourFormat = false)
+        {
+            return await BuildPrayerTimesAsync(date, use24HourFormat) ?? new PrayerTimesResult();
+        }
+
+        private async Task<PrayerTimesResult?> BuildPrayerTimesAsync(DateTime date, bool use24HourFormat)
+        {
+            var result = await _prayerTimesService.GetTodayPrayerTimesAsync(date);
+            if (result?.Data == null)
+                return null;
+
+            var timings = result.Data.Timings;
+            var prayers = new List<PrayerItem>
             {
-                new PrayerItem { Type = Enums.PrayerType.Fajr, Time = FormatTime(result.Data.Timings.Fajr, _use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Sunrise, Time = FormatTime(result.Data.Timings.Sunrise, _use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Dhuhr, Time = FormatTime(result.Data.Timings.Dhuhr, _use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Asr, Time = FormatTime(result.Data.Timings.Asr, _use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Maghrib, Time = FormatTime(result.Data.Timings.Maghrib, _use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Isha, Time = FormatTime(result.Data.Timings.Isha, _use24HourFormat) }
+                new PrayerItem { Type = Enums.PrayerType.Fajr,    Time = FormatTime(timings.Fajr, use24HourFormat) },
+                new PrayerItem { Type = Enums.PrayerType.Sunrise, Time = FormatTime(timings.Sunrise, use24HourFormat) },
+                new PrayerItem { Type = Enums.PrayerType.Dhuhr,   Time = FormatTime(timings.Dhuhr, use24HourFormat) },
+                new PrayerItem { Type = Enums.PrayerType.Asr,     Time = FormatTime(timings.Asr, use24HourFormat) },
+                new PrayerItem { Type = Enums.PrayerType.Maghrib, Time = FormatTime(timings.Maghrib, use24HourFormat) },
+                new PrayerItem { Type = Enums.PrayerType.Isha,    Time = FormatTime(timings.Isha, use24HourFormat) }
             };
 
-            // If the day is Friday, replace Dhuhr with Jumua
             if (date.DayOfWeek == DayOfWeek.Friday)
             {
-                var dhuhrItem = prayerItems.FirstOrDefault(p => p.Type == Enums.PrayerType.Dhuhr);
-                if (dhuhrItem != null)
-                {
-                    dhuhrItem.Type = Enums.PrayerType.Jumua;
-                }
+                var dhuhr = prayers.FirstOrDefault(p => p.Type == Enums.PrayerType.Dhuhr);
+                if (dhuhr != null)
+                    dhuhr.Type = Enums.PrayerType.Jumua;
             }
 
             return new PrayerTimesResult
             {
-                Prayers = prayerItems,
-                Midnight = FormatTime(result.Data.Timings.Midnight, _use24HourFormat),
-                LastThird = FormatTime(result.Data.Timings.Lastthird, _use24HourFormat),
+                Prayers = prayers,
+                Midnight = FormatTime(timings.Midnight, use24HourFormat),
+                LastThird = FormatTime(timings.Lastthird, use24HourFormat),
                 CurrentDate = FormatCurrentDate(result.Data.Date)
             };
         }
@@ -196,7 +170,7 @@ namespace Tathkīr_WPF.Managers
         {
             _timer.Stop();
             _loadedDate = DateTime.Today;
-            await LoadPrayerTimesAsync("Alexandria, EG");
+            await LoadPrayerTimesAsync();
         }
 
         private string FormatTime(string? time, bool use24HourFormat)

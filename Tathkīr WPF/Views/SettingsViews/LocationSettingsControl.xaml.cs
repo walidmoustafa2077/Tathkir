@@ -13,15 +13,5 @@ namespace Tathkīr_WPF.Views.SettingsViews
             InitializeComponent();
             DataContext = new ViewModels.Settings.LocationSettingsViewModel();
         }
-
-        private void ComboBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-            if (comboBox != null && !comboBox.IsDropDownOpen)
-            {
-                comboBox.IsDropDownOpen = true;
-            }
-        }
-
     }
 }

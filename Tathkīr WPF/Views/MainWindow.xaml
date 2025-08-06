@@ -15,38 +15,44 @@
         MouseDown="Window_MouseDown">
 
     <Border CornerRadius="20"
-            Background="#F5F5F5">
-
+            Background="{DynamicResource MaterialDesignCardBackground}">
         <Grid>
+            <Border CornerRadius="20"
+                    ClipToBounds="True">
+                <Border.Background>
+                    <ImageBrush ImageSource="/Resources/Background.png"
+                                Stretch="UniformToFill"
+                                Opacity="0.3" />
+                </Border.Background>
+                <Grid>
+                    <!-- Color Overlay -->
+                    <Border Background="{DynamicResource MaterialDesignCardBackground}"
+                            CornerRadius="20"
+                            Opacity="0.2" />
+                </Grid>
+            </Border>
+            
             <!-- Main Content -->
             <Border CornerRadius="20"
-                    Padding="16">
+                    Margin="16">
                 <Grid>
-                    <Grid>
-                        <!-- Background Image -->
-                        <Image Source="/Resources/Background.png"
-                               Stretch="UniformToFill"
-                               Opacity="0.2" />
-
-                        <!-- Color Overlay -->
-                        <Grid Background="#80F5F5F5"
-                              Opacity="0.5" />
-                    </Grid>
-                    
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        
+
                         <!-- Header -->
                         <DockPanel Grid.Row="0"
                                    Margin="0,0,0,12">
                             <TextBlock Text="{x:Static local:Strings.Tathkir}"
                                        FontSize="24"
                                        FontWeight="Bold"
-                                       Foreground="#333"
-                                       VerticalAlignment="Center" />
+                                       Foreground="#222C31"
+                                       Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                       VerticalAlignment="Center"
+                                       materialDesign:TextBlockAssist.AutoToolTip="True"/>
+                            
                             <Button Content="X"
                                     Width="32"
                                     Height="32"
@@ -63,7 +69,6 @@
 
                         <!-- Main Content -->
                         <TabControl Grid.Row="1"
-                                    Background="Transparent"
                                     BorderThickness="0"
                                     SelectedItem="{Binding SelectedTap, Mode=TwoWay}"
                                     materialDesign:ColorZoneAssist.Mode="PrimaryLight">

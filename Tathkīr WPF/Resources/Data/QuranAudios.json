@@ -1,0 +1,1103 @@
+{
+  "Number": 1,
+  "Audio": [
+    {
+      "Reciter": {
+        "Ar": "أحمد الحواشي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/hawashi"
+    },
+    {
+      "Reciter": {
+        "Ar": "أحمد السويلم"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server14.mp3quran.net/swlim/Rewayat-Hafs-A-n-Assem/"
+    },
+    {
+      "Reciter": {
+        "Ar": "أحمد الطرابلسي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/trabulsi"
+    },
+    {
+      "Reciter": {
+        "Ar": "أحمد بن علي العجمي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/ajm/128"
+    },
+    {
+      "Reciter": {
+        "Ar": "أحمد خليل شاهين"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/shaheen/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "أحمد ديبان"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/deban/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "أحمد صابر"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/saber"
+    },
+    {
+      "Reciter": {
+        "Ar": "أحمد عامر"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/Aamer"
+    },
+    {
+      "Reciter": {
+        "Ar": "أحمد عيسى المعصراوي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/a_maasaraawi/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "أحمد نعينع"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/ahmad_nu"
+    },
+    {
+      "Reciter": {
+        "Ar": "أكرم العلاقمي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server9.mp3quran.net/akrm"
+    },
+    {
+      "Reciter": {
+        "Ar": "إبراهيم الأخضر"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/akdr"
+    },
+    {
+      "Reciter": {
+        "Ar": "إبراهيم الجرمي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/jormy"
+    },
+    {
+      "Reciter": {
+        "Ar": "إبراهيم الدوسري"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/ibrahim_dosri/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "الزين محمد أحمد"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server9.mp3quran.net/alzain"
+    },
+    {
+      "Reciter": {
+        "Ar": "بدر التركي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/bader/Rewayat-Hafs-A-n-Assem/"
+    },
+    {
+      "Reciter": {
+        "Ar": "بندر بليله"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/balilah"
+    },
+    {
+      "Reciter": {
+        "Ar": "بيشه وا قادر الكردي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/peshawa/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "توفيق الصايغ"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/twfeeq"
+    },
+    {
+      "Reciter": {
+        "Ar": "جمال شاكر عبدالله"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/jamal"
+    },
+    {
+      "Reciter": {
+        "Ar": "جمعان العصيمي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/jaman"
+    },
+    {
+      "Reciter": {
+        "Ar": "حاتم فريد الواعر"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/hatem"
+    },
+    {
+      "Reciter": {
+        "Ar": "خالد الجليل"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/jleel"
+    },
+    {
+      "Reciter": {
+        "Ar": "خالد القحطاني"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/qht"
+    },
+    {
+      "Reciter": {
+        "Ar": "خالد المهنا"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/mohna"
+    },
+    {
+      "Reciter": {
+        "Ar": "خالد عبدالكافي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/kafi"
+    },
+    {
+      "Reciter": {
+        "Ar": "خالد كريم محمدي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/kh_mohammadi/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "خليفة الطنيجي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/tnjy"
+    },
+    {
+      "Reciter": {
+        "Ar": "رامي الدعيس"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/rami"
+    },
+    {
+      "Reciter": {
+        "Ar": "زكي داغستاني"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server9.mp3quran.net/zaki"
+    },
+    {
+      "Reciter": {
+        "Ar": "سعد الغامدي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server7.mp3quran.net/s_gmd"
+    },
+    {
+      "Reciter": {
+        "Ar": "سعد المقرن"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/saad/Rewayat-Hafs-A-n-Assem/"
+    },
+    {
+      "Reciter": {
+        "Ar": "سعود الشريم"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server7.mp3quran.net/shur"
+    },
+    {
+      "Reciter": {
+        "Ar": "سلمان الصديق"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/s_sadeiq/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "سهل ياسين"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/shl"
+    },
+    {
+      "Reciter": {
+        "Ar": "سيد أحمد هاشمي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/s_hashemi/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "سيد رمضان"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/sayed"
+    },
+    {
+      "Reciter": {
+        "Ar": "شيخ أبو بكر الشاطري"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/shatri"
+    },
+    {
+      "Reciter": {
+        "Ar": "شيرزاد عبدالرحمن طاهر"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/taher"
+    },
+    {
+      "Reciter": {
+        "Ar": "صابر عبدالحكم"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/hkm"
+    },
+    {
+      "Reciter": {
+        "Ar": "صالح الشمراني"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/shamrani/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "صالح الهبدان"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/habdan"
+    },
+    {
+      "Reciter": {
+        "Ar": "صلاح البدير"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/s_bud"
+    },
+    {
+      "Reciter": {
+        "Ar": "صلاح الهاشم"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/salah_hashim_m"
+    },
+    {
+      "Reciter": {
+        "Ar": "صلاح بو خاطر"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/bu_khtr"
+    },
+    {
+      "Reciter": {
+        "Ar": "عادل الكلباني"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/a_klb"
+    },
+    {
+      "Reciter": {
+        "Ar": "عادل ريان"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/ryan"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالإله بن عون"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/a_binaoun/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالبارئ الثبيتي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/thubti"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالبارئ محمد"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/bari"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالباسط عبدالصمد "
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server7.mp3quran.net/basit/Almusshaf-Al-Mojawwad"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالباسط عبدالصمد "
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server7.mp3quran.net/basit"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالرحمن السديس"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/sds"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالرحمن العوسي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/aloosi"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالرحمن الماجد"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/a_majed"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالرشيد صوفي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/soufi/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالعزيز الأحمد"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/a_ahmed"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالعزيز الزهراني"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server9.mp3quran.net/zahrani"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالله الخلف"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server14.mp3quran.net/khalf"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالله الكندري"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/Abdullahk"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالله المطرود"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/mtrod"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالله بصفر"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/bsfr"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالله خياط"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/kyat"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالله عبدل"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/a_abdl/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالله عواد الجهني"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server13.mp3quran.net/jhn"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالله غيلان"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/gulan"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالله كامل"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/kamel/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالمحسن الحارثي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/mohsin_harthi"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالمحسن العبيكان"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/obk"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالمحسن القاسم"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/qasm"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالهادي أحمد كناكري"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/kanakeri"
+    },
+    {
+      "Reciter": {
+        "Ar": "عبدالودود حنيف"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/wdod"
+    },
+    {
+      "Reciter": {
+        "Ar": "علي الحذيفي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server9.mp3quran.net/hthfi"
+    },
+    {
+      "Reciter": {
+        "Ar": "علي جابر"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/a_jbr"
+    },
+    {
+      "Reciter": {
+        "Ar": "علي حجاج السويسي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server9.mp3quran.net/hajjaj"
+    },
+    {
+      "Reciter": {
+        "Ar": "عماد زهير حافظ"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/hafz"
+    },
+    {
+      "Reciter": {
+        "Ar": "فؤاد الخامري"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/f_khamery/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "فارس عباد"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/frs_a"
+    },
+    {
+      "Reciter": {
+        "Ar": "ماجد الزامل"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server9.mp3quran.net/zaml"
+    },
+    {
+      "Reciter": {
+        "Ar": "مال الله عبدالرحمن الجابر"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/mal-allah_jaber/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "ماهر المعيقلي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/maher/Almusshaf-Al-Mojawwad"
+    },
+    {
+      "Reciter": {
+        "Ar": "ماهر المعيقلي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/maher"
+    },
+    {
+      "Reciter": {
+        "Ar": "ماهر شخاشيرو"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/shaksh"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد أيوب"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/ayyub"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد الطبلاوي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/tblawi"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد اللحيدان"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/lhdan"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد جبريل"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/jbrl"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد رشاد الشريف"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/rashad"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد صالح عالم شاه"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/shah"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد صديق المنشاوي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/minsh"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد صديق المنشاوي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/minsh/Almusshaf-Al-Mojawwad"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد صديق المنشاوي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server10.mp3quran.net/minsh/Almusshaf-Al-Mo-lim"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد عبدالكريم"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/m_krm"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمد عثمان خان ( من الهند )"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/khan"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمود الرفاعي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/mrifai"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمود خليل الحصري"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server13.mp3quran.net/husr/Almusshaf-Al-Mojawwad"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمود خليل الحصري"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server13.mp3quran.net/husr"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمود عبدالحكم"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/m_abdelhakam/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمود علي البنا"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/bna"
+    },
+    {
+      "Reciter": {
+        "Ar": "محمود علي البنا"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/bna/Almusshaf-Al-Mojawwad/"
+    },
+    {
+      "Reciter": {
+        "Ar": "مشاري العفاسي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/afs"
+    },
+    {
+      "Reciter": {
+        "Ar": "مصطفى إسماعيل"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/mustafa/Almusshaf-Al-Mojawwad"
+    },
+    {
+      "Reciter": {
+        "Ar": "مصطفى إسماعيل"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/mustafa"
+    },
+    {
+      "Reciter": {
+        "Ar": "مصطفى اللاهوني"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/lahoni"
+    },
+    {
+      "Reciter": {
+        "Ar": "مصطفى رعد العزاوي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/ra3ad"
+    },
+    {
+      "Reciter": {
+        "Ar": "معيض الحارثي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/harthi"
+    },
+    {
+      "Reciter": {
+        "Ar": "مفتاح السلطني"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server14.mp3quran.net/muftah_sultany/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "موسى بلال"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/bilal"
+    },
+    {
+      "Reciter": {
+        "Ar": "ناصر القطامي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/qtm"
+    },
+    {
+      "Reciter": {
+        "Ar": "ناصر الماجد"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server14.mp3quran.net/nasser_almajed"
+    },
+    {
+      "Reciter": {
+        "Ar": "نبيل الرفاعي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server9.mp3quran.net/nabil"
+    },
+    {
+      "Reciter": {
+        "Ar": "نذير المالكي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/nathier/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "نعمة الحسان"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/namh"
+    },
+    {
+      "Reciter": {
+        "Ar": "هاشم أبو دلال"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server16.mp3quran.net/h_abudalal/Rewayat-Hafs-A-n-Assem"
+    },
+    {
+      "Reciter": {
+        "Ar": "هاني الرفاعي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/hani"
+    },
+    {
+      "Reciter": {
+        "Ar": "وديع اليمني"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server6.mp3quran.net/wdee3"
+    },
+    {
+      "Reciter": {
+        "Ar": "ياسر الدوسري"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server11.mp3quran.net/yasser"
+    },
+    {
+      "Reciter": {
+        "Ar": "ياسر القرشي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server9.mp3quran.net/qurashi"
+    },
+    {
+      "Reciter": {
+        "Ar": "ياسر سلامة"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/salamah/Rewayat-Hafs-A-n-Assem/"
+    },
+    {
+      "Reciter": {
+        "Ar": "يحيى حوا"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server12.mp3quran.net/yahya"
+    },
+    {
+      "Reciter": {
+        "Ar": "يوسف الشويعي"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server9.mp3quran.net/yousef"
+    },
+    {
+      "Reciter": {
+        "Ar": "يوسف بن نوح أحمد"
+      },
+      "Rewaya": {
+        "Ar": "حفص عن عاصم"
+      },
+      "Server": "https://server8.mp3quran.net/noah"
+    }
+  ]
+}

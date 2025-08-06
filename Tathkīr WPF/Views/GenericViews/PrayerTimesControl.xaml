@@ -5,15 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Tathkīr_WPF"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             Foreground="#1199DD"
+             Effect="{StaticResource MaterialDesignShadowDepth3}">
     <!-- Prayer list -->
     <Border CornerRadius="16"
-            Background="#20F2FBFF"
+            Background="{StaticResource MaterialDesignLightSeparatorBackground}"
             Padding="6">
 
         <StackPanel>
-            <ItemsControl ItemsSource="{Binding PrayerList}"
-                          Foreground="#103E65">
+            <ItemsControl ItemsSource="{Binding PrayerList}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border CornerRadius="12"
@@ -73,30 +74,25 @@
 
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center">
-                    <TextBlock Foreground="#103E65"
-                               Text="{x:Static local:Strings.Midnight}"
+                    <TextBlock Text="{x:Static local:Strings.Midnight}"
                                FontSize="14"
                                FontWeight="Medium"
                                Margin="0,0,4,0" />
 
-                    <TextBlock Foreground="#103E65"
-                               Text="{Binding MidnightTime}"
+                    <TextBlock Text="{Binding MidnightTime}"
                                FontSize="14"
                                FontWeight="Bold" />
 
-                    <TextBlock Foreground="#103E65"
-                               Text="|"
+                    <TextBlock Text="|"
                                FontSize="14"
                                Margin="18 0" />
 
-                    <TextBlock Foreground="#103E65"
-                               Text="{x:Static local:Strings.Last_Third}"
+                    <TextBlock Text="{x:Static local:Strings.Last_Third}"
                                FontSize="14"
                                FontWeight="Medium"
                                Margin="0,0,4,0" />
 
-                    <TextBlock Foreground="#103E65"
-                               Text="{Binding LastThirdTime}"
+                    <TextBlock Text="{Binding LastThirdTime}"
                                FontSize="14"
                                FontWeight="Bold" />
                 </StackPanel>
@@ -120,8 +116,7 @@
                         FlowDirection="LeftToRight">
 
                 <!-- Left Arrow -->
-                <Button Foreground="#103E65"
-                        Command="{Binding PreviousDateCommand}"
+                <Button Command="{Binding PreviousDateCommand}"
                         Padding="4"
                         Margin="0,0,8,0"
                         Style="{StaticResource MaterialDesignIconForegroundButton}">
@@ -131,8 +126,7 @@
                 </Button>
 
                 <!-- Date -->
-                <TextBlock Foreground="#103E65"
-                           Text="{Binding CurrentDate}"
+                <TextBlock Text="{Binding CurrentDate}"
                            Width="300"
                            TextAlignment="Center"
                            FontSize="16"
@@ -141,8 +135,7 @@
                            VerticalAlignment="Center" />
 
                 <!-- Right Arrow -->
-                <Button Foreground="#103E65"
-                        Command="{Binding NextDateCommand}"
+                <Button Command="{Binding NextDateCommand}"
                         Padding="4"
                         Margin="8,0,0,0"
                         Style="{StaticResource MaterialDesignIconForegroundButton}">
