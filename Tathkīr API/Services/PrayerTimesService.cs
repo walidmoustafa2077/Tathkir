@@ -1,6 +1,7 @@
-﻿using Tathkīr_API.Services;
+﻿using Tathkīr_API.DTOs;
+using Tathkīr_API.Services.Interfaces;
 
-namespace Tathkīr_API.DTOs
+namespace Tathkīr_API.Services
 {
     public class PrayerTimesService : IPrayerTimesService
     {
@@ -9,18 +10,6 @@ namespace Tathkīr_API.DTOs
         public PrayerTimesService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-        }
-
-        public async Task<PrayerTimingsResponse> GetTodayTimingsAsync(string address, string timeZone)
-        {
-            // Get time zone info
-            var tzInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
-            var todayLocal = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tzInfo);
-
-            // Pass correct date in local time zone
-            var date = todayLocal.ToString("dd-MM-yyyy");
-
-            return await GetTimingsByDateAsync(address, date);
         }
 
         public async Task<PrayerTimingsResponse> GetTimingsByDateAsync(string address, string date)

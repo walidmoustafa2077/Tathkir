@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Tathkīr_API.Services;
+using Tathkīr_API.Services.Interfaces;
 
 namespace Tathkīr_API.Controllers
 {
@@ -14,20 +14,9 @@ namespace Tathkīr_API.Controllers
             _prayerTimesService = prayerTimesService;
         }
 
-        [HttpGet("today")]
-        public async Task<IActionResult> GetToday([FromQuery] string address, [FromQuery] string timeZone)
-        {
-            if (string.IsNullOrWhiteSpace(address))
-                return BadRequest("Address is required.");
-            if (string.IsNullOrWhiteSpace(timeZone))
-                return BadRequest("Time zone is required.");
-
-            var result = await _prayerTimesService.GetTodayTimingsAsync(address, timeZone);
-            return Ok(result);
-        }
 
         [HttpGet("{date}")]
-        public async Task<IActionResult> GetByDate(string date, [FromQuery] string address, [FromQuery] string timeZone)
+        public async Task<IActionResult> GetByDate(string date, [FromQuery] string address)
         {
             if (string.IsNullOrWhiteSpace(address))
                 return BadRequest("Address is required.");

@@ -1,13 +1,61 @@
-﻿namespace Tathkīr_API.DTOs
+﻿using System.Text.Json.Serialization;
+
+namespace Tathkīr_API.DTOs
 {
-    public record IpApiResponse
+    public record GeoCountryInfoResponse
     {
-        public string Status { get; set; } = string.Empty;
-        public string Country { get; set; } = string.Empty;
+        public List<GeoCountryEntry> Geonames { get; set; } = new();
+    }
+
+    public record GeoCountryEntry
+    {
+        public string CountryName { get; set; } = string.Empty;
         public string CountryCode { get; set; } = string.Empty;
-        public string RegionName { get; set; } = string.Empty;
+    }
+
+    public record GeoCityNamesResponse
+    {
+        public int TotalResultsCount { get; set; }
+        public List<GeoCityNameEntry> Geonames { get; set; } = new();
+    }
+
+    public record GeoCityNameEntry
+    {
+        public string Name { get; set; } = string.Empty;
+        public string FcodeName { get; set; } = string.Empty;
+        public string AdminName1 { get; set; } = string.Empty;
+        public string ToponymName { get; set; } = string.Empty;
+    }
+
+    public record IpResponse
+    {
+        public string Country { get; set; } = string.Empty;
+        public string CountryLocalized { get; set; } = string.Empty;
+        public string CountryCode { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
-        public string Timezone { get; set; } = string.Empty;
+        public string CityLocalized { get; set; } = string.Empty;
+    }
+    public record CountryResponse
+    {
+        public string Name { get; set; } = string.Empty;
+        public string NameLocalized { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
+    }
+
+    public record CityResponse 
+    { 
+        [JsonIgnore]
+        public string AdminName1Original { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
+        public string NameLocalized { get; set; } = string.Empty;
+        public List<StateResponse> States { get; set; } = new List<StateResponse>();
+    }
+
+    public record StateResponse
+    {
+        public string Name { get; set; } = string.Empty;
+        public string NameLocalized { get; set; } = string.Empty;
     }
 
     public record PrayerTimingsResponse
