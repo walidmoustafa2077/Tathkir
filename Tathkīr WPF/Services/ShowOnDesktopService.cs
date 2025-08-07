@@ -4,7 +4,7 @@ using Tathkīr_WPF.Helpers;
 
 namespace Tathkīr_WPF.Services
 {
-    public static class ShowDesktopService
+    public static class ShowOnDesktopService
     {
         private const uint WINEVENT_OUTOFCONTEXT = 0u;
         private const uint EVENT_SYSTEM_FOREGROUND = 3u;

@@ -28,7 +28,7 @@
         public string Code { get; set; } = string.Empty;
     }
 
-    public record City 
+    public record City
     {
         public string Name { get; set; } = string.Empty;
         public string NameLocalized { get; set; } = string.Empty;

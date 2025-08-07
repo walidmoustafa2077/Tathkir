@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Tathkīr_WPF.Views.Dialogs"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             Foreground="#1199DD">
 
     <Border CornerRadius="12"
-            Background="#FFFFFF"
             Effect="{StaticResource MaterialDesignShadowDepth2}"
+            Background="{Binding DialogBackground}"
             BorderBrush="{StaticResource MaterialDesignLightSeparatorBackground}"
             BorderThickness="4"
             Padding="18"

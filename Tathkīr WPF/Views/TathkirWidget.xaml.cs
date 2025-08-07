@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using Tathkīr_WPF.Helpers;
 using Tathkīr_WPF.Managers;
 using Tathkīr_WPF.Services;
 
@@ -23,7 +22,7 @@ namespace Tathkīr_WPF
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // Notify the user that the widget is ready
-            ToastHelper.ShowToast("Tathkir Widget", "Prayer times widget is now active.");
+            ToastMaganer.ShowToast("Tathkir Widget", "Prayer times widget is now active.");
 
             // Set the window to be topmost
             WindowStyle = WindowStyle.None;
@@ -41,12 +40,12 @@ namespace Tathkīr_WPF
             Top = 20;
 
             // Hook into the Show Desktop event
-            ShowDesktopService.AddHook(this);
+            ShowOnDesktopService.AddHook(this);
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)
         {
-            ShowDesktopService.RemoveHook();
+            ShowOnDesktopService.RemoveHook();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

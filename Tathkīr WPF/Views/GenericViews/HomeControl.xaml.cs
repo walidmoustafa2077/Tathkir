@@ -71,7 +71,7 @@ namespace Tathkīr_WPF.Views.GenericViews
 
                         // Set initial tooltip delay to 0 for immediate display
                         ToolTipService.SetInitialShowDelay(button, 0);
-                        
+
                         // Create the template
                         var borderFactory = new FrameworkElementFactory(typeof(Border));
                         borderFactory.SetValue(Border.BackgroundProperty, button.Background);

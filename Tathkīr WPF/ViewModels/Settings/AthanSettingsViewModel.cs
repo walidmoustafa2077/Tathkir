@@ -1,69 +1,101 @@
 ﻿using System.Collections.ObjectModel;
-using Tathkīr_WPF.Extensions;
-using Tathkīr_WPF.Models;
 using Tathkīr_WPF.Services;
+using Tathkīr_WPF.ViewModels.Settings.SubViewModels;
 
 namespace Tathkīr_WPF.ViewModels.Settings
 {
-    public class AthanSettingsViewModel : ViewModelBase
+    public class AthanSettingsViewModel : ViewModelBase, ISettingsPageService
     {
-        public ObservableCollection<PrayerNotificationSetting> BeforeAthanSettings { get; set; } = new ObservableCollection<PrayerNotificationSetting>();
-        public ObservableCollection<PrayerNotificationSetting> OnAthanSettings { get; set; } = new ObservableCollection<PrayerNotificationSetting>();
+        private ObservableCollection<PrayerNotificationSettingViewModel> _beforeAthanSettings = new ObservableCollection<PrayerNotificationSettingViewModel>();
+        public ObservableCollection<PrayerNotificationSettingViewModel> BeforeAthanSettings
+        {
+            get => _beforeAthanSettings;
+            set
+            {
+                if (_beforeAthanSettings != value)
+                {
+                    _beforeAthanSettings = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<PrayerNotificationSettingViewModel> _onAthanSettings = new ObservableCollection<PrayerNotificationSettingViewModel>();
+        public ObservableCollection<PrayerNotificationSettingViewModel> OnAthanSettings
+        {
+            get => _onAthanSettings;
+            set
+            {
+                if (_onAthanSettings != value)
+                {
+                    _onAthanSettings = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public AthanSettingsViewModel()
         {
-            var prayers = new[] { Strings.Fajr, Strings.Dhuhr, Strings.Asr, Strings.Maghrib, Strings.Isha, Strings.Jumua };
 
             if (SettingsService.AppSettings.AppConfig.AthanConfigSettings == null)
+                Initialize();
+            else
             {
-                SettingsService.AppSettings.AppConfig.AthanConfigSettings = SettingsService.AppSettings.AppConfig.SetAthanConfigSettings();
 
-                BeforeAthanSettings = new ObservableCollection<PrayerNotificationSetting>(
-                    prayers.Select(p => new PrayerNotificationSetting
-                    {
-                        PrayerName = p,
-                        IsEnabled = true,
-                        SelectedOffset = p == Strings.Jumua ? 20 : 5,
-                        AvailableOffsets = p == Strings.Jumua
+                BeforeAthanSettings = new ObservableCollection<PrayerNotificationSettingViewModel>(
+                    SettingsService.AppSettings.AppConfig.AthanConfigSettings.BeforeAthanSettings
+                        .Select(model => new PrayerNotificationSettingViewModel(model)));
+
+                OnAthanSettings = new ObservableCollection<PrayerNotificationSettingViewModel>(
+                    SettingsService.AppSettings.AppConfig.AthanConfigSettings.OnAthanSettings
+                        .Select(model => new PrayerNotificationSettingViewModel(model)));
+
+                foreach (var item in BeforeAthanSettings)
+                {
+                    item.AvailableOffsets = item.PrayerName == Strings.Jumua
                             ? new List<int> { 20, 30, 45, 60, 100 }
-                            : new List<int> { 5, 10, 15, 20, 25, 30 }
-                    }));
+                            : new List<int> { 5, 10, 15, 20, 25, 30 };
+                }
 
-                // Save the default settings to the app config
-                SettingsService.AppSettings.AppConfig.AthanConfigSettings.BeforeAthanSettings = BeforeAthanSettings;
 
-                foreach (var item in SettingsService.AppSettings.AppConfig.AthanConfigSettings.BeforeAthanSettings)
-                    item.PrayerName = item.PrayerName.ToInvariantLanguage();
+            }
+        }
 
-                OnAthanSettings = new ObservableCollection<PrayerNotificationSetting>(
-                prayers.Select(p => new PrayerNotificationSetting
+        private void Initialize()
+        {
+            BeforeAthanSettings.Clear();
+            OnAthanSettings.Clear();
+
+            var prayers = new[] { Strings.Fajr, Strings.Dhuhr, Strings.Asr, Strings.Maghrib, Strings.Isha, Strings.Jumua };
+
+            BeforeAthanSettings = new ObservableCollection<PrayerNotificationSettingViewModel>(
+                prayers.Select(p => new PrayerNotificationSettingViewModel
                 {
                     PrayerName = p,
                     IsEnabled = true,
+                    SelectedOffset = p == Strings.Jumua ? 20 : 5
                 }));
 
-                // Save the default settings to the app config
-                SettingsService.AppSettings.AppConfig.AthanConfigSettings.OnAthanSettings = OnAthanSettings;
-
-                foreach (var item in SettingsService.AppSettings.AppConfig.AthanConfigSettings.OnAthanSettings)
-                    item.PrayerName = item.PrayerName.ToInvariantLanguage();
-
-                // Save the settings to the service
-                SettingsService.Save(SettingsService.AppSettings);
-            }
-            else
+            OnAthanSettings = new ObservableCollection<PrayerNotificationSettingViewModel>(
+            prayers.Select(p => new PrayerNotificationSettingViewModel
             {
-                BeforeAthanSettings = SettingsService.AppSettings.AppConfig.AthanConfigSettings.BeforeAthanSettings;
-            
-                foreach (var item in BeforeAthanSettings)
-                    item.PrayerName = item.PrayerName.ToLocalizedLanguage();
-                
-                OnAthanSettings = SettingsService.AppSettings.AppConfig.AthanConfigSettings.OnAthanSettings;
-                
-                foreach (var item in OnAthanSettings)
-                    item.PrayerName = item.PrayerName.ToLocalizedLanguage();
+                PrayerName = p,
+                IsEnabled = true,
+            }));
+
+
+            foreach (var item in BeforeAthanSettings)
+            {
+                item.AvailableOffsets = item.PrayerName == Strings.Jumua
+                        ? new List<int> { 20, 30, 45, 60, 100 }
+                        : new List<int> { 5, 10, 15, 20, 25, 30 };
             }
+
+            // Save the settings to the service
+            SaveSettings();
         }
+
+        public void ResetSettings() => Initialize();
 
         public void SaveSettings()
         {
@@ -72,17 +104,12 @@ namespace Tathkīr_WPF.ViewModels.Settings
                 SettingsService.AppSettings.AppConfig.AthanConfigSettings = SettingsService.AppSettings.AppConfig.SetAthanConfigSettings();
             }
 
-            // Save the default settings to the app config
-            SettingsService.AppSettings.AppConfig.AthanConfigSettings.BeforeAthanSettings = BeforeAthanSettings;
+            // Convert ViewModels to Models before saving
+            SettingsService.AppSettings.AppConfig.AthanConfigSettings.BeforeAthanSettings =
+                BeforeAthanSettings.Select(vm => vm.ToModel()).ToList();
 
-            foreach (var item in SettingsService.AppSettings.AppConfig.AthanConfigSettings.BeforeAthanSettings)
-                item.PrayerName = item.PrayerName.ToInvariantLanguage();
-
-            // Save the default settings to the app config
-            SettingsService.AppSettings.AppConfig.AthanConfigSettings.OnAthanSettings = OnAthanSettings;
-
-            foreach (var item in SettingsService.AppSettings.AppConfig.AthanConfigSettings.OnAthanSettings)
-                item.PrayerName = item.PrayerName.ToInvariantLanguage();
+            SettingsService.AppSettings.AppConfig.AthanConfigSettings.OnAthanSettings =
+                OnAthanSettings.Select(vm => vm.ToModel()).ToList();
 
             // Save the settings to the service
             SettingsService.Save(SettingsService.AppSettings);

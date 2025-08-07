@@ -8,7 +8,7 @@
 
     <Border Padding="16"
             CornerRadius="14"
-            Background="#20F5F5F5">
+            Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
 
         <Grid>
             <Grid.RowDefinitions>

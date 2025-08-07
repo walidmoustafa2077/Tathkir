@@ -30,7 +30,7 @@ namespace Tathkīr_WPF.ViewModels.Generic
         {
             if (string.IsNullOrEmpty(categoryName) || !_athkarByCategory.ContainsKey(categoryName))
                 return;
-            
+
             if (!_athkarByCategory.TryGetValue(categoryName, out var entries))
                 return;
 

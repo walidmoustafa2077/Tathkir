@@ -9,9 +9,11 @@
              mc:Ignorable="d"
              Foreground="#1199DD">
 
-    <ScrollViewer Focusable="True"
-                  FocusVisualStyle="{x:Null}"
-                  behaviors:AutoOpenBehavior.EnableAutoOpen="True">
+    <Border CornerRadius="16"
+            Padding="16"
+            FocusVisualStyle="{x:Null}"
+            behaviors:AutoOpenBehavior.EnableAutoOpen="True">
+
         <StackPanel>
             <TextBlock Text="{x:Static local:Strings.Select_Location}"
                        FontSize="18"
@@ -62,6 +64,7 @@
             </StackPanel>
         </StackPanel>
 
-    </ScrollViewer>
+
+    </Border>
 
 </UserControl>

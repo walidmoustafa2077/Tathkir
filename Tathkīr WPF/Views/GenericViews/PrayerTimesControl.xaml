@@ -5,12 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Tathkīr_WPF"
-             mc:Ignorable="d"
-             Foreground="#1199DD"
-             Effect="{StaticResource MaterialDesignShadowDepth3}">
+             mc:Ignorable="d">
+    
     <!-- Prayer list -->
     <Border CornerRadius="16"
-            Background="{StaticResource MaterialDesignLightSeparatorBackground}"
+            Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
             Padding="6">
 
         <StackPanel>
@@ -18,19 +17,16 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border CornerRadius="12"
-                                Margin="0 2">
+                                Margin="0 2"
+                                Effect="{StaticResource MaterialDesignShadowDepth4}">
 
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsNextPrayer}"
-                                                     Value="True">
-                                            <Setter Property="Background"
-                                                    Value="{DynamicResource MaterialDesignDarkSeparatorBackground}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            <Border.Background>
+                                <MultiBinding Converter="{StaticResource ConditionalBrushConverter}">
+                                    <Binding Path="IsNextPrayer" />
+                                    <Binding Path="DataContext.SeparatorBackground"
+                                             RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                </MultiBinding>
+                            </Border.Background>
 
                             <Grid Margin="8">
                                 <Grid.ColumnDefinitions>

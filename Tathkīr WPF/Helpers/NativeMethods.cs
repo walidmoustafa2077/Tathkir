@@ -7,7 +7,7 @@ namespace Tathkīr_WPF.Helpers
     internal static class NativeMethods
     {
         [DllImport("user32.dll")]
-        internal static extern nint SetWinEventHook(uint eventMin, uint eventMax, nint hmodWinEventProc, ShowDesktopService.WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+        internal static extern nint SetWinEventHook(uint eventMin, uint eventMax, nint hmodWinEventProc, ShowOnDesktopService.WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
 
         [DllImport("user32.dll")]
         internal static extern bool UnhookWinEvent(nint hWinEventHook);

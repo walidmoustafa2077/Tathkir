@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
-using Tathkīr_WPF.Helpers;
 using Tathkīr_WPF.Managers;
 using Tathkīr_WPF.Models;
 
@@ -9,8 +7,6 @@ namespace Tathkīr_WPF.ViewModels
     public class TathkirWidgetViewModel : ViewModelBase
     {
         private readonly PrayerTimesManager _manager;
-        private Audios? _audios;
-        private string _cachedNextPrayerName = string.Empty;
 
         public ObservableCollection<PrayerItem> PrayerList { get; } = new();
 
@@ -37,12 +33,8 @@ namespace Tathkīr_WPF.ViewModels
         public TathkirWidgetViewModel()
         {
             _manager = PrayerTimesManager.Instance;
-            //var testClock = new TestClock();
-            //testClock.Advance(TimeSpan.FromMinutes(-144)); // Advance by 1 minute to simulate countdown
 
-            //PrayerTimesManager.SetClockForTests(testClock);
-            //_manager.LoadPrayerTimesAsync(_manager.Address, Use24HourFormat);
-            Initialize();
+            _manager.PrayerTimeUpdated += Initialize;
         }
 
         private void Initialize()
@@ -96,59 +88,7 @@ namespace Tathkīr_WPF.ViewModels
         {
             var countdown = _manager.Countdown;
 
-            if (_manager.NextPrayer != null && countdown <= TimeSpan.FromMinutes(5) && _cachedNextPrayerName != NextPrayerName)
-            {
-                PlayAudio("BeforeAthanPath");
-                _cachedNextPrayerName = NextPrayerName;
-            }
-
-            if (countdown <= TimeSpan.FromSeconds(1) && _cachedNextPrayerName == NextPrayerName)
-            {
-                PlayAudio("OnAthanPath");
-                _cachedNextPrayerName = string.Empty;
-            }
-
             Countdown = $"{(int)countdown.TotalHours:D2}:{countdown.Minutes:D2}:{countdown.Seconds:D2}";
-        }
-
-        private void PlayAudio(string timing)
-        {
-            string jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Audios.json");
-            if (File.Exists(jsonPath))
-            {
-                var json = File.ReadAllText(jsonPath);
-                _audios = System.Text.Json.JsonSerializer.Deserialize<Audios>(json);
-            }
-
-            var prayerName = _manager.NextPrayer?.Type.ToString();
-
-            var audioEntry = _audios?.PrayAudios
-                .FirstOrDefault(a => a.Name.Equals(prayerName, StringComparison.OrdinalIgnoreCase));
-
-            string? audioFilePath = null;
-
-            if (audioEntry != null)
-            {
-                var prop = audioEntry.GetType().GetProperty(timing);
-                audioFilePath = prop?.GetValue(audioEntry) as string;
-            }
-
-
-
-            if (!string.IsNullOrWhiteSpace(audioFilePath))
-            {
-                audioFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Audios", audioFilePath);
-
-                if (audioFilePath.Contains("before", StringComparison.OrdinalIgnoreCase))
-                {
-                    // Do something if "before" exists in the string
-                    ToastHelper.ShowToast("Prayer Reminder", $"{Strings.The_Time_For} {_manager.NextPrayer?.Name} {Strings.Prayer_Is_Approaching}", audioFilePath);
-
-                    return;
-                }
-
-                ToastHelper.ShowToast("Prayer Reminder", $"{Strings.It_s_Time_For} {_manager.NextPrayer?.Name} {Strings.Prayer}", audioFilePath);
-            }
         }
 
     }

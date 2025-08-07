@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Data;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -8,6 +6,8 @@ using Tathkīr_WPF.Commands;
 using Tathkīr_WPF.Helpers;
 using Tathkīr_WPF.Models;
 using Tathkīr_WPF.Services;
+using Tathkīr_WPF.Services.ModulesService.QuranService;
+using Tathkīr_WPF.Services.ModulesService.QuranService.Interfaces;
 
 namespace Tathkīr_WPF.ViewModels.Dialogs
 {
@@ -61,10 +61,10 @@ namespace Tathkīr_WPF.ViewModels.Dialogs
         public ICommand CloseDialog { get; set; } = null!;
 
         private SurahAudio? surahAudio;
-        
+
         private string _currentTrackUrl = string.Empty;
         private string _cachedReader = string.Empty;
-        
+
         private bool _isLoopEnabled = false;
         private bool _isSeeking;
 
@@ -187,7 +187,7 @@ namespace Tathkīr_WPF.ViewModels.Dialogs
             }
             else
             {
-                ReadersList.SelectedItem     = ReadersList.Items.FirstOrDefault() ?? string.Empty;
+                ReadersList.SelectedItem = ReadersList.Items.FirstOrDefault() ?? string.Empty;
             }
         }
 

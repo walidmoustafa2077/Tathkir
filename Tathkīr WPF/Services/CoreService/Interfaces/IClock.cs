@@ -1,4 +1,4 @@
-﻿namespace Tathkīr_WPF.Helpers
+﻿namespace Tathkīr_WPF.Services.CoreService.Interfaces
 {
     public interface IClock
     {

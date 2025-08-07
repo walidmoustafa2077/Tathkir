@@ -1,9 +1,10 @@
-﻿using Tathkīr_WPF.Helpers;
+﻿using System.Globalization;
+using Tathkīr_WPF.Helpers;
 using Tathkīr_WPF.Services;
 
 namespace Tathkīr_WPF.ViewModels.Settings
 {
-    public class LocationSettingsViewModel : ViewModelBase
+    public class LocationSettingsViewModel : ViewModelBase, ISettingsPageService
     {
         public SearchableList<string> AvailableCountries { get; } = new();
         public SearchableList<string> AvailableCities { get; } = new();
@@ -54,7 +55,7 @@ namespace Tathkīr_WPF.ViewModels.Settings
 
         private async void LoadAsync()
         {
-            var countries = await HostService.Instance.GetCountryNamesAsync();
+            var countries = await HttpHostService.Instance.GetCountryNamesAsync();
             if (countries != null && countries.Count > 0)
             {
                 AvailableCountries.Items.Clear();
@@ -66,9 +67,12 @@ namespace Tathkīr_WPF.ViewModels.Settings
                     }
                 });
 
+                var culture = CultureInfo.DefaultThreadCurrentCulture ?? CultureInfo.CurrentCulture;
+                bool isRtl = culture.TextInfo.IsRightToLeft;
+
                 // set default country to AppSettings
-                SelectedCountry = SettingsService.AppSettings.ApiConfig.Country;
-                SelectedCity = SettingsService.AppSettings.ApiConfig.City;
+                SelectedCountry = DynamicStrings.GetString("Country", isRtl) ?? SettingsService.AppSettings.ApiConfig.Country;
+                SelectedCity = DynamicStrings.GetString("City", isRtl) ?? SettingsService.AppSettings.ApiConfig.City;
             }
             else
             {
@@ -80,7 +84,7 @@ namespace Tathkīr_WPF.ViewModels.Settings
 
         private async void LoadCitiesForCountry(string country)
         {
-            var cities = await HostService.Instance.GetCitiesByCountryNameAsync(country);
+            var cities = await HttpHostService.Instance.GetCitiesByCountryNameAsync(country);
             if (cities != null && cities.Count > 0)
             {
                 AvailableCities.Items.Clear();
@@ -99,12 +103,25 @@ namespace Tathkīr_WPF.ViewModels.Settings
             }
         }
 
+        public void ResetSettings()
+        {
+            SelectedCountry = string.Empty;
+            SelectedCity = string.Empty;
+            AvailableCountries.Items.Clear();
+            AvailableCities.Items.Clear();
+            IsCityEnabled = false;
+
+            // Reset the address in AppSettings
+            SettingsService.AppSettings.ApiConfig.LastUpdated = DateTime.MinValue;
+            SettingsService.Save(SettingsService.AppSettings);
+        }
+
         public void SaveSettings()
         {
-            SettingsService.AppSettings.ApiConfig.Country = SelectedCountry ?? string.Empty;
-            SettingsService.AppSettings.ApiConfig.City = SelectedCity ?? string.Empty;
+            SettingsService.AppSettings.ApiConfig.Country = DynamicStrings.UpdateString("Country", SelectedCountry ?? string.Empty, SelectedCountry ?? string.Empty);
+            SettingsService.AppSettings.ApiConfig.City = DynamicStrings.UpdateString("City", SelectedCity ?? string.Empty, SelectedCity ?? string.Empty);
 
-            SettingsService.AppSettings.ApiConfig.Address = HostService.Instance.GetCurrentAddress(SelectedCountry, SelectedCity);
+            SettingsService.AppSettings.ApiConfig.Address = HttpHostService.Instance.GetCurrentAddress(SelectedCountry, SelectedCity);
 
             SettingsService.Save(SettingsService.AppSettings);
         }

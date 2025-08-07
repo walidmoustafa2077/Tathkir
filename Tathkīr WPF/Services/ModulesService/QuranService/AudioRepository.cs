@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 using Tathkīr_WPF.Models;
+using Tathkīr_WPF.Services.ModulesService.QuranService.Interfaces;
 
-namespace Tathkīr_WPF.Services
+namespace Tathkīr_WPF.Services.ModulesService.QuranService
 {
     public class AudioRepository : IAudioRepository
     {

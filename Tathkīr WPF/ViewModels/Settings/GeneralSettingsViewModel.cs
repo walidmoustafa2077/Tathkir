@@ -1,10 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using Tathkīr_WPF.Extensions;
 using Tathkīr_WPF.Services;
 
 namespace Tathkīr_WPF.ViewModels.Settings
 {
-    public class GeneralSettingsViewModel : ViewModelBase
+    public class GeneralSettingsViewModel : ViewModelBase, ISettingsPageService
     {
         public ObservableCollection<string> AvailableLanguages { get; } = new()
         {
@@ -47,16 +46,30 @@ namespace Tathkīr_WPF.ViewModels.Settings
         public GeneralSettingsViewModel()
         {
             // Initialize with default values or load from settings
-            SelectedLanguage = SettingsService.AppSettings.AppConfig.Language.ToLocalizedLanguage();
-            SelectedTheme = SettingsService.AppSettings.AppConfig.Theme.ToLocalizedLanguage();
+            SelectedLanguage = SettingsService.AppSettings.AppConfig.Language;
+            SelectedTheme = SettingsService.AppSettings.AppConfig.Theme;
             LaunchOnStartup = SettingsService.AppSettings.AppConfig.LaunchOnStartup;
             ShowNotifications = SettingsService.AppSettings.AppConfig.ShowNotifications;
         }
 
+        public void ResetSettings()
+        {
+            // Reset to default values
+            SelectedLanguage = Strings.English;
+            SelectedTheme = Strings.Light;
+
+            LaunchOnStartup = true;
+            ShowNotifications = true;
+
+            // Save the reset settings
+            SaveSettings();
+        }
+
         public void SaveSettings()
         {
-            SettingsService.AppSettings.AppConfig.Language = SelectedLanguage.ToInvariantLanguage();
-            SettingsService.AppSettings.AppConfig.Theme = SelectedTheme.ToInvariantLanguage();
+            SettingsService.AppSettings.AppConfig.Language = SelectedLanguage;
+            SettingsService.AppSettings.AppConfig.Theme = SelectedTheme;
+
             SettingsService.AppSettings.AppConfig.LaunchOnStartup = LaunchOnStartup;
             SettingsService.AppSettings.AppConfig.ShowNotifications = ShowNotifications;
 

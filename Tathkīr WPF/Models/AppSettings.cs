@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Tathkīr_WPF.Extensions;
 
 namespace Tathkīr_WPF.Models
 {
@@ -40,10 +41,52 @@ namespace Tathkīr_WPF.Models
             return new AthkarSettings();
         }
 
+        public void OnSave()
+        {
+            foreach (var item in AthanConfigSettings?.BeforeAthanSettings ?? new List<PrayerNotificationSetting>())
+            {
+                item.PrayerName = item.PrayerName.ToInvariantLanguage();
+            }
+
+            foreach (var item in AthanConfigSettings?.OnAthanSettings ?? new List<PrayerNotificationSetting>())
+            {
+                item.PrayerName = item.PrayerName.ToInvariantLanguage();
+            }
+
+            foreach (var item in AthkarConfigSettings?.AthkarList ?? new ObservableCollection<AthkarItem>())
+            {
+                item.Name = item.Name.ToInvariantLanguage();
+            }
+
+            Language = Language.ToInvariantLanguage();
+            Theme = Theme.ToInvariantLanguage();
+        }
+
+        public void Onload()
+        {
+            foreach (var item in AthanConfigSettings?.BeforeAthanSettings ?? new List<PrayerNotificationSetting>())
+            {
+                item.PrayerName = item.PrayerName.ToLocalizedLanguage();
+            }
+
+            foreach (var item in AthanConfigSettings?.OnAthanSettings ?? new List<PrayerNotificationSetting>())
+            {
+                item.PrayerName = item.PrayerName.ToLocalizedLanguage();
+            }
+
+            foreach (var item in AthkarConfigSettings?.AthkarList ?? new ObservableCollection<AthkarItem>())
+            {
+                item.Name = item.Name.ToLocalizedLanguage();
+            }
+
+            Language = Language.ToLocalizedLanguage();
+            Theme = Theme.ToLocalizedLanguage();
+        }
+
         public class AthanSettings
         {
-            public ObservableCollection<PrayerNotificationSetting> BeforeAthanSettings { get; set; } = new ObservableCollection<PrayerNotificationSetting>();
-            public ObservableCollection<PrayerNotificationSetting> OnAthanSettings { get; set; } = new ObservableCollection<PrayerNotificationSetting>();
+            public List<PrayerNotificationSetting> BeforeAthanSettings { get; set; } = new List<PrayerNotificationSetting>();
+            public List<PrayerNotificationSetting> OnAthanSettings { get; set; } = new List<PrayerNotificationSetting>();
         }
 
         public class AthkarSettings

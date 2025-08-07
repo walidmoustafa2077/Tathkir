@@ -15,7 +15,8 @@ namespace Tathkīr_WPF.Views.GenericViews
             DataContext = vm;
 
             // Load data async after UI is ready
-            Loaded += async (s, e) => {
+            Loaded += async (s, e) =>
+            {
                 await vm.LoadDataAsync();
             };
         }

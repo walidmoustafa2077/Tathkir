@@ -321,8 +321,8 @@
   <data name="Select_Theme" xml:space="preserve">
     <value>Select Theme</value>
   </data>
-  <data name="Privacy_Settings" xml:space="preserve">
-    <value>Privacy Settings</value>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
   </data>
   <data name="About" xml:space="preserve">
     <value>About</value>
@@ -347,5 +347,20 @@
   </data>
   <data name="OnSave" xml:space="preserve">
     <value>Current settings will be saved. Please restart the application to activate the new settings.</value>
+  </data>
+  <data name="OnReset" xml:space="preserve">
+    <value>Current settings will be reset. Please restart the application to activate the new settings.</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="Disabled_Alert" xml:space="preserve">
+    <value>Disable Alert</value>
+  </data>
+  <data name="Prayer_Reminder" xml:space="preserve">
+    <value>Prayer Reminder</value>
+  </data>
+  <data name="Thikr_Reminder" xml:space="preserve">
+    <value>Thikr Reminder</value>
   </data>
 </root>

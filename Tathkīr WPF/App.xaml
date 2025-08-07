@@ -8,7 +8,8 @@
         <ResourceDictionary>
             <!-- Converters -->
             <Convertors:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-            
+            <Convertors:ConditionalBrushConverter x:Key="ConditionalBrushConverter" />
+
             <ResourceDictionary.MergedDictionaries>
                 <!-- Material Design Themes -->
                 <materialDesign:BundledTheme BaseTheme="Inherit"

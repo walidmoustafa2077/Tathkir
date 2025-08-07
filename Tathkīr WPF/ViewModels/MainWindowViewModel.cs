@@ -1,4 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using MaterialDesignColors.ColorManipulation;
+using MaterialDesignThemes.Wpf;
+using System.Windows.Controls;
+using System.Windows.Media;
+using Tathkīr_WPF.Extensions;
 using Tathkīr_WPF.Views.GenericViews;
 using Tathkīr_WPF.Views.SettingsViews;
 
@@ -81,6 +85,33 @@ namespace Tathkīr_WPF.ViewModels
             }
         }
 
+        private bool _isLoading = false;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                if (_isLoading != value)
+                {
+                    _isLoading = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public Brush Foreground
+        {
+            get
+            {
+                var theme = new PaletteHelper().GetTheme().GetBaseTheme();
+
+                if (theme == BaseTheme.Light)
+                    return new SolidColorBrush(Color.FromRgb(11, 108, 157));
+                else
+                    return new SolidColorBrush((Color.FromRgb(11, 108, 157)).Lighten(0.6));
+            }
+        }
+
         private HomeControl? _homeControl;
         private AthkarControl? _athkarControl;
         private QuranControl? _quranControl;
@@ -90,12 +121,13 @@ namespace Tathkīr_WPF.ViewModels
 
         public MainWindowViewModel()
         {
+            _instance = this;
+
             _homeControl ??= new HomeControl();
             _athkarControl ??= new AthkarControl();
             _quranControl ??= new QuranControl();
             _prayerTimesControl ??= new PrayerTimesControl();
             _settingsControl ??= new SettingsControl();
-
 
             TabItem tap = new TabItem();
             tap.Header = Strings.Home;

@@ -1,34 +1,40 @@
-﻿using System.Net.Http;
+﻿using System.Globalization;
+using System.Net.Http;
 using System.Text.Json;
 using Tathkīr_WPF.Models;
+using Tathkīr_WPF.ViewModels;
 
 namespace Tathkīr_WPF.Services
 {
-    public class HostService
+    public class HttpHostService
     {
-        private static HostService _instance = null!;
-        public static HostService Instance
+        private static HttpHostService _instance = null!;
+        public static HttpHostService Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new HostService();
+                    _instance = new HttpHostService();
                 }
                 return _instance;
             }
         }
 
         private readonly HttpClient _httpClient;
-        
+        private readonly bool _isRtl;
+
         private const string BaseUrl = "https://localhost:7299/api";
 
         private List<Country> _countries = new List<Country>();
         private List<City> _cities = new List<City>();
 
-        public HostService(HttpClient? httpClient = null)
+        public HttpHostService(HttpClient? httpClient = null)
         {
             _httpClient = httpClient ?? new HttpClient();
+
+            var culture = CultureInfo.DefaultThreadCurrentCulture ?? CultureInfo.CurrentCulture;
+            _isRtl = culture.TextInfo.IsRightToLeft;
         }
 
         public async Task<Address> GetAddress(string lang = "en")
@@ -56,6 +62,8 @@ namespace Tathkīr_WPF.Services
         {
             try
             {
+                MainWindowViewModel.Instance.IsLoading = true;
+
                 string formattedDate = date.ToString("dd-MM-yyyy");
                 string url = $"{BaseUrl}/PrayerTimes/{formattedDate}?address={Uri.EscapeDataString(SettingsService.AppSettings.ApiConfig.Address)}";
 
@@ -74,6 +82,10 @@ namespace Tathkīr_WPF.Services
                 // Log or handle JSON deserialization errors
                 DialogService.Instance.ShowError(Strings.Error, "Failed to load prayer times data. Please try again later." + e.Message);
                 return null;
+            }
+            finally
+            {
+                MainWindowViewModel.Instance.IsLoading = false;
             }
         }
 
@@ -100,7 +112,9 @@ namespace Tathkīr_WPF.Services
         {
             try
             {
-                var lang = App.IsRtl ? "ar" : "en";
+                MainWindowViewModel.Instance.IsLoading = true;
+
+                var lang = _isRtl ? "ar" : "en";
 
                 string url = $"{BaseUrl}/Main/countries?lang={lang}";
 
@@ -120,6 +134,10 @@ namespace Tathkīr_WPF.Services
                 DialogService.Instance.ShowError(Strings.Error, "Failed to load countries data. Please try again later." + e.Message);
                 return new List<Country>();
             }
+            finally
+            {
+                MainWindowViewModel.Instance.IsLoading = false;
+            }
         }
 
         public async Task<List<string>> GetCitiesByCountryNameAsync(string countryName)
@@ -132,8 +150,10 @@ namespace Tathkīr_WPF.Services
         {
             try
             {
+                MainWindowViewModel.Instance.IsLoading = true;
+
                 var code = _countries.FirstOrDefault(c => c.NameLocalized.Equals(countryName, StringComparison.OrdinalIgnoreCase))?.Code;
-                var lang = App.IsRtl ? "ar" : "en";
+                var lang = _isRtl ? "ar" : "en";
 
                 if (string.IsNullOrEmpty(code))
                 {
@@ -155,6 +175,10 @@ namespace Tathkīr_WPF.Services
                 // Log or handle JSON deserialization errors
                 DialogService.Instance.ShowError(Strings.Error, "Failed to load cities data. Please try again later." + e.Message);
                 return new List<City>();
+            }
+            finally
+            {
+                MainWindowViewModel.Instance.IsLoading = false;
             }
         }
     }

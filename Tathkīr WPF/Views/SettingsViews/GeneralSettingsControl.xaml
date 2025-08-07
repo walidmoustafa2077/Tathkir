@@ -71,7 +71,7 @@
                       Margin="0 12"
                       Style="{StaticResource MaterialDesignCardGroupBox}">
                 <StackPanel Margin="10">
-                    <Button Content="{x:Static local:Strings.Privacy_Settings}"
+                    <Button Content="{x:Static local:Strings.Privacy}"
                             Margin="0 6" />
                     <Button Content="{x:Static local:Strings.About}"
                             Margin="0 6" />

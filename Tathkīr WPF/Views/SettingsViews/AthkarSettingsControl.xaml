@@ -7,9 +7,10 @@
              xmlns:local="clr-namespace:Tathkīr_WPF"
              mc:Ignorable="d"
              Foreground="#1199DD">
-    
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <ItemsControl ItemsSource="{Binding AthkarList}">
+
+    <ScrollViewer>
+
+        <ItemsControl ItemsSource="{Binding AthkarList}" Margin="6 0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <materialDesign:Card Margin="5"
@@ -31,9 +32,11 @@
                             <!-- ComboBox for repeat options -->
                             <ComboBox Grid.Column="1"
                                       ItemsSource="{Binding RepeatOptions}"
-                                      SelectedItem="{Binding SelectedRepeatOption}"
-                                      Width="180"
+                                      SelectedValue="{Binding SelectedRepeatOption, Mode=TwoWay}"
+                                      DisplayMemberPath="DisplayText"
+                                      Width="140"
                                       Margin="10 0"
+                                      FontWeight="Bold"
                                       materialDesign:HintAssist.Hint="{x:Static local:Strings.Repeat_Time}" />
                         </Grid>
                     </materialDesign:Card>

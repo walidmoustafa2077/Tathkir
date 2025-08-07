@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Tathkīr_WPF.Extensions;
 
@@ -136,6 +136,6 @@ namespace Tathkīr_WPF.Behaviors
                     uiElement.Focus();
                 }
             }), System.Windows.Threading.DispatcherPriority.Input);
-        }            
+        }
     }
 }

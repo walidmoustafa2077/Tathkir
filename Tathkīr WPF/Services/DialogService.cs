@@ -92,6 +92,6 @@ namespace Tathkīr_WPF.Services
             IsDialogOpen = false;
         }
 
- 
+
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Tathkīr_WPF.Helpers
+﻿using Tathkīr_WPF.Services.CoreService.Interfaces;
+
+namespace Tathkīr_WPF.Services.CoreService
 {
     public class TestClock : IClock
     {

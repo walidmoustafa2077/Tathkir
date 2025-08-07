@@ -10,6 +10,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
+        Foreground="{Binding Foreground}"
         Width="800"
         Height="520"
         MouseDown="Window_MouseDown">
@@ -48,7 +49,6 @@
                             <TextBlock Text="{x:Static local:Strings.Tathkir}"
                                        FontSize="24"
                                        FontWeight="Bold"
-                                       Foreground="#222C31"
                                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                        VerticalAlignment="Center"
                                        materialDesign:TextBlockAssist.AutoToolTip="True"/>
@@ -132,6 +132,23 @@
                                 HorizontalAlignment="Center"
                                 Panel.ZIndex="99" />
 
+            </Grid>
+
+            <Grid Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
+                <!-- Dialog Overlay -->
+                <Border  CornerRadius="20"
+                         Background="Black"
+                         Opacity="0.3"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         Panel.ZIndex="98" />
+
+                <ProgressBar IsIndeterminate="True"
+                             Height="60"
+                             Width="60"
+                             Margin="20"
+                             Style="{StaticResource MaterialDesignCircularProgressBar}" 
+                              Panel.ZIndex="98"/>
             </Grid>
         </Grid>
     </Border>

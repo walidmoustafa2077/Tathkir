@@ -13,17 +13,17 @@ namespace Tathkīr_WPF.ViewModels.Dialogs
         public int Count
         {
             get => _count;
-            set 
+            set
             {
                 _count = value;
 
                 if (!_isInitialized)
                 {
-                    _cacheCount = value; 
+                    _cacheCount = value;
                     _isInitialized = true;
                 }
 
-                OnPropertyChanged(); 
+                OnPropertyChanged();
             }
         }
 

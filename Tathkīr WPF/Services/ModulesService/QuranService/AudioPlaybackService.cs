@@ -1,6 +1,7 @@
 ﻿using System.Windows.Media;
+using Tathkīr_WPF.Services.ModulesService.QuranService.Interfaces;
 
-namespace Tathkīr_WPF.Services
+namespace Tathkīr_WPF.Services.ModulesService.QuranService
 {
     public class AudioPlaybackService : IAudioPlaybackService
     {

@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using MaterialDesignThemes.Wpf;
+using System.Windows.Input;
+using System.Windows.Media;
 using Tathkīr_WPF.Commands;
 
 namespace Tathkīr_WPF.ViewModels.Dialogs
@@ -18,7 +20,7 @@ namespace Tathkīr_WPF.ViewModels.Dialogs
             get => _message;
             set { _message = value; OnPropertyChanged(); }
         }
-        
+
         private string _primaryButton = string.Empty;
         public string PrimaryButton
         {
@@ -38,6 +40,19 @@ namespace Tathkīr_WPF.ViewModels.Dialogs
         {
             get => _secondaryButtonVisibility;
             set { _secondaryButtonVisibility = value; OnPropertyChanged(); }
+        }
+
+        public Brush DialogBackground
+        {
+            get
+            {
+                var theme = new PaletteHelper().GetTheme().GetBaseTheme();
+
+                if (theme == BaseTheme.Light)
+                    return new SolidColorBrush(Color.FromRgb(245, 245, 245));
+                else
+                    return new SolidColorBrush(Color.FromRgb(48, 48, 48));
+            }
         }
 
         public Action? PrimaryButtonAction { get; set; }

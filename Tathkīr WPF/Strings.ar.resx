@@ -321,8 +321,8 @@
   <data name="Select_Theme" xml:space="preserve">
     <value>اختر السمة</value>
   </data>
-  <data name="Privacy_Settings" xml:space="preserve">
-    <value>إعدادات الخصوصية</value>
+  <data name="Privacy" xml:space="preserve">
+    <value>الخصوصية</value>
   </data>
   <data name="About" xml:space="preserve">
     <value>حول</value>
@@ -347,5 +347,20 @@
   </data>
   <data name="OnSave" xml:space="preserve">
     <value>سيتم حفظ الإعدادات الحالية. يُرجى إعادة تشغيل التطبيق لتفعيل الإعدادات الجديدة.</value>
+  </data>
+  <data name="OnReset" xml:space="preserve">
+    <value>سيتم اعادة ضبط الإعدادات الحالية. يُرجى إعادة تشغيل التطبيق لتفعيل الإعدادات الجديدة.</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>تعطيل</value>
+  </data>
+  <data name="Disabled_Alert" xml:space="preserve">
+    <value>تعطيل التنبيه</value>
+  </data>
+  <data name="Prayer_Reminder" xml:space="preserve">
+    <value>تذكير بالصلاة</value>
+  </data>
+  <data name="Thikr_Reminder" xml:space="preserve">
+    <value>تذكير بالذكر</value>
   </data>
 </root>

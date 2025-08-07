@@ -1,14 +1,14 @@
-﻿using System.Net;
-using System.Windows.Threading;
-using Tathkīr_WPF.Helpers;
+﻿using System.Windows.Threading;
+using Tathkīr_WPF.Extensions;
 using Tathkīr_WPF.Models;
 using Tathkīr_WPF.Services;
+using Tathkīr_WPF.Services.CoreService;
+using Tathkīr_WPF.Services.CoreService.Interfaces;
 
 namespace Tathkīr_WPF.Managers
 {
     public class PrayerTimesManager
     {
-        private readonly HostService _prayerTimesService;
         private static PrayerTimesManager? _instance;
         public static PrayerTimesManager Instance
         {
@@ -21,149 +21,127 @@ namespace Tathkīr_WPF.Managers
                 return _instance;
             }
         }
-        private static IClock _clock = new SystemClock();
-        public PrayerTimesResult? PrayerTimesResult { get; private set; }
 
-        private List<PrayerItem> _prayerItems => PrayerTimesResult?.Prayers ?? new List<PrayerItem>();
-
-        private DateTime _loadedDate = DateTime.Today;
-        private PrayerItem? _nextPrayer;
-        private DateTime? _nextPrayerTime;
-
+        private readonly IPrayerTimesService _prayerService;
+        private readonly IPrayerScheduler _scheduler;
+        private readonly IAudioService _audioService;
+        private readonly INotificationService _notifier;
+        private readonly IThikrReminderService _thikrService;
         private readonly DispatcherTimer _timer;
+        private readonly IClock _clock;
+
+        private PrayerTimesResult? _currentResult;
+        public PrayerTimesResult? PrayerTimesResult => _currentResult;
 
         public PrayerItem? NextPrayer => _nextPrayer;
         public DateTime? NextPrayerTime => _nextPrayerTime;
         public TimeSpan Countdown => _nextPrayerTime.HasValue ? _nextPrayerTime.Value - _clock.Now : TimeSpan.Zero;
 
+        private DateTime _loadedDate = DateTime.Today;
+        private PrayerItem? _nextPrayer;
+        private PrayerItem? _cachedNextPrayer;
+        private DateTime? _nextPrayerTime;
 
+
+        public event Action? PrayerTimeUpdated;
         public event Action? CountdownUpdated;
         public event Action? NewPrayerCycleStarted;
 
         public PrayerTimesManager()
         {
-            _prayerTimesService = HostService.Instance;
+            var testClock = new TestClock();
+            testClock.Advance(TimeSpan.FromMinutes(+220));
 
-            _timer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(1)
-            };
-            _timer.Tick += (s, e) => Timer_Tick();
-        }
+            _clock = testClock;
+            _prayerService = new PrayerTimesService();
+            _scheduler = new PrayerScheduler();
+            _notifier = new NotificationService();
+            _audioService = new AudioService();
+            _thikrService = new ThikrReminderService(_clock, _notifier, _audioService);
 
-        public static void SetClockForTests(IClock clock)
-        {
-            _clock = clock;
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            _timer.Tick += (_, _) => OnTick();
         }
 
         public async Task LoadPrayerTimesAsync(bool use24HourFormat = false)
         {
-            PrayerTimesResult = await BuildPrayerTimesAsync(_loadedDate, use24HourFormat);
+            _currentResult = await GetPrayerTimeAsync(use24HourFormat);
 
-            if (PrayerTimesResult != null)
-            {
-                _timer.Start();
-                UpdateNextPrayer();
-            }
+            if (_currentResult == null)
+                return;
+
+            UpdateNextPrayer();
+            _timer.Start();
+            PrayerTimeUpdated?.Invoke();
         }
 
-        public async Task<PrayerTimesResult> LoadPrayerTimesPerDayAsync(DateTime date, bool use24HourFormat = false)
+        public async Task<PrayerTimesResult?> GetPrayerTimeAsync(bool use24HourFormat = false, DateTime? date = null)
         {
-            return await BuildPrayerTimesAsync(date, use24HourFormat) ?? new PrayerTimesResult();
+            return await _prayerService.GetPrayerTimesAsync(date ?? _loadedDate, use24HourFormat);
         }
 
-        private async Task<PrayerTimesResult?> BuildPrayerTimesAsync(DateTime date, bool use24HourFormat)
+        private void OnTick()
         {
-            var result = await _prayerTimesService.GetTodayPrayerTimesAsync(date);
-            if (result?.Data == null)
-                return null;
+            CountdownUpdated?.Invoke();
 
-            var timings = result.Data.Timings;
-            var prayers = new List<PrayerItem>
-            {
-                new PrayerItem { Type = Enums.PrayerType.Fajr,    Time = FormatTime(timings.Fajr, use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Sunrise, Time = FormatTime(timings.Sunrise, use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Dhuhr,   Time = FormatTime(timings.Dhuhr, use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Asr,     Time = FormatTime(timings.Asr, use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Maghrib, Time = FormatTime(timings.Maghrib, use24HourFormat) },
-                new PrayerItem { Type = Enums.PrayerType.Isha,    Time = FormatTime(timings.Isha, use24HourFormat) }
-            };
-
-            if (date.DayOfWeek == DayOfWeek.Friday)
-            {
-                var dhuhr = prayers.FirstOrDefault(p => p.Type == Enums.PrayerType.Dhuhr);
-                if (dhuhr != null)
-                    dhuhr.Type = Enums.PrayerType.Jumua;
-            }
-
-            return new PrayerTimesResult
-            {
-                Prayers = prayers,
-                Midnight = FormatTime(timings.Midnight, use24HourFormat),
-                LastThird = FormatTime(timings.Lastthird, use24HourFormat),
-                CurrentDate = FormatCurrentDate(result.Data.Date)
-            };
-        }
-
-        private void Timer_Tick()
-        {
+            // Check if the date has changed
             if (DateTime.Today > _loadedDate)
             {
                 _ = ReloadAsync();
                 return;
             }
 
-            if (_nextPrayerTime.HasValue && _clock.Now >= _nextPrayerTime.Value)
+            var now = _clock.Now;
+
+            // Check if the next prayer time has passed
+            if (_nextPrayerTime.HasValue && now >= _nextPrayerTime.Value)
             {
                 UpdateNextPrayer();
             }
 
-            CountdownUpdated?.Invoke();
+
+
+            var appConfig = SettingsService.AppSettings.AppConfig;
+
+            if (appConfig.ShowNotifications == false)
+                return;
+
+            _thikrService.CheckThikrReminder();
+
+            // Handle notifications
+            if (_nextPrayer != null)
+            {
+                var timeToNext = _nextPrayerTime!.Value - now;
+                var prayerName = _nextPrayer.Name;
+
+                var selectedOffset = appConfig
+                        .AthanConfigSettings?.BeforeAthanSettings
+                        .FirstOrDefault(p => p.PrayerName.ToLocalizedLanguage() == prayerName)?.SelectedOffset;
+
+                if (timeToNext.TotalMinutes <= selectedOffset && _nextPrayer == _cachedNextPrayer)
+                {
+                    _notifier.NotifyBeforePrayer(_nextPrayer, _audioService.GetPrayerAudioPath(_nextPrayer.Type.ToString(), "BeforeAthanPath"));
+                    _cachedNextPrayer = null;
+                }
+
+                if (timeToNext.TotalSeconds <= 1)
+                {
+                    _notifier.NotifyOnPrayer(_nextPrayer, _audioService.GetPrayerAudioPath(_nextPrayer.Type.ToString(), "OnAthanPath"));
+                }
+            }
         }
 
         private void UpdateNextPrayer()
         {
-            SetNextPrayer();
-            NewPrayerCycleStarted?.Invoke();
-        }
-
-        private void SetNextPrayer()
-        {
-            if (PrayerTimesResult == null || PrayerTimesResult.Prayers.Count == 0)
-            {
-                _nextPrayer = null;
-                _nextPrayerTime = null;
+            if (_currentResult == null)
                 return;
-            }
 
-            var now = _clock.Now;
+            _nextPrayer = _scheduler.GetNextPrayer(_currentResult.Prayers, _clock.Now, out _nextPrayerTime);
 
-            foreach (var prayer in PrayerTimesResult.Prayers)
-            {
-                if (DateTime.TryParse(prayer.Time, out var prayerTime))
-                {
-                    var fullTime = new DateTime(now.Year, now.Month, now.Day, prayerTime.Hour, prayerTime.Minute, 0);
-                    if (fullTime > now)
-                    {
-                        _nextPrayer = prayer;
-                        _nextPrayerTime = fullTime;
-                        _nextPrayer.IsNextPrayer = true;
-                        return;
-                    }
-                }
-            }
+            if (_nextPrayer != null)
+                _cachedNextPrayer = _nextPrayer;
 
-            if (_prayerItems.Count > 0 && DateTime.TryParse(_prayerItems[0].Time, out var firstTime))
-            {
-                _nextPrayer = _prayerItems[0];
-                _nextPrayerTime = new DateTime(now.Year, now.Month, now.Day, firstTime.Hour, firstTime.Minute, 0).AddDays(1);
-                _nextPrayer.IsNextPrayer = true;
-            }
-            else
-            {
-                _nextPrayer = null;
-                _nextPrayerTime = null;
-            }
+            NewPrayerCycleStarted?.Invoke();
         }
 
         private async Task ReloadAsync()
@@ -171,34 +149,6 @@ namespace Tathkīr_WPF.Managers
             _timer.Stop();
             _loadedDate = DateTime.Today;
             await LoadPrayerTimesAsync();
-        }
-
-        private string FormatTime(string? time, bool use24HourFormat)
-        {
-            if (string.IsNullOrWhiteSpace(time))
-                return string.Empty;
-
-            if (DateTime.TryParseExact(time, "HH:mm", null, System.Globalization.DateTimeStyles.None, out var parsedTime))
-                return use24HourFormat ? parsedTime.ToString("HH:mm") : parsedTime.ToString("hh:mm tt");
-
-            return time ?? string.Empty;
-        }
-
-        private string FormatCurrentDate(Models.PrayerDate date)
-        {
-            if (DateTime.TryParse(date.Readable, out var gregorianDate))
-            {
-                var weekday = gregorianDate.ToString("dddd", System.Globalization.CultureInfo.InvariantCulture);
-                var hijriDay = int.TryParse(date.Hijri?.Date.Split('-')[0], out var day)
-                    ? day.ToString()
-                    : string.Empty;
-                var hijriMonth = date.Hijri?.Month?.En ?? string.Empty;
-                var gregorianShort = gregorianDate.ToString("dd MMM", System.Globalization.CultureInfo.InvariantCulture);
-
-                return $"{weekday} {hijriDay} {hijriMonth} · {gregorianShort}";
-            }
-
-            return date.Readable ?? string.Empty;
         }
     }
 

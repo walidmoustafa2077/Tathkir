@@ -2,9 +2,9 @@
 using System.IO;
 using Windows.UI.Notifications;
 
-namespace Tathkīr_WPF.Helpers
+namespace Tathkīr_WPF.Managers
 {
-    public static class ToastHelper
+    public static class ToastMaganer
     {
         public static void Initialize()
         {

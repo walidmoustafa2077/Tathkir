@@ -214,6 +214,24 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable.
+        /// </summary>
+        public static string Disabled {
+            get {
+                return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable Alert.
+        /// </summary>
+        public static string Disabled_Alert {
+            get {
+                return ResourceManager.GetString("Disabled_Alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable.
         /// </summary>
         public static string Enable {
@@ -466,6 +484,15 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current settings will be reset. Please restart the application to activate the new settings..
+        /// </summary>
+        public static string OnReset {
+            get {
+                return ResourceManager.GetString("OnReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current settings will be saved. Please restart the application to activate the new settings..
         /// </summary>
         public static string OnSave {
@@ -520,6 +547,15 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prayer Reminder.
+        /// </summary>
+        public static string Prayer_Reminder {
+            get {
+                return ResourceManager.GetString("Prayer_Reminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prayer Times.
         /// </summary>
         public static string Prayer_Times {
@@ -529,20 +565,20 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string Privacy {
+            get {
+                return ResourceManager.GetString("Privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Privacy Info.
         /// </summary>
         public static string Privacy_Info {
             get {
                 return ResourceManager.GetString("Privacy_Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Privacy Settings.
-        /// </summary>
-        public static string Privacy_Settings {
-            get {
-                return ResourceManager.GetString("Privacy_Settings", resourceCulture);
             }
         }
         
@@ -714,6 +750,15 @@ namespace Tathkīr_WPF {
         public static string The_Time_For {
             get {
                 return ResourceManager.GetString("The_Time_For", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thikr Reminder.
+        /// </summary>
+        public static string Thikr_Reminder {
+            get {
+                return ResourceManager.GetString("Thikr_Reminder", resourceCulture);
             }
         }
         

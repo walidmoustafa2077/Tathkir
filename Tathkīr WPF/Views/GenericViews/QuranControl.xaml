@@ -5,7 +5,7 @@
 
     <Border Padding="16"
             CornerRadius="14"
-            Background="#25F5F5F5">
+            Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
         <!-- Wrap Grid in a Border for Padding -->
         <Grid>
 

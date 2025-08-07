@@ -139,7 +139,7 @@
                 <Border Grid.Row="2"
                         CornerRadius="10"
                         Padding="12"
-                        Background="{StaticResource MaterialDesignLightSeparatorBackground}"
+                        Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
                         Effect="{DynamicResource MaterialDesignElevationShadow}">
 
                     <Grid>
@@ -156,7 +156,6 @@
                                 <TextBlock Text="{x:Static local:Strings.Tasbeeh}"
                                            FontWeight="Bold"
                                            FontSize="22"
-                                           Foreground="#222C31"
                                            Margin="0,0,0,12" />
 
                                 <!-- Tasbeeh Button -->
@@ -185,10 +184,9 @@
                                                                               Opacity="0.2" />
                                                         </Ellipse.Effect>
                                                     </Ellipse>
-
+                                                    
                                                     <!-- Text inside the Ellipse -->
                                                     <StackPanel x:Name="TextContainer"
-                                                                Orientation="Horizontal"
                                                                 VerticalAlignment="Center"
                                                                 HorizontalAlignment="Center"
                                                                 Margin="0 6 0 0">
@@ -197,19 +195,37 @@
                                                                             ScaleY="1" />
                                                         </StackPanel.RenderTransform>
 
-                                                        <TextBlock Text="{Binding TasbeehLimit}"
-                                                                   FontSize="18"
-                                                                   Foreground="White"
-                                                                   Margin="4,0" />
-                                                        <TextBlock Text="/"
-                                                                   FontSize="18"
-                                                                   Foreground="White"
-                                                                   Margin="4,0" />
-                                                        <TextBlock Text="{Binding TasbeehCount}"
-                                                                   FontSize="32"
-                                                                   FontWeight="Bold"
-                                                                   Foreground="White"
-                                                                   Margin="4,0" />
+                                                        <Grid>
+                                                            <StackPanel Orientation="Horizontal"
+                                                                        VerticalAlignment="Center"
+                                                                        HorizontalAlignment="Center">
+                                                                <TextBlock Text="{Binding TasbeehLimit}"
+                                                                           FontSize="18"
+                                                                           Foreground="White"
+                                                                           Margin="4,0" />
+                                                                <TextBlock Text="/"
+                                                                           FontSize="18"
+                                                                           Foreground="White"
+                                                                           Margin="4,0" />
+                                                                <TextBlock Text="{Binding TasbeehCount}"
+                                                                           FontSize="32"
+                                                                           FontWeight="Bold"
+                                                                           Foreground="White"
+                                                                           Margin="4,0" />
+                                                            </StackPanel>
+
+                                                            <Button Command="{Binding ResetTasbeehCountCommand}"
+                                                                    Foreground="Red"
+                                                                    Height="35"
+                                                                    Width="35"
+                                                                    Margin="0 0 0 86"
+                                                                    Style="{StaticResource MaterialDesignIconButton}"
+                                                                    Visibility="{Binding ResetTasbeehCountVisibility, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                                <materialDesign:PackIcon Kind="Restart"
+                                                                                         Width="25"
+                                                                                         Height="25" />
+                                                            </Button>
+                                                        </Grid>
                                                     </StackPanel>
 
                                                     <!-- Visual States -->
@@ -260,30 +276,26 @@
                                         </Button.Template>
                                     </Button>
 
-                                    <TextBlock Text="{Binding TasbeehTotal}"
-                                               FontSize="15"
-                                               Foreground="#222C31"
-                                               HorizontalAlignment="Center"
-                                               Margin="0,4,0,0" />
+                 
                                 </StackPanel>
 
                                 <!-- Dropdown to select TasbeehLimit -->
                                 <StackPanel VerticalAlignment="Center"
                                             HorizontalAlignment="Stretch"
-                                            Margin="12 16">
+                                            Margin="12 8">
                                     <TextBlock Text="{x:Static local:Strings.Select_Tasbeeh_Limit}"
                                                FontSize="14"
-                                               Foreground="#37474F"
-                                               Margin="0,0,0,4" />
+                                               FontWeight="SemiBold"
+                                               Margin="0,0,0,6" />
 
                                     <ComboBox ItemsSource="{Binding TasbeehLimits}"
                                               SelectedItem="{Binding TasbeehLimit, Mode=TwoWay}"
-                                              Height="32"
-                                              Padding="4"
-                                              FontSize="18"
-                                              Background="{StaticResource MaterialDesignLightSeparatorBackground}"
-                                              Style="{StaticResource MaterialDesignOutlinedComboBox}" 
-                                              Effect="{StaticResource MaterialDesignShadowDepth1}"/>
+                                              Height="40"
+                                              Padding="12 6"
+                                              FontSize="16"
+                                              FontWeight="SemiBold"
+                                              Background="{Binding SeparatorBackground}"
+                                              Style="{StaticResource MaterialDesignFilledComboBox}"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -295,17 +307,16 @@
                                 <TextBlock Text="{x:Static local:Strings.Calendar}"
                                            FontWeight="Bold"
                                            FontSize="22"
-                                           Foreground="#263238"
                                            Margin="0,0,0,12" />
                                 <Calendar x:Name="HijriCalendar"
                                           SelectedDate="{Binding SelectedDate}"
                                           DisplayDate="{Binding CurrentMonth, Mode=OneWay}"
+                                          Language="ar-SA"
                                           Loaded="HijriCalendar_Loaded"
                                           DisplayDateChanged="HijriCalendar_DisplayDateChanged"
-                                          SelectedDatesChanged="HijriCalendar_SelectedDatesChanged"/>
-
+                                          SelectedDatesChanged="HijriCalendar_SelectedDatesChanged"
+                                          materialDesign:CalendarAssist.HeaderBackground="{Binding CalendarHeaderBackground}"/>
                             </StackPanel>
-
                         </Border>
                     </Grid>
                 </Border>

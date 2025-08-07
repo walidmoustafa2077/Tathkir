@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Input;
 using Tathkīr_WPF.Models;
 using Tathkīr_WPF.Services;
+using Tathkīr_WPF.Services.ModulesService.QuranService;
 using Tathkīr_WPF.ViewModels.Dialogs;
 
 namespace Tathkīr_WPF.ViewModels.Generic
@@ -76,7 +77,7 @@ namespace Tathkīr_WPF.ViewModels.Generic
                 {
                     Number = fullSurah.Number,
                     Name = fullSurah.Name,
-                    DisplayName = fullSurah.Name.Ar 
+                    DisplayName = fullSurah.Name.Ar
                 };
 
                 Surahs.Add(meta);

@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using MaterialDesignThemes.Wpf;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Tathkīr_WPF.Commands;
+using Tathkīr_WPF.Extensions;
 using Tathkīr_WPF.Managers;
 using Tathkīr_WPF.Models;
 
@@ -17,12 +20,26 @@ namespace Tathkīr_WPF.ViewModels.Generic
 
         private string _lastThirdTime = string.Empty;
         public string LastThirdTime { get => _lastThirdTime; set { _lastThirdTime = value; OnPropertyChanged(); } }
-        
+
         private string _currentDate = string.Empty;
         public string CurrentDate { get => _currentDate; set { _currentDate = value; OnPropertyChanged(); } }
 
         private bool _resetDateVisibility = false;
         public bool ResetDateVisibility { get => _resetDateVisibility; set { _resetDateVisibility = value; OnPropertyChanged(); } }
+
+        public Brush SeparatorBackground
+        {
+            get
+            {
+                var theme = new PaletteHelper().GetTheme().GetBaseTheme();
+
+                var resourceKey = theme == BaseTheme.Light
+                    ? "MaterialDesignDarkSeparatorBackground"
+                    : "MaterialDesignLightSeparatorBackground";
+
+                return Application.Current.Resources[resourceKey] as Brush ?? Brushes.Transparent;
+            }
+        }
 
         // Commands
         public ICommand ResetDateCommand { get; }
@@ -39,7 +56,7 @@ namespace Tathkīr_WPF.ViewModels.Generic
             NextDateCommand = new CommandBase(NextDate);
             PreviousDateCommand = new CommandBase(PreviousDate);
 
-            Initialize();
+            _manager.PrayerTimeUpdated += Initialize;
         }
 
         private void Initialize()
@@ -58,12 +75,13 @@ namespace Tathkīr_WPF.ViewModels.Generic
 
         private void NextDate(object? obj)
         {
-            var date = ConvertDate(CurrentDate);
+            var date = CurrentDate.ConvertDate();
             date = date.AddDays(Application.Current.MainWindow.FlowDirection == FlowDirection.RightToLeft ? -1 : 1);
 
+            if (ResetDateVisibility == false)
+                ResetDateVisibility = true;
 
-            ResetDateVisibility = true;
-            var result = _manager.LoadPrayerTimesPerDayAsync(date);
+            var result = _manager.GetPrayerTimeAsync(date: date);
 
             result.ContinueWith(task =>
             {
@@ -72,7 +90,7 @@ namespace Tathkīr_WPF.ViewModels.Generic
                     App.Current.Dispatcher.Invoke(() =>
                     {
                         PrayerList.Clear();
-                        foreach (var p in task.Result.Prayers)
+                        foreach (var p in task.Result!.Prayers)
                             PrayerList.Add(p);
 
                         MidnightTime = task.Result.Midnight;
@@ -84,11 +102,13 @@ namespace Tathkīr_WPF.ViewModels.Generic
         }
         private void PreviousDate(object? obj)
         {
-            var date = ConvertDate(CurrentDate);
+            var date = CurrentDate.ConvertDate();
             date = date.AddDays(Application.Current.MainWindow.FlowDirection == FlowDirection.RightToLeft ? 1 : -1);
 
-            ResetDateVisibility = true;
-            var result = _manager.LoadPrayerTimesPerDayAsync(date);
+            if (ResetDateVisibility == false)
+                ResetDateVisibility = true;
+
+            var result = _manager.GetPrayerTimeAsync(date: date);
 
             result.ContinueWith(task =>
             {
@@ -97,7 +117,7 @@ namespace Tathkīr_WPF.ViewModels.Generic
                     App.Current.Dispatcher.Invoke(() =>
                     {
                         PrayerList.Clear();
-                        foreach (var p in task.Result.Prayers)
+                        foreach (var p in task.Result!.Prayers)
                             PrayerList.Add(p);
 
                         MidnightTime = task.Result.Midnight;
@@ -106,40 +126,6 @@ namespace Tathkīr_WPF.ViewModels.Generic
                     });
                 }
             });
-        }
-
-        private DateTime ConvertDate(string formattedDate)
-        {
-            if (string.IsNullOrWhiteSpace(formattedDate))
-                return DateTime.Now;
-
-            // The format you used was:
-            // $"{weekday} {hijriDay} {hijriMonth} · {gregorianShort}"
-            // Example: "Monday 23 Muharram · 04 Feb"
-            // We need to extract the Gregorian short date part.
-
-            var parts = formattedDate.Split('·');
-            if (parts.Length != 2)
-                return DateTime.Now;
-
-            var gregorianShort = parts[1].Trim();
-
-            // gregorianShort is something like "04 Feb"
-            // We need to attach the current year or infer it
-            var currentYear = DateTime.Now.Year;
-            var dateString = $"{gregorianShort} {currentYear}"; // e.g., "04 Feb 2025"
-
-            if (DateTime.TryParseExact(
-                    dateString,
-                    "dd MMM yyyy",
-                    System.Globalization.CultureInfo.InvariantCulture,
-                    System.Globalization.DateTimeStyles.None,
-                    out var date))
-            {
-                return date;
-            }
-
-            return DateTime.Now;
         }
     }
 }

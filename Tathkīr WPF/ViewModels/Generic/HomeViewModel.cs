@@ -1,8 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Globalization;
+﻿using MaterialDesignThemes.Wpf;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Tathkīr_WPF.Commands;
+using Tathkīr_WPF.Extensions;
 using Tathkīr_WPF.Managers;
 using Tathkīr_WPF.Models;
 
@@ -11,6 +13,37 @@ namespace Tathkīr_WPF.ViewModels.Generic
     public class HomeViewModel : ViewModelBase
     {
         private readonly PrayerTimesManager _manager;
+
+        public ObservableCollection<PrayerItem> PrayerList { get; } = new();
+        public ObservableCollection<int> TasbeehLimits { get; set; } = new ObservableCollection<int> { 33, 99, 100 };
+        public ObservableCollection<HijriEvent> HijriEvents { get; set; } = new ObservableCollection<HijriEvent>();
+
+        public Brush SeparatorBackground
+        {
+            get
+            {
+                var theme = new PaletteHelper().GetTheme().GetBaseTheme();
+
+                var resourceKey = theme == BaseTheme.Dark
+                    ? "MaterialDesignLightSeparatorBackground"
+                    : "MaterialDesignDarkSeparatorBackground";
+
+                return Application.Current.Resources[resourceKey] as Brush ?? Brushes.Transparent;
+            }
+        }
+
+        public Brush CalendarHeaderBackground
+        {
+            get
+            {
+                var theme = new PaletteHelper().GetTheme().GetBaseTheme();
+
+                if (theme == BaseTheme.Light)
+                    return new SolidColorBrush(Color.FromRgb(11, 108, 157));
+                else
+                    return new SolidColorBrush((Color.FromRgb(11, 108, 157)).Lighten(0.6));
+            }
+        }
 
         private string _nextPrayerIcon = string.Empty;
         public string NextPrayerIcon { get => _nextPrayerIcon; set { _nextPrayerIcon = value; OnPropertyChanged(); } }
@@ -26,8 +59,6 @@ namespace Tathkīr_WPF.ViewModels.Generic
 
         private string _currentDate = string.Empty;
         public string CurrentDate { get => _currentDate; set { _currentDate = value; OnPropertyChanged(); } }
-        public ObservableCollection<PrayerItem> PrayerList { get; } = new();
-        public ObservableCollection<int> TasbeehLimits { get; set; } = new ObservableCollection<int> { 33, 99, 100 };
 
         // Tasbeeh properties
         private int _tasbeehCount;
@@ -37,20 +68,15 @@ namespace Tathkīr_WPF.ViewModels.Generic
             set { _tasbeehCount = value; OnPropertyChanged(); }
         }
 
-        private int _tasbeehLimit = 33; 
+        private bool _resetTasbeehCountVisibility = false;
+        public bool ResetTasbeehCountVisibility { get => _resetTasbeehCountVisibility; set { _resetTasbeehCountVisibility = value; OnPropertyChanged(); } }
+
+        private int _tasbeehLimit = 33;
         public int TasbeehLimit
         {
             get => _tasbeehLimit;
             set { _tasbeehLimit = value; OnPropertyChanged(); }
         }
-
-        private string _tasbeehTotal = "Total: 0";
-        public string TasbeehTotal
-        {
-            get => _tasbeehTotal;
-            set { _tasbeehTotal = value; OnPropertyChanged(); }
-        }
-
 
         private DateTime _selectedDate = DateTime.Now;
         public DateTime SelectedDate
@@ -66,11 +92,10 @@ namespace Tathkīr_WPF.ViewModels.Generic
             }
         }
 
-        public ObservableCollection<HijriEvent> HijriEvents { get; set; } = new ObservableCollection<HijriEvent>();
-
         public DateTime CurrentMonth => DateTime.Now;
 
         public ICommand IncrementTasbeehCommand { get; }
+        public ICommand ResetTasbeehCountCommand { get; }
 
         public HomeViewModel(Views.GenericViews.HomeControl homeControl)
         {
@@ -80,12 +105,21 @@ namespace Tathkīr_WPF.ViewModels.Generic
             IncrementTasbeehCommand = new CommandBase((o) =>
             {
                 TasbeehCount++;
-                TasbeehTotal = $"{Strings.Total}: {TasbeehCount}";
+
+                if (!ResetTasbeehCountVisibility)
+                    ResetTasbeehCountVisibility = true;
 
                 if (TasbeehCount >= TasbeehLimit)
                 {
-                    TasbeehCount = 0; // Reset after reaching limit
+                    TasbeehCount = 0;
+                    ResetTasbeehCountVisibility = false;
                 }
+            });
+
+            ResetTasbeehCountCommand = new CommandBase((o) =>
+            {
+                TasbeehCount = 0;
+                ResetTasbeehCountVisibility = false;
             });
 
             // Subscribe to collection changed
@@ -100,9 +134,8 @@ namespace Tathkīr_WPF.ViewModels.Generic
 
             // Tasbeeh initial values
             TasbeehCount = 0;
-            TasbeehTotal = $"{Strings.Total}: 0";
 
-            Initialize();
+            _manager.PrayerTimeUpdated += Initialize;
         }
 
         private void Initialize()
