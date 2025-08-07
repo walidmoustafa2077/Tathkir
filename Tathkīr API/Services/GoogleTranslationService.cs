@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Tathkīr_API.Configs;
 using Tathkīr_API.Services.Interfaces;
 
 namespace Tathkīr_API.Services
@@ -6,12 +7,15 @@ namespace Tathkīr_API.Services
     public class GoogleTranslationService : ITranslationService
     {
         private readonly HttpClient _httpClient;
+        private readonly string _apiKey;
+        
         private const string TranslateUrl = "https://translation.googleapis.com/language/translate/v2";
-        private const string ApiKey = "AIzaSyA8FDUt9a83GZHoJ8Z8rq1HdkicFDkQvJY";
 
-        public GoogleTranslationService(HttpClient httpClient)
+        public GoogleTranslationService(HttpClient httpClient, EnvironmentConfig envConfig)
         {
             _httpClient = httpClient;
+
+            _apiKey = envConfig.GoogleTranslationAPI; 
         }
 
         public async Task<string> TranslateAsync(string text, string targetLanguage)
@@ -43,7 +47,7 @@ namespace Tathkīr_API.Services
             {
                 new("target", targetLanguage),
                 new("format", "text"),
-                new("key", ApiKey)
+                new("key", _apiKey)
             };
 
             foreach (var text in texts)
