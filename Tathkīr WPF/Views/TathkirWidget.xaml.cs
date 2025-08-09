@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using Tathkīr_WPF.Managers;
 using Tathkīr_WPF.Services;
 
 namespace Tathkīr_WPF
@@ -10,6 +9,18 @@ namespace Tathkīr_WPF
     /// </summary>
     public partial class TathkirWidget : Window
     {
+        private static TathkirWidget? _instance;
+        public static TathkirWidget Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new TathkirWidget();
+                return _instance;
+            }
+
+        }
+
         public TathkirWidget()
         {
             InitializeComponent();
@@ -21,16 +32,15 @@ namespace Tathkīr_WPF
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // Notify the user that the widget is ready
-            ToastMaganer.ShowToast("Tathkir Widget", "Prayer times widget is now active.");
+            InitializeWidget();
+        }
 
+        public void InitializeWidget()
+        {
             // Set the window to be topmost
-            WindowStyle = WindowStyle.None;
             ResizeMode = ResizeMode.NoResize;
             Topmost = false;
             ShowInTaskbar = false;
-
-            //Visibility = Visibility.Hidden;
 
             // Position at top-right corner with 20px margin
             var screenWidth = SystemParameters.PrimaryScreenWidth;
@@ -43,7 +53,7 @@ namespace Tathkīr_WPF
             ShowOnDesktopService.AddHook(this);
         }
 
-        private void MainWindow_Closed(object? sender, EventArgs e)
+        public void MainWindow_Closed(object? sender, EventArgs e)
         {
             ShowOnDesktopService.RemoveHook();
         }

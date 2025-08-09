@@ -35,6 +35,8 @@ namespace Tathkīr_WPF.ViewModels
             _manager = PrayerTimesManager.Instance;
 
             _manager.PrayerTimeUpdated += Initialize;
+
+            Initialize();
         }
 
         private void Initialize()

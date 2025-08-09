@@ -363,4 +363,28 @@
   <data name="Thikr_Reminder" xml:space="preserve">
     <value>Thikr Reminder</value>
   </data>
+  <data name="Next_Prayer" xml:space="preserve">
+    <value>Next Prayer</value>
+  </data>
+  <data name="Is" xml:space="preserve">
+    <value>is</value>
+  </data>
+  <data name="Show_Widget" xml:space="preserve">
+    <value>Show Widget on startup</value>
+  </data>
+  <data name="Show_Main_Window" xml:space="preserve">
+    <value>Show Main Window on system startup</value>
+  </data>
+  <data name="Close_Application" xml:space="preserve">
+    <value>Close Application</value>
+  </data>
+  <data name="Are_You_Sure_You_Want_To_Close_The_Application" xml:space="preserve">
+    <value>Are you sure you want to close the application?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Close_Main_Window" xml:space="preserve">
+    <value>Close Main Window</value>
+  </data>
 </root>

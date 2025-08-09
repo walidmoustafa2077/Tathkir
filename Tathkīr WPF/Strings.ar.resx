@@ -363,4 +363,28 @@
   <data name="Thikr_Reminder" xml:space="preserve">
     <value>تذكير بالذكر</value>
   </data>
+  <data name="Next_Prayer" xml:space="preserve">
+    <value>الصلاة القادمة</value>
+  </data>
+  <data name="Is" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Show_Widget" xml:space="preserve">
+    <value>عرض الودجت عند بدء التشغيل</value>
+  </data>
+  <data name="Show_Main_Window" xml:space="preserve">
+    <value>عرض النافذة الرئيسية عند  بدء التشغيل</value>
+  </data>
+  <data name="Close_Application" xml:space="preserve">
+    <value>إغلاق التطبيق</value>
+  </data>
+  <data name="Are_You_Sure_You_Want_To_Close_The_Application" xml:space="preserve">
+    <value>هل أنت متأكد أنك تريد إغلاق التطبيق؟</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>نعم</value>
+  </data>
+  <data name="Close_Main_Window" xml:space="preserve">
+    <value>إغلاق النافذة الرئيسية</value>
+  </data>
 </root>

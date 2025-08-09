@@ -8,7 +8,7 @@ namespace Tathkīr_WPF.Services.StartupServices
         public const string CultureAr = "ar-SA";
         public const string CultureEn = "en-US";
 
-        public bool IsRightToLeft { get; private set; }
+        public static bool IsRightToLeft { get; private set; }
 
         public void SetCulture(string language)
         {

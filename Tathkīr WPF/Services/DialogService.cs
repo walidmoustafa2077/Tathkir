@@ -62,7 +62,7 @@ namespace Tathkīr_WPF.Services
             ShowDialogControl(dialogControl);
         }
 
-        private void ShowDialogControl(object dialogControl)
+        public void ShowDialogControl(object dialogControl)
         {
             if (dialogControl is null)
                 throw new ArgumentNullException(nameof(dialogControl));

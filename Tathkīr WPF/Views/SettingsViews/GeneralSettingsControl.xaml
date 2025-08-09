@@ -52,7 +52,7 @@
 
                     </DockPanel>
 
-                    <DockPanel Margin="0 6 0 0">
+                    <DockPanel Margin="0 6 0 6">
                         <TextBlock Text="{x:Static local:Strings.Show_Notifications}"
                                    VerticalAlignment="Center"
                                    Margin="0 0 12 0"
@@ -60,6 +60,30 @@
 
                         <!-- Show Notifications Toggle -->
                         <ToggleButton IsChecked="{Binding ShowNotifications, Mode=TwoWay}"
+                                      HorizontalAlignment="Right"
+                                      Style="{StaticResource MaterialDesignSwitchToggleButton}" />
+                    </DockPanel>
+
+                    <DockPanel Margin="0 6 0 6">
+                        <TextBlock Text="{x:Static local:Strings.Show_Main_Window}"
+                                   VerticalAlignment="Center"
+                                   Margin="0 0 12 0"
+                                   Style="{StaticResource MaterialDesignBodyMediumTextBlock}" />
+                        <!-- Launch On Startup Toggle -->
+                        <ToggleButton IsChecked="{Binding ShowMainWindow, Mode=TwoWay}"
+                                      HorizontalAlignment="Right"
+                                      Style="{StaticResource MaterialDesignSwitchToggleButton}" />
+
+                    </DockPanel>
+
+                    <DockPanel Margin="0 6 0 0">
+                        <TextBlock Text="{x:Static local:Strings.Show_Widget}"
+                                   VerticalAlignment="Center"
+                                   Margin="0 0 12 0"
+                                   Style="{StaticResource MaterialDesignBodyMediumTextBlock}" />
+
+                        <!-- Show Notifications Toggle -->
+                        <ToggleButton IsChecked="{Binding ShowWidget, Mode=TwoWay}"
                                       HorizontalAlignment="Right"
                                       Style="{StaticResource MaterialDesignSwitchToggleButton}" />
                     </DockPanel>

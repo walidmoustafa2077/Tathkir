@@ -7,12 +7,14 @@ namespace Tathkīr_WPF.Services.StartupServices
 {
     public class AppInitializer : IAppInitializer
     {
+        private readonly INotifyIconService _notifyIconService;
         private readonly IThemeManager _themeManager;
         private readonly ICultureService _cultureService;
         private readonly IStartupRegistrationService _startupService;
         private readonly IToastInitializer _toastInitializer;
         private readonly IPrayerTimesLoader _prayerLoader;
         private readonly IMainWindowService _mainWindowService;
+        private readonly IWidgetService _widgetService;
 
         public AppInitializer()
         {
@@ -22,6 +24,8 @@ namespace Tathkīr_WPF.Services.StartupServices
             _toastInitializer = new ToastInitializer();
             _prayerLoader = new PrayerTimesLoader();
             _mainWindowService = new MainWindowService();
+            _widgetService = new WidgetService();
+            _notifyIconService = new NotifyIconService(_mainWindowService);
         }
 
         public async Task InitializeAsync()
@@ -48,10 +52,18 @@ namespace Tathkīr_WPF.Services.StartupServices
             }
 
             SettingsService.Load();
+
             _toastInitializer.Initialize();
 
+            _notifyIconService.Initialize();
+
             await _prayerLoader.LoadAsync();
-            _mainWindowService.Show(_cultureService.IsRightToLeft);
+
+            if (settings.AppConfig.ShowMainWindow)
+                _mainWindowService.Show();
+
+            if (settings.AppConfig.ShowWidget)
+                _widgetService.Show();
         }
 
         public void Shutdown()

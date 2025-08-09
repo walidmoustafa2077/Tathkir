@@ -27,6 +27,8 @@ namespace Tathkīr_WPF.Models
         public string Theme { get; set; } = string.Empty;
         public bool LaunchOnStartup { get; set; } = true;
         public bool ShowNotifications { get; set; } = true;
+        public bool ShowMainWindow { get; set; } = true;
+        public bool ShowWidget { get; set; } = true;
 
         public AthanSettings? AthanConfigSettings { get; set; } = null;
         public AthkarSettings? AthkarConfigSettings { get; set; } = null;

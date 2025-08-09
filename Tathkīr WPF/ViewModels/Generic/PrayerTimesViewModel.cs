@@ -59,7 +59,7 @@ namespace Tathkīr_WPF.ViewModels.Generic
             _manager.PrayerTimeUpdated += Initialize;
         }
 
-        private void Initialize()
+        private void Initialize() 
         {
             if (_manager.PrayerTimesResult == null)
                 return;

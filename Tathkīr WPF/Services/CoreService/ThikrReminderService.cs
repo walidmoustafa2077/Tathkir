@@ -24,7 +24,7 @@ namespace Tathkīr_WPF.Services.CoreService
         public void CheckThikrReminder()
         {
             _tickCounter++;
-            if (_tickCounter < 5)
+            if (_tickCounter < _random.Next(300, 600))
                 return;
 
             _tickCounter = 0;

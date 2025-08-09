@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Tathkīr_WPF.Services;
 
 namespace Tathkīr_WPF.Views.Dialogs
 {
@@ -10,6 +11,11 @@ namespace Tathkīr_WPF.Views.Dialogs
         public BaseDialogControl()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            DialogService.Instance.CloseDialog();
         }
     }
 }

@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         Background="Transparent"
         Width="320"
-        Height="444"
+        Height="424"
         MouseDown="Window_MouseDown">
 
     <Border CornerRadius="20"

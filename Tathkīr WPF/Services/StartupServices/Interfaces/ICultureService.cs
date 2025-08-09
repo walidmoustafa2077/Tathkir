@@ -3,7 +3,7 @@
     public interface ICultureService
     {
         void SetCulture(string language);
-        bool IsRightToLeft { get; }
+        static bool IsRightToLeft { get; }
     }
 
 }

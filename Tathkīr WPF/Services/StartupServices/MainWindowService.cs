@@ -5,14 +5,13 @@ namespace Tathkīr_WPF.Services.StartupServices
 {
     public class MainWindowService : IMainWindowService
     {
-        public void Show(bool isRtl)
+        public void Show()
         {
             var window = new MainWindow
             {
-                FlowDirection = isRtl ? FlowDirection.RightToLeft : FlowDirection.LeftToRight
+                FlowDirection = CultureService.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight
             };
             window.Show();
         }
     }
-
 }

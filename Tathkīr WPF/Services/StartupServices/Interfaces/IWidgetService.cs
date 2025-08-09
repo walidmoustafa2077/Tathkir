@@ -1,6 +1,6 @@
 ﻿namespace Tathkīr_WPF.Services.StartupServices.Interfaces
 {
-    public interface IMainWindowService
+    public interface IWidgetService
     {
         void Show();
     }

@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using Tathkīr_WPF.Models;
+using Tathkīr_WPF.Services.StartupServices;
 using Tathkīr_WPF.ViewModels;
 
 namespace Tathkīr_WPF.Services
@@ -22,8 +23,7 @@ namespace Tathkīr_WPF.Services
         }
 
         private readonly HttpClient _httpClient;
-        private readonly bool _isRtl;
-
+        
         private const string BaseUrl = "https://localhost:7299/api";
 
         private List<Country> _countries = new List<Country>();
@@ -32,9 +32,6 @@ namespace Tathkīr_WPF.Services
         public HttpHostService(HttpClient? httpClient = null)
         {
             _httpClient = httpClient ?? new HttpClient();
-
-            var culture = CultureInfo.DefaultThreadCurrentCulture ?? CultureInfo.CurrentCulture;
-            _isRtl = culture.TextInfo.IsRightToLeft;
         }
 
         public async Task<Address> GetAddress(string lang = "en")
@@ -114,7 +111,7 @@ namespace Tathkīr_WPF.Services
             {
                 MainWindowViewModel.Instance.IsLoading = true;
 
-                var lang = _isRtl ? "ar" : "en";
+                var lang = CultureService.IsRightToLeft ? "ar" : "en";
 
                 string url = $"{BaseUrl}/Main/countries?lang={lang}";
 
@@ -153,7 +150,7 @@ namespace Tathkīr_WPF.Services
                 MainWindowViewModel.Instance.IsLoading = true;
 
                 var code = _countries.FirstOrDefault(c => c.NameLocalized.Equals(countryName, StringComparison.OrdinalIgnoreCase))?.Code;
-                var lang = _isRtl ? "ar" : "en";
+                var lang = CultureService.IsRightToLeft ? "ar" : "en";
 
                 if (string.IsNullOrEmpty(code))
                 {

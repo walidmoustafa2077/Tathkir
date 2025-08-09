@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using Tathkīr_WPF.Services;
+﻿using Tathkīr_WPF.Services;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace Tathkīr_WPF.ViewModels
 {

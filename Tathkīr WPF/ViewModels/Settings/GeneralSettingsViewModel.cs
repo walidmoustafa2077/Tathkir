@@ -43,6 +43,20 @@ namespace Tathkīr_WPF.ViewModels.Settings
             set => SetProperty(ref _showNotifications, value);
         }
 
+        private bool _showMainWindow = true;
+        public bool ShowMainWindow
+        {
+            get => _showMainWindow;
+            set => SetProperty(ref _showMainWindow, value);
+        } 
+
+        private bool _showWidget = true;
+        public bool ShowWidget
+        {
+            get => _showWidget;
+            set => SetProperty(ref _showWidget, value);
+        }
+
         public GeneralSettingsViewModel()
         {
             // Initialize with default values or load from settings
@@ -50,6 +64,8 @@ namespace Tathkīr_WPF.ViewModels.Settings
             SelectedTheme = SettingsService.AppSettings.AppConfig.Theme;
             LaunchOnStartup = SettingsService.AppSettings.AppConfig.LaunchOnStartup;
             ShowNotifications = SettingsService.AppSettings.AppConfig.ShowNotifications;
+            ShowMainWindow = SettingsService.AppSettings.AppConfig.ShowMainWindow;
+            ShowWidget = SettingsService.AppSettings.AppConfig.ShowWidget;
         }
 
         public void ResetSettings()
@@ -60,6 +76,8 @@ namespace Tathkīr_WPF.ViewModels.Settings
 
             LaunchOnStartup = true;
             ShowNotifications = true;
+            ShowMainWindow = true;
+            ShowWidget = true;
 
             // Save the reset settings
             SaveSettings();
@@ -72,6 +90,8 @@ namespace Tathkīr_WPF.ViewModels.Settings
 
             SettingsService.AppSettings.AppConfig.LaunchOnStartup = LaunchOnStartup;
             SettingsService.AppSettings.AppConfig.ShowNotifications = ShowNotifications;
+            SettingsService.AppSettings.AppConfig.ShowMainWindow = ShowMainWindow;
+            SettingsService.AppSettings.AppConfig.ShowWidget = ShowWidget;
 
             // Save the settings to persistent storage
             SettingsService.Save(SettingsService.AppSettings);

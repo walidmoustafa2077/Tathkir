@@ -30,29 +30,30 @@ namespace Tathkīr_WPF.Managers
         private readonly DispatcherTimer _timer;
         private readonly IClock _clock;
 
-        private PrayerTimesResult? _currentResult;
         public PrayerTimesResult? PrayerTimesResult => _currentResult;
 
         public PrayerItem? NextPrayer => _nextPrayer;
+
         public DateTime? NextPrayerTime => _nextPrayerTime;
         public TimeSpan Countdown => _nextPrayerTime.HasValue ? _nextPrayerTime.Value - _clock.Now : TimeSpan.Zero;
-
-        private DateTime _loadedDate = DateTime.Today;
-        private PrayerItem? _nextPrayer;
-        private PrayerItem? _cachedNextPrayer;
-        private DateTime? _nextPrayerTime;
-
 
         public event Action? PrayerTimeUpdated;
         public event Action? CountdownUpdated;
         public event Action? NewPrayerCycleStarted;
+        
+        private DateTime _loadedDate = DateTime.Today;
+        private PrayerItem? _nextPrayer;
+        private PrayerItem? _cachedNextPrayer;
+        private DateTime? _nextPrayerTime;
+        
+        private PrayerTimesResult? _currentResult;
 
         public PrayerTimesManager()
         {
-            var testClock = new TestClock();
-            testClock.Advance(TimeSpan.FromMinutes(+220));
+            //var testClock = new TestClock();
+            //testClock.Advance(TimeSpan.FromMinutes(+220));
 
-            _clock = testClock;
+            _clock = new SystemClock();
             _prayerService = new PrayerTimesService();
             _scheduler = new PrayerScheduler();
             _notifier = new NotificationService();
@@ -98,7 +99,6 @@ namespace Tathkīr_WPF.Managers
             {
                 UpdateNextPrayer();
             }
-
 
 
             var appConfig = SettingsService.AppSettings.AppConfig;

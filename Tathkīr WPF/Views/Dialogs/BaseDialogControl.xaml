@@ -17,11 +17,28 @@
             MinWidth="240">
 
         <StackPanel>
-            <TextBlock Text="{Binding Title}"
-                       Style="{StaticResource MaterialDesignTitleMediumTextBlock}"
-                       HorizontalAlignment="Center" />
+            <Grid>
+                <TextBlock Text="{Binding Title}"
+                           Style="{StaticResource MaterialDesignTitleMediumTextBlock}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+
+                <Button Content="X"
+                        Width="32"
+                        Height="32"
+                        Margin="0 0 0 3"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Padding="0"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Click="Button_Click"
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                </Button>
+            </Grid>
+
             <TextBlock Text="{Binding Message}"
-                       Margin="0,6,0,12"
+                       Margin="0,6,0,18"
                        HorizontalAlignment="Center"
                        Style="{StaticResource MaterialDesignBodyMediumTextBlock}" />
 

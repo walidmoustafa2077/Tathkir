@@ -97,6 +97,15 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to close the application?.
+        /// </summary>
+        public static string Are_You_Sure_You_Want_To_Close_The_Application {
+            get {
+                return ResourceManager.GetString("Are_You_Sure_You_Want_To_Close_The_Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Asr.
         /// </summary>
         public static string Asr {
@@ -183,6 +192,24 @@ namespace Tathkīr_WPF {
         public static string City {
             get {
                 return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Application.
+        /// </summary>
+        public static string Close_Application {
+            get {
+                return ResourceManager.GetString("Close_Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Main Window.
+        /// </summary>
+        public static string Close_Main_Window {
+            get {
+                return ResourceManager.GetString("Close_Main_Window", resourceCulture);
             }
         }
         
@@ -322,6 +349,15 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to is.
+        /// </summary>
+        public static string Is {
+            get {
+                return ResourceManager.GetString("Is", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Isha.
         /// </summary>
         public static string Isha {
@@ -453,6 +489,15 @@ namespace Tathkīr_WPF {
         public static string Minute {
             get {
                 return ResourceManager.GetString("Minute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next Prayer.
+        /// </summary>
+        public static string Next_Prayer {
+            get {
+                return ResourceManager.GetString("Next_Prayer", resourceCulture);
             }
         }
         
@@ -682,11 +727,29 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Main Window on system startup.
+        /// </summary>
+        public static string Show_Main_Window {
+            get {
+                return ResourceManager.GetString("Show_Main_Window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show notifications.
         /// </summary>
         public static string Show_Notifications {
             get {
                 return ResourceManager.GetString("Show_Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Widget on startup.
+        /// </summary>
+        public static string Show_Widget {
+            get {
+                return ResourceManager.GetString("Show_Widget", resourceCulture);
             }
         }
         
@@ -795,6 +858,15 @@ namespace Tathkīr_WPF {
         public static string Widgets {
             get {
                 return ResourceManager.GetString("Widgets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

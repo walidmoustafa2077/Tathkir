@@ -6,7 +6,7 @@ namespace Tathkīr_WPF.Services.StartupServices
     {
         public void Apply(string themeName)
         {
-            bool isDark = themeName == Strings.Dark;
+            bool isDark = themeName == "Dark";
             var paletteHelper = new PaletteHelper();
             var theme = paletteHelper.GetTheme();
 

@@ -36,7 +36,6 @@ namespace Tathkīr_WPF.ViewModels.Generic
                 new SettingsPageViewModel(Strings.General, new GeneralSettingsControl()),
                 new SettingsPageViewModel(Strings.Prayer_Times, new AthanSettingsControl()),
                 new SettingsPageViewModel(Strings.Athkar_Reminder, new AthkarSettingsControl()),
-                new SettingsPageViewModel(Strings.Widgets, new WidgetsSettingsControl()),
                 new SettingsPageViewModel(Strings.Location, new LocationSettingsControl()),
             };
 
