@@ -24,7 +24,7 @@ namespace Tathkīr_WPF.Services
 
         private readonly HttpClient _httpClient;
         
-        private const string BaseUrl = "https://localhost:7299/api";
+        private const string BaseUrl = "http://34.10.200.27/api";
 
         private List<Country> _countries = new List<Country>();
         private List<City> _cities = new List<City>();
