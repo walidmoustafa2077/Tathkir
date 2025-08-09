@@ -1,0 +1,390 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Athkar" xml:space="preserve">
+    <value>الأذكار</value>
+  </data>
+  <data name="Have_you_read_your_Athkar_today" xml:space="preserve">
+    <value>هل قرأت أذكارك اليوم؟</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>الرئيسية</value>
+  </data>
+  <data name="Prayer_Times" xml:space="preserve">
+    <value>اوقات الصلاة</value>
+  </data>
+  <data name="Quran" xml:space="preserve">
+    <value>القرآن</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>الاعدادات</value>
+  </data>
+  <data name="Tathkir" xml:space="preserve">
+    <value>تذكير</value>
+  </data>
+  <data name="Select_Location" xml:space="preserve">
+    <value>حدد الموقع</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>الدولة:</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>المدينة:</value>
+  </data>
+  <data name="Search_Or_Select_Country" xml:space="preserve">
+    <value>بحث أو تحديد البلد</value>
+  </data>
+  <data name="Search_Or_Select_City" xml:space="preserve">
+    <value>بحث أو تحديد المدينة</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>اعادة ضبط</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>الموقع</value>
+  </data>
+  <data name="Athkar_Reminder" xml:space="preserve">
+    <value>تنبيه الاذكار</value>
+  </data>
+  <data name="Widgets" xml:space="preserve">
+    <value>أدوات واجهة المستخدم</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>عام</value>
+  </data>
+  <data name="Midnight" xml:space="preserve">
+    <value>منتصف الليل</value>
+  </data>
+  <data name="Last_Third" xml:space="preserve">
+    <value>الثلث الأخير</value>
+  </data>
+  <data name="Fajr" xml:space="preserve">
+    <value>الفجر</value>
+  </data>
+  <data name="Sunrise" xml:space="preserve">
+    <value>الضحى</value>
+  </data>
+  <data name="Dhuhr" xml:space="preserve">
+    <value>الظهر</value>
+  </data>
+  <data name="Jumua" xml:space="preserve">
+    <value>الجمعة</value>
+  </data>
+  <data name="Asr" xml:space="preserve">
+    <value>العصر</value>
+  </data>
+  <data name="Maghrib" xml:space="preserve">
+    <value>المغرب</value>
+  </data>
+  <data name="Isha" xml:space="preserve">
+    <value>العشاء</value>
+  </data>
+  <data name="Time_Till" xml:space="preserve">
+    <value>باقي على</value>
+  </data>
+  <data name="It's_Time_For" xml:space="preserve">
+    <value>حان وقت صلاة</value>
+  </data>
+  <data name="The_Time_For" xml:space="preserve">
+    <value>اقترب وقت صلاه</value>
+  </data>
+  <data name="Prayer_Is_Approaching" xml:space="preserve">
+    <value />
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>اوافق</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="Prayer" xml:space="preserve">
+    <value />
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>لا شيء</value>
+  </data>
+  <data name="Every" xml:space="preserve">
+    <value>كل</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>ساعة</value>
+  </data>
+  <data name="Times_Per_Day" xml:space="preserve">
+    <value>مرات في اليوم</value>
+  </data>
+  <data name="Repeat_Time" xml:space="preserve">
+    <value>وقت التكرار</value>
+  </data>
+  <data name="Subhan_allah_alhamd_lilhi_allah_akbar_la_alah_ala_allah" xml:space="preserve">
+    <value>سُبْحَانَ الْلَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَهَ إِلَّا الْلَّهُ، وَالْلَّهُ أَكْبَرُ</value>
+  </data>
+  <data name="Alllahumm_slla_ealaa_sayidina_muhammad" xml:space="preserve">
+    <value>الْلَّهُم صَلِّ عَلَى سَيِّدِنَا مُحَمَّد</value>
+  </data>
+  <data name="La_allah_ala_ant_subhanak_anna_kunt_min_alzaalimina" xml:space="preserve">
+    <value>لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ</value>
+  </data>
+  <data name="Subhan_allah_wabihamdihi_subhan_allh_aleazimi" xml:space="preserve">
+    <value>سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ</value>
+  </data>
+  <data name="La_hawl_wala_quwwat_alla_biallahi" xml:space="preserve">
+    <value>لا حَوْلَ وَلا قُوَّةَ إِلا بِاللَّهِ</value>
+  </data>
+  <data name="Bookmark" xml:space="preserve">
+    <value>وضع علامة مرجعية</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>إيقاف مؤقت</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>تشغيل</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>إيقاف</value>
+  </data>
+  <data name="Choose_The_Reader" xml:space="preserve">
+    <value>اختر القارئ</value>
+  </data>
+  <data name="Looping_On" xml:space="preserve">
+    <value>إيقاف التكرار</value>
+  </data>
+  <data name="Looping_Off" xml:space="preserve">
+    <value>تشغيل التكرار</value>
+  </data>
+  <data name="Select_Tasbeeh_Limit" xml:space="preserve">
+    <value>حدد حد التسبيح</value>
+  </data>
+  <data name="Tasbeeh" xml:space="preserve">
+    <value>تسابيح</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>التقويم</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>الإجمالي</value>
+  </data>
+  <data name="Alert_Time" xml:space="preserve">
+    <value>وقت التنبيه</value>
+  </data>
+  <data name="Enable_Alert" xml:space="preserve">
+    <value>تفعيل التنبيه</value>
+  </data>
+  <data name="On_Athan" xml:space="preserve">
+    <value>وقت الآذان</value>
+  </data>
+  <data name="Before_Athan" xml:space="preserve">
+    <value>قبل الآذان</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>الرئيسية</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>دقيقة</value>
+  </data>
+  <data name="Personalization" xml:space="preserve">
+    <value>التخصيص</value>
+  </data>
+  <data name="Behavior" xml:space="preserve">
+    <value>السلوك</value>
+  </data>
+  <data name="Privacy_Info" xml:space="preserve">
+    <value>معلومات الخصوصية</value>
+  </data>
+  <data name="Launch_On_System_Startup" xml:space="preserve">
+    <value>التشغيل عند بدء تشغيل النظام</value>
+  </data>
+  <data name="Show_Notifications" xml:space="preserve">
+    <value>إظهار الإشعارات</value>
+  </data>
+  <data name="Select_Language" xml:space="preserve">
+    <value>اختر اللغة</value>
+  </data>
+  <data name="Select_Theme" xml:space="preserve">
+    <value>اختر السمة</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>الخصوصية</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>حول</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>الإنجليزية</value>
+  </data>
+  <data name="Arabic" xml:space="preserve">
+    <value>العربية</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>فاتح</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>داكن</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>تفعيل</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>خطأ</value>
+  </data>
+  <data name="OnSave" xml:space="preserve">
+    <value>سيتم حفظ الإعدادات الحالية. يُرجى إعادة تشغيل التطبيق لتفعيل الإعدادات الجديدة.</value>
+  </data>
+  <data name="OnReset" xml:space="preserve">
+    <value>سيتم اعادة ضبط الإعدادات الحالية. يُرجى إعادة تشغيل التطبيق لتفعيل الإعدادات الجديدة.</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>تعطيل</value>
+  </data>
+  <data name="Disabled_Alert" xml:space="preserve">
+    <value>تعطيل التنبيه</value>
+  </data>
+  <data name="Prayer_Reminder" xml:space="preserve">
+    <value>تذكير بالصلاة</value>
+  </data>
+  <data name="Thikr_Reminder" xml:space="preserve">
+    <value>تذكير بالذكر</value>
+  </data>
+  <data name="Next_Prayer" xml:space="preserve">
+    <value>الصلاة القادمة</value>
+  </data>
+  <data name="Is" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Show_Widget" xml:space="preserve">
+    <value>عرض الودجت عند بدء التشغيل</value>
+  </data>
+  <data name="Show_Main_Window" xml:space="preserve">
+    <value>عرض النافذة الرئيسية عند  بدء التشغيل</value>
+  </data>
+  <data name="Close_Application" xml:space="preserve">
+    <value>إغلاق التطبيق</value>
+  </data>
+  <data name="Are_You_Sure_You_Want_To_Close_The_Application" xml:space="preserve">
+    <value>هل أنت متأكد أنك تريد إغلاق التطبيق؟</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>نعم</value>
+  </data>
+  <data name="Close_Main_Window" xml:space="preserve">
+    <value>إغلاق النافذة الرئيسية</value>
+  </data>
+</root>

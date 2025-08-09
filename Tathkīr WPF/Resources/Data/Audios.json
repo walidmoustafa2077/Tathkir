@@ -1,0 +1,56 @@
+{
+  "PrayAudios": [
+    {
+      "Name": "fajr",
+      "BeforeAthanPath": "fajr-before.wav",
+      "OnAthanPath": "fajr-on.wav"
+    },
+    {
+      "Name": "dhuhr",
+      "BeforeAthanPath": "dhuhr-before.wav",
+      "OnAthanPath": "dhuhr-on.wav"
+    },
+    {
+      "Name": "asr",
+      "BeforeAthanPath": "asr-before.wav",
+      "OnAthanPath": "asr-on.wav"
+    },
+    {
+      "Name": "maghrib",
+      "BeforeAthanPath": "maghrib-before.wav",
+      "OnAthanPath": "maghrib-on.wav"
+    },
+    {
+      "Name": "isha",
+      "BeforeAthanPath": "isha-before.wav",
+      "OnAthanPath": "isha-on.wav"
+    },
+    {
+      "Name": "jumua",
+      "BeforeAthanPath": "jumua-before.wav",
+      "OnAthanPath": "jumua-on.wav"
+    }
+  ],
+  "ThikrAudios": [
+    {
+      "Name": "Alllahumm_slla_ealaa_sayidina_muhammad",
+      "Path": "alllahumm slla ealaa sayidina muhammad.wav"
+    },
+    {
+      "Name": "La_allah_ala_ant_subhanak_anna_kunt_min_alzaalimina",
+      "Path": "la allah ala ant subhanak anna kunt min alzaalimin.wav"
+    },
+    {
+      "Name": "La_hawl_wala_quwwat_alla_biallahi",
+      "Path": "la hawl wala quwwat alla biallah.wav"
+    },
+    {
+      "Name": "Subhan_allah_wabihamdihi_subhan_allh_aleazimi",
+      "Path": "subhan allah wabihamdihi, subhan allh aleazim.wav"
+    },
+    {
+      "Name": "Subhan_allah_alhamd_lilhi_allah_akbar_la_alah_ala_allah",
+      "Path": "subhan allahu, alhamd lilahi, allah akbar, la alah ala allah.wav"
+    }
+  ]
+}

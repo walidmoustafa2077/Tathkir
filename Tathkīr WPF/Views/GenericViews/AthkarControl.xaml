@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="Tathkīr_WPF.Views.GenericViews.AthkarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Tathkīr_WPF"
+             mc:Ignorable="d">
+
+    <Border Padding="16"
+            CornerRadius="14"
+            Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Border Grid.Row="0"
+                    Background="#20648B"
+                    CornerRadius="12"
+                    Margin="16"
+                    Padding="12">
+                <TextBlock Text="{x:Static local:Strings.Have_you_read_your_Athkar_today}"
+                           Foreground="White"
+                           FontSize="16"
+                           HorizontalAlignment="Center" />
+            </Border>
+
+            <!-- List -->
+            <ListView Grid.Row="1"
+                      ItemsSource="{Binding AthkarItems}"
+                      SelectedItem="{Binding SelectedAthkarItem, Mode=TwoWay}"
+                      PreviewMouseLeftButtonUp="AthkarListView_PreviewMouseLeftButtonUp"
+                      Style="{StaticResource MaterialDesignCardsListBox}">
+
+                <!-- Make the ListViewItem container white -->
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Background"
+                                Value="White" />
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Stretch" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border x:Name="Bd"
+                                            Background="{DynamicResource MaterialDesignCardBackground}"
+                                            Effect="{StaticResource MaterialDesignShadowDepth1}"
+                                            BorderBrush="Transparent"
+                                            CornerRadius="16"
+                                            Margin="8"
+                                            SnapsToDevicePixels="True">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          Margin="12 12 12 18"
+                                                          Height="80"
+                                                          RecognizesAccessKey="True" />
+                                    </Border>
+
+                                    <!-- Visual states to preserve click/selection -->
+                                    <!-- Visual states -->
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver"
+                                                 Value="True">
+                                            <Setter TargetName="Bd"
+                                                    Property="Background"
+                                                    Value="{StaticResource MaterialDesignLightSeparatorBackground}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3"
+                                     Margin="8" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="16"
+                                Padding="0"
+                                Effect="{DynamicResource MaterialDesignElevation2}">
+                            <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Name}"
+                                           FontSize="22"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap"
+                                           LineHeight="34"
+                                           LineStackingStrategy="BlockLineHeight"
+                                           Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                           FontFamily="pack://application:,,,/Resources/Fonts/#Amiri Quran" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+    </Border>
+
+</UserControl>
