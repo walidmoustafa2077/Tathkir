@@ -93,26 +93,30 @@ jobs:
           if (-not $v) { throw "No <ApplicationVersion> or <Version> found in $csproj" }
           "version=$v" >> $env:GITHUB_OUTPUT
 
-      - name: Recreate release (clean slate)
+      - name: Recreate release (idempotent)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          TAG: v${{ steps.versioning.outputs.version }}
         run: |
-          $tag = "v${{ steps.versioning.outputs.version }}"
-          # If a release with this tag exists, delete it and the tag
-          gh release view $tag 2>$null
+          # Delete release if it exists (ignore errors)
+          gh release view "$env:TAG" --repo "$env:REPO" 1>$null 2>$null
           if ($LASTEXITCODE -eq 0) {
-            gh release delete $tag -y
-            git tag -d $tag 2>$null
-            git push origin ":refs/tags/$tag"
+            gh release delete "$env:TAG" --repo "$env:REPO" -y
           }
+          # Delete tag ref if it exists (ignore 404)
+          gh api -X DELETE "repos/$env:REPO/git/refs/tags/$($env:TAG)" 1>$null 2>$null
 
       - name: Create release with single asset (zip)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          TAG: v${{ steps.versioning.outputs.version }}
         run: |
-          $tag = "v${{ steps.versioning.outputs.version }}"
           $asset = Join-Path $env:GITHUB_WORKSPACE "artifacts\TathkirWPF-${{ matrix.configuration }}-${{ matrix.runtime }}.zip"
-          gh release create $tag "$asset" `
-            --title "Release $tag" `
+          if (-not (Test-Path $asset)) { throw "Asset not found: $asset" }
+          gh release create "$env:TAG" "$asset" `
+            --repo "$env:REPO" `
+            --title "Release $env:TAG" `
             --notes "TathkīrWPF version ${{ steps.versioning.outputs.version }} built with ${{ matrix.configuration }} (self-contained, ${{ matrix.runtime }})." `
             --latest
