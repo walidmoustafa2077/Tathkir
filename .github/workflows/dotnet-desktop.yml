@@ -1,4 +1,4 @@
-name: Build & Publish TathkīrWPF 
+name: Build & Publish TathkīrWPF
 
 on:
   push:
@@ -12,74 +12,85 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: "Tathkīr WPF"   # run dotnet from inside the project folder
+
     strategy:
       matrix:
         configuration: [Release]
         runtime: [win-x64]
 
     env:
-      SOLUTION: Tathkīr WPF.sln
-      PROJECT: Tathkīr WPF/Tathkīr WPF.csproj
-      RUNTIME: win-x64
-      ARTIFACT_NAME: "TathkīrWPF-${{ matrix.configuration }}"
+      PROJECT_FILE: "Tathkīr WPF.csproj"
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup .NET SDK 8
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+      - name: Setup .NET SDK 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
-    - name: Pin SDK via global.json (8.x)
-      shell: pwsh
-      run: |
-        $versions = (& dotnet --list-sdks) | ForEach-Object { $_.Split()[0] } | Where-Object { $_ -like '8.*' } | Sort-Object -Descending
-        if (-not $versions) { throw "No .NET 8 SDK found." }
-        $ver = $versions[0]
-        @"
-        {
-          "sdk": { "version": "$ver" }
-        }
-        "@ | Out-File -FilePath global.json -Encoding utf8
+      - name: Pin SDK via global.json (8.x)
+        run: |
+          $versions = (& dotnet --list-sdks) | ForEach-Object { $_.Split()[0] } | Where-Object { $_ -like '8.*' } | Sort-Object -Descending
+          if (-not $versions) { throw "No .NET 8 SDK found." }
+          $ver = $versions[0]
+          @"
+          {
+            "sdk": { "version": "$ver" }
+          }
+          "@ | Out-File -FilePath ../global.json -Encoding utf8
 
-    - name: Restore dependencies
-      shell: pwsh
-      run: dotnet restore "${{ env.PROJECT }}"
+      - name: Restore
+        run: dotnet restore "$env:PROJECT_FILE"
 
-    - name: Build
-      run: dotnet build ${{ env.PROJECT }} --configuration ${{ matrix.configuration }} --no-restore
+      - name: Build
+        run: dotnet build "$env:PROJECT_FILE" --configuration "${{ matrix.configuration }}" --no-restore
 
-    - name: Publish self-contained
-      shell: pwsh
-      run: |
-        dotnet publish "${{ env.PROJECT }}" `
-          --configuration "${{ matrix.configuration }}" `
-          --runtime "${{ matrix.runtime }}" `
-          --self-contained true `
-          -o "publish"
+      # If you have no test projects, this step will be skipped
+      - name: Test
+        if: ${{ hashFiles('**/*Test*.csproj','**/*Tests*.csproj') != '' }}
+        working-directory: ".."  # solution lives at repo root
+        run: dotnet test "Tathkīr WPF.sln" --configuration "${{ matrix.configuration }}" --no-build
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: TathkīrWPF-${{ matrix.configuration }}-${{ matrix.runtime }}
-        path: ./publish
+      - name: Publish (self-contained)
+        run: |
+          $out = "..\publish\${{ matrix.runtime }}"
+          dotnet publish "$env:PROJECT_FILE" `
+            --configuration "${{ matrix.configuration }}" `
+            --runtime "${{ matrix.runtime }}" `
+            --self-contained true `
+            -p:PublishSingleFile=false `
+            -o "$out"
+          Write-Host "Published to $out"
 
-    - name: Extract version from .csproj
-      id: versioning
-      run: |
-        version=$(sed -n 's|.*<ApplicationVersion>\(.*\)</ApplicationVersion>.*|\1|p' ${{ env.PROJECT }})
-        echo "version=$version" >> $GITHUB_OUTPUT
-      shell: bash
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "TathkīrWPF-${{ matrix.configuration }}-${{ matrix.runtime }}"
+          path: publish/${{ matrix.runtime }}
 
-    - name: Create GitHub Release and Upload Artifacts
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: v${{ steps.versioning.outputs.version }}
-        name: Release v${{ steps.versioning.outputs.version }}
-        body: |
-          TathkīrWPF version ${{ steps.versioning.outputs.version }} built with ${{ matrix.configuration }}.
-        files: ./publish/**
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract version from .csproj
+        id: versioning
+        run: |
+          [xml]$xml = Get-Content "$env:PROJECT_FILE"
+          $v = $xml.Project.PropertyGroup.ApplicationVersion | Select-Object -First 1
+          if (-not $v) { $v = $xml.Project.PropertyGroup.Version | Select-Object -First 1 }
+          if (-not $v) { throw "No <ApplicationVersion> or <Version> found in the csproj." }
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Create GitHub Release and upload artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.versioning.outputs.version }}
+          name: Release v${{ steps.versioning.outputs.version }}
+          body: |
+            TathkīrWPF version ${{ steps.versioning.outputs.version }} built with ${{ matrix.configuration }} (self-contained, ${{ matrix.runtime }}).
+          files: publish/${{ matrix.runtime }}/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
