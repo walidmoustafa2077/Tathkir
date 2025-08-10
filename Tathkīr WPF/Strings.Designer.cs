@@ -61,6 +61,15 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A new version is available.
+        /// </summary>
+        public static string A_New_Version_Is_Available {
+            get {
+                return ResourceManager.GetString("A_New_Version_Is_Available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         public static string About {
@@ -219,6 +228,15 @@ namespace Tathkīr_WPF {
         public static string Country {
             get {
                 return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to current.
+        /// </summary>
+        public static string Current {
+            get {
+                return ResourceManager.GetString("Current", resourceCulture);
             }
         }
         
@@ -412,6 +430,15 @@ namespace Tathkīr_WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Later.
+        /// </summary>
+        public static string Later {
+            get {
+                return ResourceManager.GetString("Later", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Launch on system startup.
         /// </summary>
         public static string Launch_On_System_Startup {
@@ -543,6 +570,15 @@ namespace Tathkīr_WPF {
         public static string OnSave {
             get {
                 return ResourceManager.GetString("OnSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open the releases page?.
+        /// </summary>
+        public static string Open_The_Releases_Page {
+            get {
+                return ResourceManager.GetString("Open_The_Releases_Page", resourceCulture);
             }
         }
         

@@ -46,7 +46,7 @@ namespace Tathkīr_WPF.Managers
         public static void RemoveFromStartup()
         {
 
-            using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true))
+            using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true))
             {
                 key?.DeleteValue(RegistryName, false);
             }

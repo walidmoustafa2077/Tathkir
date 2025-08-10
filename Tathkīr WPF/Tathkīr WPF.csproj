@@ -9,7 +9,13 @@
 		<UseWPF>true</UseWPF>
 		<AssemblyName>Tathkīr</AssemblyName>
 		<ApplicationIcon>Resources\icon-logo.ico</ApplicationIcon>
-		<ApplicationVersion>1.0.0</ApplicationVersion>
+		<ApplicationVersion>1.0.5</ApplicationVersion>
+
+		<!-- Surface it to the assembly -->
+		<Version>$(ApplicationVersion)</Version>
+		<InformationalVersion>$(Version)</InformationalVersion>
+		<AssemblyVersion>$(ApplicationVersion).0</AssemblyVersion>
+		<FileVersion>$(AssemblyVersion)</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

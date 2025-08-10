@@ -387,4 +387,16 @@
   <data name="Close_Main_Window" xml:space="preserve">
     <value>Close Main Window</value>
   </data>
+  <data name="A_New_Version_Is_Available" xml:space="preserve">
+    <value>A new version is available</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>current</value>
+  </data>
+  <data name="Open_The_Releases_Page" xml:space="preserve">
+    <value>Open the releases page?</value>
+  </data>
+  <data name="Later" xml:space="preserve">
+    <value>Later</value>
+  </data>
 </root>

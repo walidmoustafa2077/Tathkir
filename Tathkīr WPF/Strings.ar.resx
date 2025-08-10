@@ -387,4 +387,16 @@
   <data name="Close_Main_Window" xml:space="preserve">
     <value>إغلاق النافذة الرئيسية</value>
   </data>
+  <data name="A_New_Version_Is_Available" xml:space="preserve">
+    <value>نسخة جديدة متاحة</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>الحالية</value>
+  </data>
+  <data name="Open_The_Releases_Page" xml:space="preserve">
+    <value>فتح صفحة الإصدارات؟</value>
+  </data>
+  <data name="Later" xml:space="preserve">
+    <value>لاحقاً</value>
+  </data>
 </root>
