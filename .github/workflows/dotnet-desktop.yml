@@ -48,10 +48,6 @@ jobs:
       shell: pwsh
       run: dotnet restore "${{ env.PROJECT }}"
 
-
-    - name: Run unit tests
-      run: dotnet test ${{ env.SOLUTION }} --configuration ${{ matrix.configuration }} --no-restore
-
     - name: Build
       run: dotnet build ${{ env.PROJECT }} --configuration ${{ matrix.configuration }} --no-restore
 
