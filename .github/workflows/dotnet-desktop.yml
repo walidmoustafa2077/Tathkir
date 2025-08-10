@@ -53,6 +53,7 @@ jobs:
         run: dotnet build "$env:PROJECT_FILE" --configuration "${{ matrix.configuration }}" --no-restore
 
       - name: Publish (self-contained)
+        shell: pwsh
         run: |
           $out = Join-Path $env:GITHUB_WORKSPACE "publish\${{ matrix.runtime }}"
           New-Item -ItemType Directory -Force -Path $out | Out-Null
