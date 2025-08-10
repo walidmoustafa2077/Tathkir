@@ -41,17 +41,17 @@ namespace Tathkīr_WPF.Managers
         public event Action? CountdownUpdated;
         public event Action? NewPrayerCycleStarted;
         
-        private DateTime _loadedDate = DateTime.Today;
         private PrayerItem? _nextPrayer;
         private PrayerItem? _cachedNextPrayer;
         private DateTime? _nextPrayerTime;
+        private DateTime? _currentDay;
         
         private PrayerTimesResult? _currentResult;
 
         public PrayerTimesManager()
         {
             //var testClock = new TestClock();
-            //testClock.Advance(TimeSpan.FromMinutes(+220));
+            //testClock.Advance(TimeSpan.FromMinutes(+13));
 
             _clock = new SystemClock();
             _prayerService = new PrayerTimesService();
@@ -62,6 +62,8 @@ namespace Tathkīr_WPF.Managers
 
             _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             _timer.Tick += (_, _) => OnTick();
+
+            _currentDay = _clock.Now;
         }
 
         public async Task LoadPrayerTimesAsync(bool use24HourFormat = false)
@@ -78,7 +80,7 @@ namespace Tathkīr_WPF.Managers
 
         public async Task<PrayerTimesResult?> GetPrayerTimeAsync(bool use24HourFormat = false, DateTime? date = null)
         {
-            return await _prayerService.GetPrayerTimesAsync(date ?? _loadedDate, use24HourFormat);
+            return await _prayerService.GetPrayerTimesAsync(date ?? _clock.Now, use24HourFormat);
         }
 
         private void OnTick()
@@ -86,7 +88,7 @@ namespace Tathkīr_WPF.Managers
             CountdownUpdated?.Invoke();
 
             // Check if the date has changed
-            if (DateTime.Today > _loadedDate)
+            if (_clock.Now.Date > _currentDay!.Value.Date)
             {
                 _ = ReloadAsync();
                 return;
@@ -99,7 +101,6 @@ namespace Tathkīr_WPF.Managers
             {
                 UpdateNextPrayer();
             }
-
 
             var appConfig = SettingsService.AppSettings.AppConfig;
 
@@ -147,7 +148,7 @@ namespace Tathkīr_WPF.Managers
         private async Task ReloadAsync()
         {
             _timer.Stop();
-            _loadedDate = DateTime.Today;
+            _currentDay = _clock.Now;
             await LoadPrayerTimesAsync();
         }
     }

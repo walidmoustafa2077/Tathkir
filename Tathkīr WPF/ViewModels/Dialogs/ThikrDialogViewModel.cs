@@ -4,9 +4,8 @@ using Tathkīr_WPF.Commands;
 
 namespace Tathkīr_WPF.ViewModels.Dialogs
 {
-    public class ThikrDialogViewModel : ViewModelBase
+    public class ThikrDialogViewModel : BaseDialogViewModel
     {
-        public string Title { get; set; } = "Thikr Dialog";
         public ObservableCollection<ThikrDialogItem> Items { get; set; }
 
         public ICommand CloseDialog { get; }

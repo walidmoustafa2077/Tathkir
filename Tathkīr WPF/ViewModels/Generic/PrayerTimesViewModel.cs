@@ -65,12 +65,23 @@ namespace Tathkīr_WPF.ViewModels.Generic
                 return;
 
             PrayerList.Clear();
+
             foreach (var p in _manager.PrayerTimesResult.Prayers)
                 PrayerList.Add(p);
 
             MidnightTime = _manager.PrayerTimesResult.Midnight;
             LastThirdTime = _manager.PrayerTimesResult.LastThird;
             CurrentDate = _manager.PrayerTimesResult.CurrentDate;
+
+            _manager.NewPrayerCycleStarted += () =>
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    PrayerList.Clear();
+                    foreach (var p in _manager.PrayerTimesResult!.Prayers)
+                        PrayerList.Add(p);
+                });
+            };
         }
 
         private void NextDate(object? obj)

@@ -8,7 +8,7 @@
 
     <Border x:Name="MainBorder"
             CornerRadius="12"
-            Background="White"
+            Background="{Binding DialogBackground}"
             Padding="18"
             MinWidth="400"
             MaxWidth="740"
@@ -49,7 +49,7 @@
                     CornerRadius="12"
                     BorderThickness="2"
                     BorderBrush="#8B6F47"
-                    Background="#FDF8F2"
+                    Background="{Binding DialogBackground}"
                     Margin="28 6 28 14">
 
                 <Grid>
@@ -80,7 +80,6 @@
                         <TextBlock Text="{Binding Surah.Name.DisplayName}"
                                    FontSize="28"
                                    FontWeight="Bold"
-                                   Foreground="#37474F"
                                    TextAlignment="Center" />
                     </StackPanel>
 

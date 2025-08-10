@@ -1,0 +1,75 @@
+name: Build & Publish TathkīrWPF 
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        configuration: [Release]
+        runtime: [win-x64]
+
+    env:
+      SOLUTION: Tathkīr WPF.sln
+      PROJECT: Tathkīr WPF/Tathkīr WPF.csproj 
+      RUNTIME: win-x64
+      ARTIFACT_NAME: "TathkīrWPF-${{ matrix.configuration }}"
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.PROJECT }}
+
+    - name: Run unit tests
+      run: dotnet test ${{ env.SOLUTION }} --configuration ${{ matrix.configuration }} --no-restore
+
+    - name: Build
+      run: dotnet build ${{ env.PROJECT }} --configuration ${{ matrix.configuration }} --no-restore
+
+    - name: Publish self-contained single-file
+      run: |
+        dotnet publish ${{ env.PROJECT }} \
+          --configuration ${{ matrix.configuration }} \
+          --runtime ${{ matrix.runtime }} \
+          --self-contained true \
+          -o ./publish
+      shell: bash
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: TathkīrWPF-${{ matrix.configuration }}-${{ matrix.runtime }}
+        path: ./publish
+
+    - name: Extract version from .csproj
+      id: versioning
+      run: |
+        version=$(sed -n 's|.*<ApplicationVersion>\(.*\)</ApplicationVersion>.*|\1|p' ${{ env.PROJECT }})
+        echo "version=$version" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Create GitHub Release and Upload Artifacts
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ steps.versioning.outputs.version }}
+        name: Release v${{ steps.versioning.outputs.version }}
+        body: |
+          RenderShift version ${{ steps.versioning.outputs.version }} built with ${{ matrix.configuration }}.
+        files: ./publish/**
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
