@@ -54,6 +54,8 @@ namespace Tathkīr_WPF.Services.CoreService
                     _notifier.NotifyThikr(thikr, path);
                     thikr.TimesTriggeredToday++;
                     SettingsService.Save(SettingsService.AppSettings);
+                    // Call Onload to refresh the settings localization
+                    SettingsService.AppSettings.AppConfig.Onload();
                     return;
                 }
             }

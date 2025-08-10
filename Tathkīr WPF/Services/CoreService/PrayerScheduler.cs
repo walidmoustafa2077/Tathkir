@@ -24,6 +24,8 @@ namespace Tathkīr_WPF.Services.CoreService
                         return prayer;
                     }
                 }
+
+                prayer.IsNextPrayer = false;
             }
 
             // fallback to first prayer on next day
