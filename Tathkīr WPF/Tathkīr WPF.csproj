@@ -9,6 +9,7 @@
 		<UseWPF>true</UseWPF>
 		<AssemblyName>Tathkīr</AssemblyName>
 		<ApplicationIcon>Resources\icon-logo.ico</ApplicationIcon>
+		<ApplicationVersion>1.0.0</ApplicationVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

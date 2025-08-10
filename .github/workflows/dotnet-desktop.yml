@@ -19,7 +19,7 @@ jobs:
 
     env:
       SOLUTION: Tathkīr WPF.sln
-      PROJECT: Tathkīr WPF/Tathkīr WPF.csproj 
+      PROJECT: Tathkīr WPF/Tathkīr WPF.csproj
       RUNTIME: win-x64
       ARTIFACT_NAME: "TathkīrWPF-${{ matrix.configuration }}"
 
@@ -27,13 +27,27 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Setup .NET SDK
+    - name: Setup .NET SDK 8
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
+    - name: Pin SDK via global.json (8.x)
+      shell: pwsh
+      run: |
+        $versions = (& dotnet --list-sdks) | ForEach-Object { $_.Split()[0] } | Where-Object { $_ -like '8.*' } | Sort-Object -Descending
+        if (-not $versions) { throw "No .NET 8 SDK found." }
+        $ver = $versions[0]
+        @"
+        {
+          "sdk": { "version": "$ver" }
+        }
+        "@ | Out-File -FilePath global.json -Encoding utf8
+
     - name: Restore dependencies
-      run: dotnet restore ${{ env.PROJECT }}
+      shell: pwsh
+      run: dotnet restore "${{ env.PROJECT }}"
+
 
     - name: Run unit tests
       run: dotnet test ${{ env.SOLUTION }} --configuration ${{ matrix.configuration }} --no-restore
@@ -41,14 +55,14 @@ jobs:
     - name: Build
       run: dotnet build ${{ env.PROJECT }} --configuration ${{ matrix.configuration }} --no-restore
 
-    - name: Publish self-contained single-file
+    - name: Publish self-contained
+      shell: pwsh
       run: |
-        dotnet publish ${{ env.PROJECT }} \
-          --configuration ${{ matrix.configuration }} \
-          --runtime ${{ matrix.runtime }} \
-          --self-contained true \
-          -o ./publish
-      shell: bash
+        dotnet publish "${{ env.PROJECT }}" `
+          --configuration "${{ matrix.configuration }}" `
+          --runtime "${{ matrix.runtime }}" `
+          --self-contained true `
+          -o "publish"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -69,7 +83,7 @@ jobs:
         tag_name: v${{ steps.versioning.outputs.version }}
         name: Release v${{ steps.versioning.outputs.version }}
         body: |
-          RenderShift version ${{ steps.versioning.outputs.version }} built with ${{ matrix.configuration }}.
+          TathkīrWPF version ${{ steps.versioning.outputs.version }} built with ${{ matrix.configuration }}.
         files: ./publish/**
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
