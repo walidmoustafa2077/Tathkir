@@ -16,7 +16,7 @@ jobs:
     defaults:
       run:
         shell: pwsh
-        working-directory: "Tathkīr WPF"   # run dotnet from inside the project folder
+        working-directory: "Tathkīr WPF"
 
     strategy:
       matrix:
@@ -93,13 +93,26 @@ jobs:
           if (-not $v) { throw "No <ApplicationVersion> or <Version> found in $csproj" }
           "version=$v" >> $env:GITHUB_OUTPUT
 
-      - name: Create GitHub Release and Upload (single asset)
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: v${{ steps.versioning.outputs.version }}
-          name: Release v${{ steps.versioning.outputs.version }}
-          body: |
-            TathkīrWPF version ${{ steps.versioning.outputs.version }} built with ${{ matrix.configuration }} (self-contained, ${{ matrix.runtime }}).
-          files: artifacts/*.zip
+      - name: Recreate release (clean slate)
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $tag = "v${{ steps.versioning.outputs.version }}"
+          # If a release with this tag exists, delete it and the tag
+          gh release view $tag 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            gh release delete $tag -y
+            git tag -d $tag 2>$null
+            git push origin ":refs/tags/$tag"
+          }
+
+      - name: Create release with single asset (zip)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $tag = "v${{ steps.versioning.outputs.version }}"
+          $asset = Join-Path $env:GITHUB_WORKSPACE "artifacts\TathkirWPF-${{ matrix.configuration }}-${{ matrix.runtime }}.zip"
+          gh release create $tag "$asset" `
+            --title "Release $tag" `
+            --notes "TathkīrWPF version ${{ steps.versioning.outputs.version }} built with ${{ matrix.configuration }} (self-contained, ${{ matrix.runtime }})." `
+            --latest
