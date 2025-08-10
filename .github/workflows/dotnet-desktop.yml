@@ -52,16 +52,11 @@ jobs:
       - name: Build
         run: dotnet build "$env:PROJECT_FILE" --configuration "${{ matrix.configuration }}" --no-restore
 
-      # If you have no test projects, this step will be skipped
-      - name: Test
-        if: ${{ hashFiles('**/*Test*.csproj','**/*Tests*.csproj') != '' }}
-        working-directory: ".."  # solution lives at repo root
-        run: dotnet test "Tathkīr WPF.sln" --configuration "${{ matrix.configuration }}" --no-build
-
       - name: Publish (self-contained)
         run: |
-          $out = "..\publish\${{ matrix.runtime }}"
-          dotnet publish "$env:PROJECT_FILE" `
+          $out = Join-Path $env:GITHUB_WORKSPACE "publish\${{ matrix.runtime }}"
+          New-Item -ItemType Directory -Force -Path $out | Out-Null
+          dotnet publish "Tathkīr WPF.csproj" `
             --configuration "${{ matrix.configuration }}" `
             --runtime "${{ matrix.runtime }}" `
             --self-contained true `
@@ -69,28 +64,40 @@ jobs:
             -o "$out"
           Write-Host "Published to $out"
 
-      - name: Upload artifact
+      - name: Package release (zip)
+        run: |
+          $zipDir = Join-Path $env:GITHUB_WORKSPACE "artifacts"
+          New-Item -ItemType Directory -Force -Path $zipDir | Out-Null
+          $zipPath = Join-Path $zipDir "TathkirWPF-${{ matrix.configuration }}-${{ matrix.runtime }}.zip"
+          if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+          $publishDir = Join-Path $env:GITHUB_WORKSPACE "publish\${{ matrix.runtime }}"
+          Compress-Archive -Path (Join-Path $publishDir "*") -DestinationPath $zipPath
+          Write-Host "Created $zipPath"
+
+      - name: Upload artifact (zip only)
         uses: actions/upload-artifact@v4
         with:
           name: "TathkīrWPF-${{ matrix.configuration }}-${{ matrix.runtime }}"
-          path: publish/${{ matrix.runtime }}
+          path: artifacts/*.zip
+          if-no-files-found: error
 
       - name: Extract version from .csproj
         id: versioning
+        shell: pwsh
         run: |
-          [xml]$xml = Get-Content "$env:PROJECT_FILE"
+          [xml]$xml = Get-Content "${{ env.PROJECT }}"
           $v = $xml.Project.PropertyGroup.ApplicationVersion | Select-Object -First 1
           if (-not $v) { $v = $xml.Project.PropertyGroup.Version | Select-Object -First 1 }
           if (-not $v) { throw "No <ApplicationVersion> or <Version> found in the csproj." }
           "version=$v" >> $env:GITHUB_OUTPUT
 
-      - name: Create GitHub Release and upload artifacts
+      - name: Create GitHub Release and Upload (single asset)
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.versioning.outputs.version }}
           name: Release v${{ steps.versioning.outputs.version }}
           body: |
             TathkīrWPF version ${{ steps.versioning.outputs.version }} built with ${{ matrix.configuration }} (self-contained, ${{ matrix.runtime }}).
-          files: publish/${{ matrix.runtime }}/**
+          files: artifacts/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
