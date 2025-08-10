@@ -86,10 +86,11 @@ jobs:
         id: versioning
         shell: pwsh
         run: |
-          [xml]$xml = Get-Content "${{ env.PROJECT }}"
+          $csproj = Join-Path $env:GITHUB_WORKSPACE "Tathkīr WPF\Tathkīr WPF.csproj"
+          [xml]$xml = Get-Content $csproj
           $v = $xml.Project.PropertyGroup.ApplicationVersion | Select-Object -First 1
           if (-not $v) { $v = $xml.Project.PropertyGroup.Version | Select-Object -First 1 }
-          if (-not $v) { throw "No <ApplicationVersion> or <Version> found in the csproj." }
+          if (-not $v) { throw "No <ApplicationVersion> or <Version> found in $csproj" }
           "version=$v" >> $env:GITHUB_OUTPUT
 
       - name: Create GitHub Release and Upload (single asset)
