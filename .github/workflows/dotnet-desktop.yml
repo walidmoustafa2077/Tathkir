@@ -99,13 +99,25 @@ jobs:
           REPO: ${{ github.repository }}
           TAG: v${{ steps.versioning.outputs.version }}
         run: |
-          # Delete release if it exists (ignore errors)
+          # Delete release if it exists
           gh release view "$env:TAG" --repo "$env:REPO" 1>$null 2>$null
           if ($LASTEXITCODE -eq 0) {
             gh release delete "$env:TAG" --repo "$env:REPO" -y
+          } else {
+            Write-Host "No existing release $env:TAG"
           }
-          # Delete tag ref if it exists (ignore 404)
-          gh api -X DELETE "repos/$env:REPO/git/refs/tags/$($env:TAG)" 1>$null 2>$null
+
+          # Delete tag ref if it exists
+          gh api "repos/$env:REPO/git/refs/tags/$($env:TAG)" 1>$null 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            gh api -X DELETE "repos/$env:REPO/git/refs/tags/$($env:TAG)" 1>$null 2>$null
+            Write-Host "Deleted tag $env:TAG"
+          } else {
+            Write-Host "No existing tag $env:TAG"
+          }
+
+          # Ensure step ends with success
+          Write-Host "Recreate step completed"
 
       - name: Create release with single asset (zip)
         env:
